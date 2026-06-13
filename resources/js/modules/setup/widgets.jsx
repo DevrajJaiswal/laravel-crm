@@ -5,4 +5,5 @@ export const widgets = [
     { id: 'access-control', title: 'Roles & Permissions', complete: true },
     { id: 'leads', title: 'Leads', complete: true },
     { id: 'customers', title: 'Customers', complete: true },
+    { id: 'contacts', title: 'Contacts', complete: true },
 ];

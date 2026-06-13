@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { apiFetch } from '../../shared/apiClient';
+import CustomerContactsSection from '../contacts/CustomerContactsSection';
 
 export default function CustomerDetail() {
     const { id } = useParams();
@@ -72,6 +73,8 @@ export default function CustomerDetail() {
                         </p>
                     </div>
                 ) : null}
+
+                <CustomerContactsSection customerId={customer.id} />
             </div>
         </main>
     );
