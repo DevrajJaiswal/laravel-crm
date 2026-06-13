@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { apiFetch } from '../../shared/apiClient';
+import { dashboardLinks } from '../navigation';
 
 export default function Dashboard() {
     const [user, setUser] = useState(null);
@@ -20,29 +21,29 @@ export default function Dashboard() {
 
     return (
         <main className="min-h-screen bg-[radial-gradient(circle_at_top,_#fff5d6_0%,_#f7fafc_42%,_#dbeafe_100%)] flex items-center justify-center p-6">
-            <div className="rounded-[2rem] border border-white/70 bg-white/80 p-8 shadow-[0_20px_80px_rgba(15,23,42,0.10)] backdrop-blur">
+            <div className="w-full max-w-4xl rounded-[2rem] border border-white/70 bg-white/80 p-8 shadow-[0_20px_80px_rgba(15,23,42,0.10)] backdrop-blur">
                 <h1 className="text-3xl font-bold text-slate-950 mb-4">Dashboard</h1>
                 <p className="text-slate-600 mb-2">Welcome, {user.name}!</p>
                 <p className="text-slate-600">{user.email}</p>
-                <a
-                    href="/access-control/roles"
-                    className="mt-4 inline-flex rounded-2xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
-                >
-                    Open Roles & Permissions
-                </a>
-                <a
-                    href="/leads"
-                    className="mt-4 ml-3 inline-flex rounded-2xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
-                >
-                    Open Leads
-                </a>
+                <div className="mt-8 grid gap-4 md:grid-cols-3">
+                    {dashboardLinks.map((link) => (
+                        <a
+                            key={link.href}
+                            href={link.href}
+                            className="rounded-[1.5rem] border border-slate-200 bg-white p-4 transition hover:-translate-y-0.5 hover:shadow-md"
+                        >
+                            <h2 className="text-base font-semibold text-slate-950">{link.title}</h2>
+                            <p className="mt-2 text-sm leading-6 text-slate-600">{link.description}</p>
+                        </a>
+                    ))}
+                </div>
                 <button
                     onClick={() => {
                         apiFetch('/api/logout', { method: 'POST' });
                         localStorage.removeItem('auth_token');
                         window.location.href = '/login';
                     }}
-                    className="mt-4 rounded-2xl bg-amber-600 px-4 py-2 text-sm font-semibold text-white"
+                    className="mt-8 rounded-2xl bg-amber-600 px-4 py-2 text-sm font-semibold text-white"
                 >
                     Logout
                 </button>

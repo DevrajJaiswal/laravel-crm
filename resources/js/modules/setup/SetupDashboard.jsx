@@ -24,10 +24,10 @@ export default function SetupDashboard() {
                             {moduleWidgets.map((widget) => (
                                 <div
                                     key={widget.id}
-                                    className="rounded-2xl border border-slate-200 bg-slate-50/80 p-4 text-sm font-medium text-slate-700 flex items-center gap-2"
+                                    className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50/80 p-4 text-sm font-medium text-slate-700"
                                 >
-                                    <span className={widget.complete ? 'text-emerald-500' : 'text-slate-400'}>
-                                        {widget.complete ? '✓' : '○'}
+                                    <span className={widget.complete ? 'font-semibold text-emerald-600' : 'font-semibold text-slate-400'}>
+                                        {widget.complete ? 'Done' : 'Pending'}
                                     </span>
                                     {widget.title}
                                 </div>
@@ -38,14 +38,18 @@ export default function SetupDashboard() {
                     <aside className="space-y-6">
                         <div className="rounded-[2rem] bg-slate-950 p-8 text-slate-50 shadow-[0_24px_64px_rgba(15,23,42,0.28)]">
                             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-cyan-300">
-                                Navigation
+                                Current Module
+                            </p>
+                            <h2 className="mt-4 text-2xl font-bold">Leads</h2>
+                            <p className="mt-3 text-sm leading-6 text-slate-300">
+                                The CRM is now through Module 5, with Leads visible in the application and tracked in the progress board.
                             </p>
                             <div className="mt-6 space-y-3">
-                                <a href="/login" className="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm">
-                                    Login
+                                <a href="/leads" className="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm">
+                                    Open Leads
                                 </a>
-                                <a href="/register" className="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm">
-                                    Register
+                                <a href="/access-control/roles" className="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm">
+                                    Open Roles & Permissions
                                 </a>
                             </div>
                         </div>

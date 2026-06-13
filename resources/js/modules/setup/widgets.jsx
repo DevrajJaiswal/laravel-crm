@@ -1,5 +1,7 @@
 export const widgets = [
-    { id: 'setup', title: 'Project Setup', icon: '✓', complete: true },
-    { id: 'auth', title: 'Authentication', icon: '✓', complete: true },
-    { id: 'users', title: 'Users Management', icon: '✓', complete: true },
+    { id: 'setup', title: 'Project Setup', complete: true },
+    { id: 'auth', title: 'Authentication', complete: true },
+    { id: 'users', title: 'Users Management', complete: true },
+    { id: 'access-control', title: 'Roles & Permissions', complete: true },
+    { id: 'leads', title: 'Leads', complete: true },
 ];
