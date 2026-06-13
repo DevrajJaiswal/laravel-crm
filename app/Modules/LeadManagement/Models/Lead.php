@@ -22,6 +22,7 @@ class Lead extends Model
         'value',
         'notes',
         'owner_id',
+        'converted_customer_id',
     ];
 
     protected function casts(): array

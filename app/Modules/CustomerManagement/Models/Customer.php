@@ -22,6 +22,7 @@ class Customer extends Model
         'shipping_address',
         'notes',
         'owner_id',
+        'converted_from_lead_id',
     ];
 
     public function owner(): BelongsTo

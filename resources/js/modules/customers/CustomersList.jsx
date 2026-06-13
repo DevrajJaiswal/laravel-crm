@@ -26,6 +26,12 @@ export default function CustomersList() {
                     </Link>
                 </div>
 
+                <div className="mb-4">
+                    <Link to="/customers/create" className="inline-flex rounded-2xl bg-amber-600 px-4 py-2 text-sm font-semibold text-white">
+                        Create Customer
+                    </Link>
+                </div>
+
                 {loading ? (
                     <div className="rounded-[2rem] border border-white/70 bg-white/80 p-8 shadow-sm">Loading customers...</div>
                 ) : (
@@ -35,7 +41,9 @@ export default function CustomersList() {
                                 <div>
                                     <h2 className="text-xl font-bold text-slate-950">{customer.name}</h2>
                                     <p className="mt-1 text-sm text-slate-600">{customer.company_name}</p>
-                                    <p className="mt-1 text-sm text-slate-500">{customer.status} · {customer.industry || 'Industry not set'}</p>
+                                    <p className="mt-1 text-sm text-slate-500">
+                                        {customer.status} · {customer.industry || 'Industry not set'}
+                                    </p>
                                 </div>
                                 <Link to={`/customers/${customer.id}`} className="rounded-xl bg-slate-950 px-4 py-2 text-sm font-semibold text-white">
                                     View Details

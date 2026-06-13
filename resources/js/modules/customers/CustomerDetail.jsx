@@ -22,6 +22,8 @@ export default function CustomerDetail() {
         ['Phone', customer.phone || '-'],
         ['Status', customer.status],
         ['Industry', customer.industry || '-'],
+        ['Billing Address', customer.billing_address || '-'],
+        ['Shipping Address', customer.shipping_address || '-'],
         ['Owner', customer.owner?.name || '-'],
     ];
 
@@ -33,9 +35,17 @@ export default function CustomerDetail() {
                         <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">Customer Details</p>
                         <h1 className="mt-3 text-3xl font-black text-slate-950">{customer.name}</h1>
                     </div>
-                    <Link to="/customers" className="rounded-2xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700">
-                        Back
-                    </Link>
+                    <div className="flex gap-3">
+                        <Link
+                            to={`/customers/${customer.id}/edit`}
+                            className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-semibold text-amber-800"
+                        >
+                            Edit
+                        </Link>
+                        <Link to="/customers" className="rounded-2xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700">
+                            Back
+                        </Link>
+                    </div>
                 </div>
 
                 <div className="grid gap-4 md:grid-cols-2">
@@ -51,6 +61,15 @@ export default function CustomerDetail() {
                     <div className="mt-4 rounded-2xl border border-slate-200 bg-slate-50/80 p-4">
                         <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">Notes</p>
                         <p className="mt-2 text-sm leading-6 text-slate-700">{customer.notes}</p>
+                    </div>
+                ) : null}
+
+                {customer.converted_from_lead_id ? (
+                    <div className="mt-4 rounded-2xl border border-emerald-200 bg-emerald-50/80 p-4">
+                        <p className="text-xs font-semibold uppercase tracking-wider text-emerald-700">Converted from Lead</p>
+                        <p className="mt-2 text-sm leading-6 text-emerald-800">
+                            This customer was created automatically from a won lead.
+                        </p>
                     </div>
                 ) : null}
             </div>

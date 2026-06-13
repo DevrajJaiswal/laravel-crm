@@ -5,5 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['api', 'auth:sanctum'])->prefix('api')->group(function () {
     Route::get('customers', [CustomerController::class, 'index']);
+    Route::post('customers', [CustomerController::class, 'store']);
     Route::get('customers/{customer}', [CustomerController::class, 'show']);
+    Route::put('customers/{customer}', [CustomerController::class, 'update']);
 });

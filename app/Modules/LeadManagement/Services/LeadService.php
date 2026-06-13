@@ -4,6 +4,7 @@ namespace App\Modules\LeadManagement\Services;
 
 use App\Models\User;
 use App\Modules\LeadManagement\Models\Lead;
+use App\Modules\CustomerManagement\Events\LeadWon;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class LeadService
@@ -26,9 +27,17 @@ class LeadService
 
     public function update(Lead $lead, array $data): Lead
     {
+        $wasWon = $lead->status === 'Won';
+
         $lead->update($data);
 
-        return $lead->refresh()->load('owner');
+        $lead->refresh()->load('owner');
+
+        if (! $wasWon && $lead->status === 'Won') {
+            LeadWon::dispatchIf(! $lead->converted_customer_id, $lead);
+        }
+
+        return $lead;
     }
 
     public function delete(Lead $lead): void
@@ -54,6 +63,7 @@ class LeadService
                 'name' => $lead->owner->name,
                 'email' => $lead->owner->email,
             ] : null,
+            'converted_customer_id' => $lead->converted_customer_id,
             'created_at' => $lead->created_at?->toDateTimeString(),
             'updated_at' => $lead->updated_at?->toDateTimeString(),
         ];

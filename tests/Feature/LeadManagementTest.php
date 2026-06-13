@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\User;
+use App\Modules\CustomerManagement\Models\Customer;
 use App\Modules\LeadManagement\Models\Lead;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
@@ -81,5 +82,51 @@ class LeadManagementTest extends TestCase
         $this->assertDatabaseMissing('leads', [
             'id' => $leadId,
         ]);
+    }
+
+    public function test_winning_a_lead_auto_creates_a_customer(): void
+    {
+        $actor = User::factory()->create();
+        Sanctum::actingAs($actor);
+
+        $lead = Lead::create([
+            'title' => 'Won Deal',
+            'company_name' => 'Won Co',
+            'contact_name' => 'Won Person',
+            'email' => 'won@example.com',
+            'phone' => '7778889999',
+            'source' => 'Website',
+            'status' => 'New',
+            'value' => 5000,
+            'notes' => 'Ready to convert',
+            'owner_id' => $actor->id,
+        ]);
+
+        $response = $this->putJson("/api/leads/{$lead->id}", [
+            'title' => 'Won Deal',
+            'company_name' => 'Won Co',
+            'contact_name' => 'Won Person',
+            'email' => 'won@example.com',
+            'phone' => '7778889999',
+            'source' => 'Website',
+            'status' => 'Won',
+            'value' => 5000,
+            'notes' => 'Ready to convert',
+        ]);
+
+        $response->assertOk()
+            ->assertJsonPath('lead.status', 'Won');
+
+        $lead->refresh();
+
+        $this->assertNotNull($lead->converted_customer_id);
+        $this->assertDatabaseHas('customers', [
+            'id' => $lead->converted_customer_id,
+            'converted_from_lead_id' => $lead->id,
+            'company_name' => 'Won Co',
+        ]);
+
+        $customer = Customer::find($lead->converted_customer_id);
+        $this->assertSame('Won Person', $customer?->name);
     }
 }

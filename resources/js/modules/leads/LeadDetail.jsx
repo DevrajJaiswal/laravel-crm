@@ -55,6 +55,21 @@ export default function LeadDetail() {
                         <p className="mt-2 text-sm leading-6 text-slate-700">{lead.notes}</p>
                     </div>
                 ) : null}
+
+                {lead.status === 'Won' && lead.converted_customer_id ? (
+                    <div className="mt-4 rounded-2xl border border-emerald-200 bg-emerald-50/80 p-4">
+                        <p className="text-xs font-semibold uppercase tracking-wider text-emerald-700">Converted</p>
+                        <p className="mt-2 text-sm leading-6 text-emerald-800">
+                            This lead has been converted into a customer.
+                        </p>
+                        <Link
+                            to={`/customers/${lead.converted_customer_id}`}
+                            className="mt-3 inline-flex rounded-2xl bg-emerald-600 px-4 py-2 text-sm font-semibold text-white"
+                        >
+                            View Customer
+                        </Link>
+                    </div>
+                ) : null}
             </div>
         </main>
     );
