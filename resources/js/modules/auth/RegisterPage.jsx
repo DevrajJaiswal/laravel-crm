@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { apiFetch } from '../../shared/apiClient';
 
 export default function RegisterPage() {
     const [formData, setFormData] = useState({
@@ -16,12 +17,8 @@ export default function RegisterPage() {
         setError(null);
 
         try {
-            await fetch('/sanctum/csrf-cookie', { method: 'GET', credentials: 'include' });
-
-            const response = await fetch('/api/register', {
+            const response = await apiFetch('/api/register', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'include',
                 body: JSON.stringify(formData),
             });
 

@@ -1,13 +1,17 @@
-// Auto-discover modules and their routes
-const modules = import.meta.glob('./*/routes.jsx', { eager: true });
+// Direct imports for reliability
+import { routes as authRoutes } from './auth/routes.jsx';
+import { routes as usersRoutes } from './users/routes.jsx';
+import { routes as setupRoutes } from './setup/routes.jsx';
 
-export const moduleRoutes = Object.entries(modules).flatMap(([path, module]) => {
-    return module.routes || [];
-});
+export const moduleRoutes = [
+    ...setupRoutes,
+    ...authRoutes,
+    ...usersRoutes,
+];
 
-// Auto-discover module widgets for dashboard
-const widgets = import.meta.glob('./*/widgets.jsx', { eager: true });
+// Direct imports for widgets
+import { widgets as setupWidgets } from './setup/widgets.jsx';
 
-export const moduleWidgets = Object.entries(widgets).flatMap(([path, widget]) => {
-    return widget.widgets || [];
-});
+export const moduleWidgets = [
+    ...setupWidgets,
+];

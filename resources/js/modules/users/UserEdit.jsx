@@ -1,44 +1,50 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { apiFetch } from '../../shared/apiClient';
 
-export default function LoginPage() {
-    const [formData, setFormData] = useState({ email: '', password: '' });
+export default function UserEdit() {
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const [formData, setFormData] = useState({ name: '', email: '' });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+
+    useEffect(() => {
+        apiFetch(`/api/users/${id}`)
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`Failed to load user (${response.status})`);
+            }
+            return response.json();
+        })
+        .then(data => setFormData({ name: data.name, email: data.email }))
+        .catch(() => navigate('/users'));
+    }, [id]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        setError(null);
-
+        
         try {
-            // Then login
-            const response = await apiFetch('/api/login', {
-                method: 'POST',
+            const response = await apiFetch(`/api/users/${id}`, {
+                method: 'PUT',
                 body: JSON.stringify(formData),
             });
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                setError(data.message || `Login failed (${response.status})`);
-                return;
-            }
-
-            localStorage.setItem('auth_token', data.token);
-            window.location.href = '/dashboard';
+            
+            if (!response.ok) throw new Error('Update failed');
+            navigate('/users');
         } catch (err) {
-            setError('Network error: ' + err.message);
+            setError('Failed to update user');
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <main className="min-h-screen bg-[radial-gradient(circle_at_top,_#fff5d6_0%,_#f7fafc_42%,_#dbeafe_100%)] flex items-center justify-center p-6">
+        <div className="min-h-screen bg-[radial-gradient(circle_at_top,_#fff5d6_0%,_#f7fafc_42%,_#dbeafe_100%)] flex items-center justify-center p-6">
             <div className="w-full max-w-md rounded-[2rem] border border-white/70 bg-white/80 p-8 shadow-[0_20px_80px_rgba(15,23,42,0.10)] backdrop-blur">
-                <h1 className="text-3xl font-bold text-slate-950 mb-6">Login</h1>
-
+                <h1 className="text-3xl font-bold text-slate-950 mb-6">Edit User</h1>
+                
                 {error && (
                     <div className="mb-4 rounded-2xl bg-red-50 p-4 text-sm text-red-600">
                         {error}
@@ -46,6 +52,19 @@ export default function LoginPage() {
                 )}
 
                 <form onSubmit={handleSubmit} className="space-y-4">
+                    <div>
+                        <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">
+                            Name
+                        </label>
+                        <input
+                            type="text"
+                            value={formData.name}
+                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                            required
+                            className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-amber-500"
+                        />
+                    </div>
+
                     <div>
                         <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">
                             Email
@@ -59,35 +78,22 @@ export default function LoginPage() {
                         />
                     </div>
 
-                    <div>
-                        <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">
-                            Password
-                        </label>
-                        <input
-                            type="password"
-                            value={formData.password}
-                            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                            required
-                            className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-amber-500"
-                        />
-                    </div>
-
                     <button
                         type="submit"
                         disabled={loading}
                         className="w-full rounded-2xl bg-amber-600 py-3 text-sm font-semibold uppercase tracking-wider text-white hover:bg-amber-700 disabled:opacity-50"
                     >
-                        {loading ? 'Logging in...' : 'Login'}
+                        {loading ? 'Saving...' : 'Save'}
                     </button>
                 </form>
 
-                <p className="mt-6 text-center text-sm text-slate-600">
-                    Don't have an account?{' '}
-                    <a href="/register" className="font-semibold text-amber-600 hover:underline">
-                        Register
-                    </a>
-                </p>
+                <button
+                    onClick={() => navigate('/users')}
+                    className="mt-4 w-full rounded-2xl border border-slate-200 bg-white py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+                >
+                    Cancel
+                </button>
             </div>
-        </main>
+        </div>
     );
 }

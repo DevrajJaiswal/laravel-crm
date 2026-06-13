@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react';
+import { apiFetch } from '../../shared/apiClient';
 
 export default function Dashboard() {
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-        fetch('/api/user', {
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('auth_token')}`,
-            },
+        apiFetch('/api/user')
+        .then((r) => {
+            if (!r.ok) {
+                throw new Error(`Failed to load user (${r.status})`);
+            }
+            return r.json();
         })
-        .then(r => r.json())
         .then(setUser)
         .catch(() => window.location.href = '/login');
     }, []);
@@ -24,7 +26,7 @@ export default function Dashboard() {
                 <p className="text-slate-600">{user.email}</p>
                 <button
                     onClick={() => {
-                        fetch('/api/logout', { method: 'POST', headers: { 'Authorization': `Bearer ${localStorage.getItem('auth_token')}` } });
+                        apiFetch('/api/logout', { method: 'POST' });
                         localStorage.removeItem('auth_token');
                         window.location.href = '/login';
                     }}
