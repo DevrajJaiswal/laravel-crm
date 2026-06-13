@@ -24,6 +24,12 @@ export default function Dashboard() {
                 <h1 className="text-3xl font-bold text-slate-950 mb-4">Dashboard</h1>
                 <p className="text-slate-600 mb-2">Welcome, {user.name}!</p>
                 <p className="text-slate-600">{user.email}</p>
+                <a
+                    href="/access-control/roles"
+                    className="mt-4 inline-flex rounded-2xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+                >
+                    Open Roles & Permissions
+                </a>
                 <button
                     onClick={() => {
                         apiFetch('/api/logout', { method: 'POST' });
