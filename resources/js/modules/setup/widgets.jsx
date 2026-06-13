@@ -8,5 +8,5 @@ export const widgets = [
     { id: 'contacts', title: 'Contacts', complete: true },
     { id: 'activities', title: 'Activities', complete: true },
     { id: 'deals', title: 'Deals', complete: true },
-    { id: 'support-tickets', title: 'Support Tickets', complete: false },
+    { id: 'support-tickets', title: 'Support Tickets', complete: true },
 ];
