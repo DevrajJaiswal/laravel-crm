@@ -1,0 +1,22 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../js/**/*.{js,jsx}';
+
+@theme {
+    --font-sans: 'Space Grotesk', 'Segoe UI', sans-serif;
+}
+
+:root {
+    color-scheme: light;
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-sans);
+}
+
+* {
+    box-sizing: border-box;
+}
