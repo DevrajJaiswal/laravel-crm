@@ -3,6 +3,7 @@
 namespace App\Modules\CustomerManagement\Models;
 
 use App\Models\User;
+use App\Modules\ActivityManagement\Models\Activity;
 use App\Modules\ContactManagement\Models\Contact;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -35,5 +36,10 @@ class Customer extends Model
     public function contacts(): HasMany
     {
         return $this->hasMany(Contact::class);
+    }
+
+    public function activities(): HasMany
+    {
+        return $this->hasMany(Activity::class);
     }
 }

@@ -40,9 +40,9 @@ export default function SetupDashboard() {
                             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-cyan-300">
                                 Current Module
                             </p>
-                            <h2 className="mt-4 text-2xl font-bold">Contacts</h2>
+                            <h2 className="mt-4 text-2xl font-bold">Activities</h2>
                             <p className="mt-3 text-sm leading-6 text-slate-300">
-                                The CRM is now through Module 7, with Contacts managed inside Customer Details and tracked in the progress board.
+                                The CRM is now through Module 8, with Activities shown as a timeline inside Customer Details and tracked in the progress board.
                             </p>
                             <div className="mt-6 space-y-3">
                                 <a href="/customers" className="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm">
