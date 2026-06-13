@@ -1,5 +1,5 @@
-import SetupDashboard from '../modules/setup/SetupDashboard';
+import Router from '../router';
 
 export default function App() {
-    return <SetupDashboard />;
+    return <Router />;
 }
