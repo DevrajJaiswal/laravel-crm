@@ -1,4 +1,5 @@
 // Direct imports for reliability
+import { routes as leadRoutes } from './leads/routes.jsx';
 import { routes as authRoutes } from './auth/routes.jsx';
 import { routes as accessControlRoutes } from './access-control/routes.jsx';
 import { routes as usersRoutes } from './users/routes.jsx';
@@ -8,6 +9,7 @@ export const moduleRoutes = [
     ...setupRoutes,
     ...authRoutes,
     ...accessControlRoutes,
+    ...leadRoutes,
     ...usersRoutes,
 ];
 
