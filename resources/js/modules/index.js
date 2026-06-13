@@ -1,5 +1,6 @@
 // Direct imports for reliability
 import { routes as leadRoutes } from './leads/routes.jsx';
+import { routes as dealRoutes } from './deals/routes.jsx';
 import { routes as customerRoutes } from './customers/routes.jsx';
 import { routes as authRoutes } from './auth/routes.jsx';
 import { routes as accessControlRoutes } from './access-control/routes.jsx';
@@ -11,6 +12,7 @@ export const moduleRoutes = [
     ...authRoutes,
     ...accessControlRoutes,
     ...leadRoutes,
+    ...dealRoutes,
     ...customerRoutes,
     ...usersRoutes,
 ];
