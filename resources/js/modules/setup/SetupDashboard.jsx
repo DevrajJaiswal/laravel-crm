@@ -40,9 +40,9 @@ export default function SetupDashboard() {
                             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-cyan-300">
                                 Current Module
                             </p>
-                            <h2 className="mt-4 text-2xl font-bold">Support Tickets</h2>
+                            <h2 className="mt-4 text-2xl font-bold">Notifications</h2>
                             <p className="mt-3 text-sm leading-6 text-slate-300">
-                                The CRM is now through Module 10, with Support Tickets visible in the application and tracked in the progress board.
+                                The CRM is now through Module 11, with a notification dropdown visible in the dashboard and tracked in the progress board.
                             </p>
                             <div className="mt-6 space-y-3">
                                 <a href="/customers" className="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm">
@@ -53,6 +53,9 @@ export default function SetupDashboard() {
                                 </a>
                                 <a href="/tickets" className="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm">
                                     Open Tickets
+                                </a>
+                                <a href="/dashboard" className="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm">
+                                    Open Dashboard
                                 </a>
                                 <a href="/leads" className="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm">
                                     Open Leads

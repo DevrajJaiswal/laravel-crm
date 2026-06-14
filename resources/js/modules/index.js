@@ -7,6 +7,7 @@ import { routes as authRoutes } from './auth/routes.jsx';
 import { routes as accessControlRoutes } from './access-control/routes.jsx';
 import { routes as usersRoutes } from './users/routes.jsx';
 import { routes as setupRoutes } from './setup/routes.jsx';
+import { routes as importRoutes } from './imports/routes.jsx';
 
 export const moduleRoutes = [
     ...setupRoutes,
@@ -16,6 +17,7 @@ export const moduleRoutes = [
     ...dealRoutes,
     ...ticketRoutes,
     ...customerRoutes,
+    ...importRoutes,
     ...usersRoutes,
 ];
 

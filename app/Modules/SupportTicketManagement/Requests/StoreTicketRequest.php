@@ -13,6 +13,15 @@ class StoreTicketRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'contact_id' => $this->input('contact_id') ?: null,
+            'assigned_to_user_id' => $this->input('assigned_to_user_id') ?: null,
+            'resolution_notes' => $this->input('resolution_notes') ?: null,
+        ]);
+    }
+
     public function rules(): array
     {
         return [

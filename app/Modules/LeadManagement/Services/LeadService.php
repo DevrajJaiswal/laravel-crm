@@ -5,10 +5,15 @@ namespace App\Modules\LeadManagement\Services;
 use App\Models\User;
 use App\Modules\LeadManagement\Models\Lead;
 use App\Modules\CustomerManagement\Events\LeadWon;
+use App\Modules\NotificationManagement\Services\NotificationService;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class LeadService
 {
+    public function __construct(
+        private NotificationService $notifications
+    ) {}
+
     public function list(int $perPage = 10): LengthAwarePaginator
     {
         return Lead::query()
@@ -35,6 +40,17 @@ class LeadService
 
         if (! $wasWon && $lead->status === 'Won') {
             LeadWon::dispatchIf(! $lead->converted_customer_id, $lead);
+            if ($lead->owner) {
+                $this->notifications->create($lead->owner, [
+                    'type' => 'lead.won',
+                    'title' => 'Lead won',
+                    'message' => sprintf('Lead "%s" was marked as won.', $lead->title),
+                    'link' => "/leads/{$lead->id}",
+                    'data' => [
+                        'lead_id' => $lead->id,
+                    ],
+                ]);
+            }
         }
 
         return $lead;

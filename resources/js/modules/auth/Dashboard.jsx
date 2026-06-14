@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { apiFetch } from '../../shared/apiClient';
 import { dashboardLinks } from '../navigation';
+import NotificationBell from '../notifications/NotificationBell';
 
 export default function Dashboard() {
     const [user, setUser] = useState(null);
@@ -22,9 +23,14 @@ export default function Dashboard() {
     return (
         <main className="min-h-screen bg-[radial-gradient(circle_at_top,_#fff5d6_0%,_#f7fafc_42%,_#dbeafe_100%)] flex items-center justify-center p-6">
             <div className="w-full max-w-4xl rounded-[2rem] border border-white/70 bg-white/80 p-8 shadow-[0_20px_80px_rgba(15,23,42,0.10)] backdrop-blur">
-                <h1 className="text-3xl font-bold text-slate-950 mb-4">Dashboard</h1>
-                <p className="text-slate-600 mb-2">Welcome, {user.name}!</p>
-                <p className="text-slate-600">{user.email}</p>
+                <div className="mb-4 flex items-start justify-between gap-4">
+                    <div>
+                        <h1 className="text-3xl font-bold text-slate-950 mb-4">Dashboard</h1>
+                        <p className="text-slate-600 mb-2">Welcome, {user.name}!</p>
+                        <p className="text-slate-600">{user.email}</p>
+                    </div>
+                    <NotificationBell />
+                </div>
                 <div className="mt-8 grid gap-4 md:grid-cols-3">
                     {dashboardLinks.map((link) => (
                         <a

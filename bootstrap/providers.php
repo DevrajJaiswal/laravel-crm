@@ -7,7 +7,9 @@ use App\Modules\DealManagement\Providers\DealManagementServiceProvider;
 use App\Modules\ContactManagement\Providers\ContactManagementServiceProvider;
 use App\Modules\CustomerManagement\Providers\CustomerManagementServiceProvider;
 use App\Modules\LeadManagement\Providers\LeadManagementServiceProvider;
+use App\Modules\NotificationManagement\Providers\NotificationManagementServiceProvider;
 use App\Modules\SupportTicketManagement\Providers\SupportTicketManagementServiceProvider;
+use App\Modules\ImportExport\Providers\ImportExportServiceProvider;
 use App\Modules\Setup\Providers\SetupServiceProvider;
 use App\Modules\Users\Providers\UsersServiceProvider;
 use App\Providers\AppServiceProvider;
@@ -21,6 +23,8 @@ return [
     LeadManagementServiceProvider::class,
     ActivityManagementServiceProvider::class,
     DealManagementServiceProvider::class,
+    NotificationManagementServiceProvider::class,
+    ImportExportServiceProvider::class,
     SupportTicketManagementServiceProvider::class,
     ContactManagementServiceProvider::class,
     CustomerManagementServiceProvider::class,

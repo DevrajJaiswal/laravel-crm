@@ -5,11 +5,16 @@ namespace App\Modules\DealManagement\Services;
 use App\Models\User;
 use App\Modules\DealManagement\Models\Deal;
 use App\Modules\CustomerManagement\Models\Customer;
+use App\Modules\NotificationManagement\Services\NotificationService;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
 class DealService
 {
+    public function __construct(
+        private NotificationService $notifications
+    ) {}
+
     public function pipeline(): array
     {
         $deals = Deal::query()
@@ -82,9 +87,24 @@ class DealService
 
     public function update(Deal $deal, array $data): Deal
     {
+        $wasWon = $deal->stage === 'Won';
         $deal->update($data);
 
-        return $deal->refresh()->load(['customer', 'owner']);
+        $deal->refresh()->load(['customer', 'owner']);
+
+        if (! $wasWon && $deal->stage === 'Won' && $deal->owner) {
+            $this->notifications->create($deal->owner, [
+                'type' => 'deal.won',
+                'title' => 'Deal won',
+                'message' => sprintf('Deal "%s" moved to Won.', $deal->title),
+                'link' => "/deals/{$deal->id}",
+                'data' => [
+                    'deal_id' => $deal->id,
+                ],
+            ]);
+        }
+
+        return $deal;
     }
 
     public function delete(Deal $deal): void

@@ -5,12 +5,17 @@ namespace App\Modules\SupportTicketManagement\Services;
 use App\Models\User;
 use App\Modules\ContactManagement\Models\Contact;
 use App\Modules\CustomerManagement\Models\Customer;
+use App\Modules\NotificationManagement\Services\NotificationService;
 use App\Modules\SupportTicketManagement\Models\Ticket;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
 class TicketService
 {
+    public function __construct(
+        private NotificationService $notifications
+    ) {}
+
     public function list(int $perPage = 10): LengthAwarePaginator
     {
         return Ticket::query()
@@ -91,11 +96,27 @@ class TicketService
             $data['closed_at'] = now();
         }
 
-        return Ticket::create($data)->load(['customer', 'contact', 'assignedTo']);
+        $ticket = Ticket::create($data)->load(['customer', 'contact', 'assignedTo']);
+
+        if ($ticket->assignedTo) {
+            $this->notifications->create($ticket->assignedTo, [
+                'type' => 'ticket.assigned',
+                'title' => 'New ticket assigned',
+                'message' => sprintf('Ticket "%s" was assigned to you.', $ticket->subject),
+                'link' => "/tickets/{$ticket->id}",
+                'data' => [
+                    'ticket_id' => $ticket->id,
+                ],
+            ]);
+        }
+
+        return $ticket;
     }
 
     public function update(Ticket $ticket, array $data): Ticket
     {
+        $previousAssigneeId = $ticket->assigned_to_user_id;
+
         if (in_array($data['status'] ?? $ticket->status, ['Resolved', 'Closed'], true)) {
             $data['closed_at'] = $ticket->closed_at ?? now();
         } else {
@@ -103,8 +124,21 @@ class TicketService
         }
 
         $ticket->update($data);
+        $ticket->refresh()->load(['customer', 'contact', 'assignedTo']);
 
-        return $ticket->refresh()->load(['customer', 'contact', 'assignedTo']);
+        if ($ticket->assignedTo && $ticket->assigned_to_user_id !== $previousAssigneeId) {
+            $this->notifications->create($ticket->assignedTo, [
+                'type' => 'ticket.assigned',
+                'title' => 'Ticket reassigned',
+                'message' => sprintf('Ticket "%s" was assigned to you.', $ticket->subject),
+                'link' => "/tickets/{$ticket->id}",
+                'data' => [
+                    'ticket_id' => $ticket->id,
+                ],
+            ]);
+        }
+
+        return $ticket;
     }
 
     public function delete(Ticket $ticket): void

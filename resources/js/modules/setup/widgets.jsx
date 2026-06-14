@@ -9,4 +9,5 @@ export const widgets = [
     { id: 'activities', title: 'Activities', complete: true },
     { id: 'deals', title: 'Deals', complete: true },
     { id: 'support-tickets', title: 'Support Tickets', complete: true },
+    { id: 'notifications', title: 'Notifications', complete: true },
 ];
