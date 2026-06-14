@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { apiFetch } from '../../shared/apiClient';
+import { apiFetch } from '../../lib/apiClient';
+import { Alert, Button, FormField, Select } from '../../components/ui';
 
 export default function ExportForm({ onSuccess }) {
     const [model, setModel] = useState('customers');
@@ -37,37 +38,30 @@ export default function ExportForm({ onSuccess }) {
     };
 
     return (
-        <section className="rounded-[2rem] border border-white/70 bg-white/80 p-6 shadow-sm">
-            <div className="mb-5 flex items-center justify-between gap-4">
-                <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">Export data</p>
-                    <h2 className="mt-2 text-2xl font-bold text-slate-950">Export</h2>
-                </div>
-            </div>
-
+        <section className="space-y-5">
             <form onSubmit={submit} className="space-y-4">
-                <div>
-                    <label className="block text-sm font-semibold text-slate-700">Model</label>
-                    <select value={model} onChange={(e) => setModel(e.target.value)} className="mt-2 block w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm">
+                <FormField label="Model">
+                    <Select value={model} onChange={(e) => setModel(e.target.value)}>
                         <option value="customers">Customers</option>
                         <option value="leads">Leads</option>
                         <option value="contacts">Contacts</option>
                         <option value="deals">Deals</option>
                         <option value="tickets">Tickets</option>
-                    </select>
-                </div>
+                    </Select>
+                </FormField>
 
-                <div>
-                    <label className="block text-sm font-semibold text-slate-700">Format</label>
-                    <select value={format} onChange={(e) => setFormat(e.target.value)} className="mt-2 block w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm">
-                        <option value="csv">CSV</option>                        <option value="xlsx">XLSX</option>                    </select>
-                </div>
+                <FormField label="Format">
+                    <Select value={format} onChange={(e) => setFormat(e.target.value)}>
+                        <option value="csv">CSV</option>
+                        <option value="xlsx">XLSX</option>
+                    </Select>
+                </FormField>
 
-                <button type="submit" className="mt-2 inline-flex items-center justify-center rounded-2xl bg-slate-950 px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-slate-800">
+                <Button type="submit" variant="dark">
                     Export data
-                </button>
+                </Button>
 
-                {message ? <p className="mt-3 text-sm text-slate-600">{message}</p> : null}
+                {message ? <Alert tone="info">{message}</Alert> : null}
             </form>
         </section>
     );

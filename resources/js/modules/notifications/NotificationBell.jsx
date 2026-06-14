@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { apiFetch } from '../../shared/apiClient';
+import { apiFetch } from '../../lib/apiClient';
 
 export default function NotificationBell() {
     const [open, setOpen] = useState(false);
@@ -54,7 +54,7 @@ export default function NotificationBell() {
             >
                 Notifications
                 {unreadCount > 0 ? (
-                    <span className="ml-2 inline-flex min-w-6 items-center justify-center rounded-full bg-rose-600 px-2 py-0.5 text-[11px] font-bold text-white">
+                    <span className="ml-2 inline-flex min-w-6 items-center justify-center rounded-full bg-slate-950 px-2 py-0.5 text-[11px] font-bold text-white">
                         {unreadCount}
                     </span>
                 ) : null}
@@ -67,7 +67,7 @@ export default function NotificationBell() {
                         <button
                             type="button"
                             onClick={markAllRead}
-                            className="text-xs font-semibold uppercase tracking-wider text-rose-700"
+                            className="text-xs font-semibold uppercase tracking-wider text-slate-700"
                         >
                             Mark all read
                         </button>
@@ -76,10 +76,10 @@ export default function NotificationBell() {
                     <div className="max-h-96 overflow-y-auto">
                         {notifications.length ? (
                             notifications.map((notification) => (
-                                <div
-                                    key={notification.id}
-                                    className={`border-b border-slate-100 p-4 last:border-b-0 ${notification.read_at ? 'bg-white' : 'bg-rose-50/70'}`}
-                                >
+                            <div
+                                key={notification.id}
+                                className={`border-b border-slate-100 p-4 last:border-b-0 ${notification.read_at ? 'bg-white' : 'bg-slate-50'}`}
+                            >
                                     <div className="flex items-start justify-between gap-3">
                                         <div>
                                             <p className="text-sm font-semibold text-slate-900">{notification.title}</p>
@@ -100,7 +100,7 @@ export default function NotificationBell() {
                                     {notification.link ? (
                                         <a
                                             href={notification.link}
-                                            className="mt-3 inline-flex text-sm font-semibold text-rose-700"
+                                            className="mt-3 inline-flex text-sm font-semibold text-slate-700"
                                             onClick={(event) => {
                                                 event.preventDefault();
                                                 markRead(notification.id).finally(() => {

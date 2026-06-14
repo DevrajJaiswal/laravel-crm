@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { apiFetch } from '../../shared/apiClient';
+import { apiFetch } from '../../lib/apiClient';
+import { Button, Card, LoadingState, ModuleLayout, PageHeader } from '../../components/ui';
 
 export default function RolePermissionsPage() {
     const { id } = useParams();
@@ -74,29 +75,33 @@ export default function RolePermissionsPage() {
     };
 
     if (loading) {
-        return <main className="min-h-screen p-6">Loading permissions...</main>;
+        return (
+            <ModuleLayout className="flex items-center justify-center">
+                <LoadingState label="Loading permissions..." />
+            </ModuleLayout>
+        );
     }
 
     return (
-        <main className="min-h-screen bg-[radial-gradient(circle_at_top,_#fff5d6_0%,_#f7fafc_42%,_#dbeafe_100%)] p-6 text-slate-900">
-            <div className="mx-auto max-w-6xl">
-                <div className="mb-6 flex items-end justify-between gap-4">
-                    <div>
-                        <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">Access Control</p>
-                        <h1 className="mt-3 text-3xl font-black text-slate-950">
-                            Permission Assignment: {role?.name}
-                        </h1>
-                    </div>
-                    <Link to="/access-control/roles" className="rounded-2xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700">
-                        Back to roles
-                    </Link>
-                </div>
+        <ModuleLayout>
+            <div className="w-full space-y-6">
+                <PageHeader
+                    eyebrow="Access Control"
+                    title={`Permission Assignment: ${role?.name}`}
+                    description="Choose which permissions belong to this role."
+                    breadcrumbs={[
+                        { label: 'Dashboard', href: '/dashboard' },
+                        { label: 'Roles', href: '/access-control/roles' },
+                        { label: 'Permissions' },
+                    ]}
+                    actions={<Button to="/access-control/roles" variant="secondary">Back to Roles</Button>}
+                />
 
-                {error ? <p className="mb-4 rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p> : null}
+                {error ? <p className="mb-4 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p> : null}
 
                 <div className="space-y-6">
                     {Object.entries(groupedPermissions).map(([group, items]) => (
-                        <section key={group} className="rounded-[2rem] border border-white/70 bg-white/80 p-6 shadow-sm">
+                        <Card key={group}>
                             <h2 className="mb-4 text-lg font-bold capitalize text-slate-950">{group}</h2>
                             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                                 {items.map((permission) => (
@@ -105,13 +110,13 @@ export default function RolePermissionsPage() {
                                             type="checkbox"
                                             checked={selected.includes(permission.id)}
                                             onChange={() => togglePermission(permission.id)}
-                                            className="h-4 w-4 rounded border-slate-300 text-amber-600 focus:ring-amber-500"
+                                            className="h-4 w-4 rounded border-slate-300 text-slate-900 focus:ring-slate-500"
                                         />
                                         <span className="text-sm font-medium text-slate-700">{permission.name}</span>
                                     </label>
                                 ))}
                             </div>
-                        </section>
+                        </Card>
                     ))}
                 </div>
 
@@ -120,13 +125,13 @@ export default function RolePermissionsPage() {
                         type="button"
                         onClick={handleSave}
                         disabled={saving}
-                        className="rounded-2xl bg-amber-600 px-5 py-3 text-sm font-semibold text-white disabled:opacity-50"
+                        className="rounded-2xl border border-slate-200 bg-slate-950 px-5 py-3 text-sm font-semibold text-white disabled:opacity-50"
                     >
                         {saving ? 'Saving...' : 'Save Permissions'}
                     </button>
                     <span className="text-sm text-slate-600">{selected.length} selected</span>
                 </div>
             </div>
-        </main>
+        </ModuleLayout>
     );
 }

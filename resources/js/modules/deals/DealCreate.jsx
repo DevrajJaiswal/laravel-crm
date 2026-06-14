@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { apiFetch } from '../../shared/apiClient';
+import { apiFetch } from '../../lib/apiClient';
 import DealForm from './DealForm';
+import { Button, Card, LoadingState, ModuleLayout, PageHeader } from '../../components/ui';
 
 const emptyDeal = {
     customer_id: '',
@@ -55,23 +56,36 @@ export default function DealCreate() {
     };
 
     if (loading) {
-        return <main className="p-6">Loading deal form...</main>;
+        return (
+            <ModuleLayout className="flex items-center justify-center">
+                <LoadingState label="Loading deal form..." />
+            </ModuleLayout>
+        );
     }
 
     return (
-        <main className="min-h-screen bg-[radial-gradient(circle_at_top,_#e0f2fe_0%,_#f8fafc_42%,_#dbeafe_100%)] p-6 text-slate-900">
-            <div className="mx-auto max-w-2xl rounded-[2rem] border border-white/70 bg-white/80 p-8 shadow-[0_20px_80px_rgba(15,23,42,0.10)] backdrop-blur">
-                <h1 className="mb-6 text-3xl font-black text-slate-950">Create Deal</h1>
-                <DealForm
-                    value={value}
-                    onChange={setValue}
-                    onSubmit={handleSubmit}
-                    submitLabel={saving ? 'Creating...' : 'Create Deal'}
-                    loading={saving}
-                    error={error}
-                    customers={customers}
+        <ModuleLayout>
+            <div className="w-full max-w-4xl space-y-6">
+                <PageHeader
+                    eyebrow="Deal Management"
+                    title="Create Deal"
+                    description="Capture a sales opportunity in the pipeline."
+                    breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Deals', href: '/deals' }, { label: 'Create Deal' }]}
+                    actions={<Button to="/deals" variant="secondary">Back to Deals</Button>}
                 />
+
+                <Card className="p-8">
+                    <DealForm
+                        value={value}
+                        onChange={setValue}
+                        onSubmit={handleSubmit}
+                        submitLabel={saving ? 'Creating...' : 'Create Deal'}
+                        loading={saving}
+                        error={error}
+                        customers={customers}
+                    />
+                </Card>
             </div>
-        </main>
+        </ModuleLayout>
     );
 }

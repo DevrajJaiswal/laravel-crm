@@ -1,8 +1,14 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { apiFetch } from '../../shared/apiClient';
+import { apiFetch } from '../../lib/apiClient';
 import { dashboardLinks } from '../navigation';
 import NotificationBell from '../notifications/NotificationBell';
+import {
+    Button,
+    Card,
+    LoadingState,
+    ModuleLayout,
+    PageHeader,
+} from '../../components/ui';
 
 export default function Dashboard() {
     const [user, setUser] = useState(null);
@@ -19,42 +25,59 @@ export default function Dashboard() {
         .catch(() => window.location.href = '/login');
     }, []);
 
-    if (!user) return <div className="p-6">Loading...</div>;
+    if (!user) {
+        return (
+            <ModuleLayout>
+                <div className="mx-auto w-full max-w-none">
+                    <LoadingState label="Loading dashboard..." />
+                </div>
+            </ModuleLayout>
+        );
+    }
 
     return (
-        <main className="min-h-screen bg-[radial-gradient(circle_at_top,_#fff5d6_0%,_#f7fafc_42%,_#dbeafe_100%)] flex items-center justify-center p-6">
-            <div className="w-full max-w-4xl rounded-[2rem] border border-white/70 bg-white/80 p-8 shadow-[0_20px_80px_rgba(15,23,42,0.10)] backdrop-blur">
-                <div className="mb-4 flex items-start justify-between gap-4">
-                    <div>
-                        <h1 className="text-3xl font-bold text-slate-950 mb-4">Dashboard</h1>
-                        <p className="text-slate-600 mb-2">Welcome, {user.name}!</p>
-                        <p className="text-slate-600">{user.email}</p>
-                    </div>
-                    <NotificationBell />
-                </div>
-                <div className="mt-8 grid gap-4 md:grid-cols-3">
-                    {dashboardLinks.map((link) => (
-                        <Link
-                            key={link.href}
-                            to={link.href}
-                            className="rounded-[1.5rem] border border-slate-200 bg-white p-4 transition hover:-translate-y-0.5 hover:shadow-md"
+        <ModuleLayout>
+            <div className="w-full max-w-none">
+                <PageHeader
+                    eyebrow="CRM Dashboard"
+                    title={`Welcome back, ${user.name}`}
+                    description={user.email}
+                    actions={<NotificationBell />}
+                />
+
+                <Card className="mb-6">
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                        <div>
+                            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">Quick Actions</p>
+                            <p className="mt-2 text-sm text-slate-600">Jump into the main CRM areas or end the session.</p>
+                        </div>
+                        <Button
+                            variant="danger"
+                            onClick={() => {
+                                apiFetch('/api/logout', { method: 'POST' });
+                                localStorage.removeItem('auth_token');
+                                window.location.href = '/login';
+                            }}
                         >
-                            <h2 className="text-base font-semibold text-slate-950">{link.title}</h2>
+                            Logout
+                        </Button>
+                    </div>
+                </Card>
+
+                <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                    {dashboardLinks.map((link) => (
+                        <Card key={link.href} className="hover:-translate-y-0.5 transition">
+                            <h2 className="text-base font-bold text-slate-950">{link.title}</h2>
                             <p className="mt-2 text-sm leading-6 text-slate-600">{link.description}</p>
-                        </Link>
+                            <div className="mt-4">
+                                <Button to={link.href} variant="dark" size="sm">
+                                    Open
+                                </Button>
+                            </div>
+                        </Card>
                     ))}
                 </div>
-                <button
-                    onClick={() => {
-                        apiFetch('/api/logout', { method: 'POST' });
-                        localStorage.removeItem('auth_token');
-                        window.location.href = '/login';
-                    }}
-                    className="mt-8 rounded-2xl bg-amber-600 px-4 py-2 text-sm font-semibold text-white"
-                >
-                    Logout
-                </button>
             </div>
-        </main>
+        </ModuleLayout>
     );
 }

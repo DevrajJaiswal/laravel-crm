@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { apiFetch } from '../../shared/apiClient';
+import { apiFetch } from '../../lib/apiClient';
+import { Button, DataTable, EmptyState, LoadingState, ModuleLayout, PageHeader } from '../../components/ui';
 
 export default function UsersList() {
     const [users, setUsers] = useState([]);
@@ -54,59 +55,58 @@ export default function UsersList() {
         }
     };
 
-    if (loading) {
-        return (
-            <div className="flex min-h-screen items-center justify-center bg-[radial-gradient(circle_at_top,_#fff5d6_0%,_#f7fafc_42%,_#dbeafe_100%)]">
-                <div className="text-slate-600">Loading users...</div>
-            </div>
-        );
-    }
+    const columns = [
+        {
+            key: 'name',
+            label: 'Name',
+            render: (user) => (
+                <div>
+                    <div className="font-semibold text-slate-950">{user.name}</div>
+                    <div className="text-sm text-slate-500">{user.email}</div>
+                </div>
+            ),
+        },
+        {
+            key: 'actions',
+            label: 'Actions',
+            cellClassName: 'w-48',
+            render: (user) => (
+                <div className="flex flex-wrap gap-2">
+                    <Button variant="secondary" size="sm" onClick={() => navigate(`/users/${user.id}/edit`)}>
+                        Edit
+                    </Button>
+                    <Button variant="danger" size="sm" onClick={() => handleDelete(user.id)} disabled={deleting}>
+                        Delete
+                    </Button>
+                </div>
+            ),
+        },
+    ];
 
     return (
-        <div className="min-h-screen bg-[radial-gradient(circle_at_top,_#fff5d6_0%,_#f7fafc_42%,_#dbeafe_100%)] text-slate-900 p-6">
-            <div className="mx-auto max-w-6xl">
-                <h1 className="mb-6 text-3xl font-bold text-slate-950">Users Management</h1>
-                
-                <div className="space-y-3">
-                    {users.data && users.data.length > 0 ? (
-                        users.data.map(user => (
-                            <div key={user.id} className="rounded-2xl border border-slate-200 bg-white/80 p-4 flex justify-between items-center backdrop-blur transition-shadow hover:shadow-md">
-                                <div>
-                                    <span className="font-medium text-slate-900">{user.name}</span>
-                                    <span className="ml-2 text-slate-500">{user.email}</span>
-                                </div>
-                                <div className="flex gap-2">
-                                    <button 
-                                        type="button"
-                                        onClick={() => navigate(`/users/${user.id}/edit`)}
-                                        className="rounded-xl bg-amber-50 px-3 py-1.5 text-sm font-semibold text-amber-700 transition-colors hover:bg-amber-100"
-                                    >
-                                        Edit
-                                    </button>
-                                    <button 
-                                        type="button"
-                                        onClick={() => handleDelete(user.id)}
-                                        disabled={deleting}
-                                        className="rounded-xl bg-red-50 px-3 py-1.5 text-sm font-semibold text-red-700 transition-colors hover:bg-red-100 disabled:opacity-50"
-                                    >
-                                        Delete
-                                    </button>
-                                </div>
-                            </div>
-                        ))
-                    ) : (
-                        <div className="rounded-2xl border border-slate-200 bg-white/80 p-8 text-center">
-                            <p className="text-slate-600">No users found. Login required.</p>
-                            <button 
-                                onClick={() => navigate('/login')}
-                                className="mt-4 rounded-xl bg-amber-600 px-4 py-2 text-sm font-semibold text-white"
-                            >
-                                Go to Login
-                            </button>
-                        </div>
-                    )}
-                </div>
+        <ModuleLayout>
+            <div className="w-full space-y-6">
+                <PageHeader
+                    eyebrow="Users Management"
+                    title="Users"
+                    description="Create, edit, and remove CRM users."
+                    breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Users' }]}
+                    actions={<Button to="/dashboard" variant="secondary">Back to Dashboard</Button>}
+                />
+
+                {loading ? (
+                    <LoadingState label="Loading users..." />
+                ) : users.data && users.data.length > 0 ? (
+                    <DataTable columns={columns} data={users.data} />
+                ) : (
+                    <EmptyState
+                        title="No users found"
+                        description="Login required or no records have been created yet."
+                        actionLabel="Go to Login"
+                        actionTo="/login"
+                    />
+                )}
             </div>
-        </div>
+        </ModuleLayout>
     );
 }

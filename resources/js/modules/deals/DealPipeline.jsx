@@ -1,15 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { apiFetch } from '../../shared/apiClient';
-
-const stageColors = {
-    Prospecting: 'bg-slate-100 text-slate-700',
-    Qualification: 'bg-cyan-100 text-cyan-800',
-    Proposal: 'bg-indigo-100 text-indigo-800',
-    Negotiation: 'bg-amber-100 text-amber-800',
-    Won: 'bg-emerald-100 text-emerald-800',
-    Lost: 'bg-rose-100 text-rose-800',
-};
+import { apiFetch } from '../../lib/apiClient';
+import { Button, Card, LoadingState, ModuleLayout, PageHeader } from '../../components/ui';
 
 export default function DealPipeline() {
     const [stages, setStages] = useState([]);
@@ -61,31 +53,29 @@ export default function DealPipeline() {
     };
 
     return (
-        <main className="min-h-screen bg-[radial-gradient(circle_at_top,_#e0f2fe_0%,_#f8fafc_42%,_#dbeafe_100%)] p-6 text-slate-900">
-            <div className="mx-auto max-w-[1400px]">
-                <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
-                    <div>
-                        <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">Deal Management</p>
-                        <h1 className="mt-3 text-3xl font-black text-slate-950">Sales Pipeline</h1>
-                    </div>
-                    <div className="flex gap-3">
-                        <Link to="/deals/create" className="rounded-2xl bg-sky-600 px-4 py-2 text-sm font-semibold text-white">
-                            Create Deal
-                        </Link>
-                        <Link to="/dashboard" className="rounded-2xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700">
-                            Back to dashboard
-                        </Link>
-                    </div>
-                </div>
+        <ModuleLayout>
+            <div className="w-full space-y-6">
+                <PageHeader
+                    eyebrow="Deal Management"
+                    title="Sales Pipeline"
+                    description="Move deals through the pipeline in a consistent board layout."
+                    breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Deals' }, { label: 'Pipeline' }]}
+                    actions={
+                        <>
+                            <Button to="/deals/create" variant="secondary">Create Deal</Button>
+                            <Button to="/dashboard" variant="secondary">Back to Dashboard</Button>
+                        </>
+                    }
+                />
 
-                {error ? <div className="mb-4 rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div> : null}
+                {error ? <div className="mb-4 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div> : null}
 
                 {loading ? (
-                    <div className="rounded-[2rem] border border-white/70 bg-white/80 p-8 shadow-sm">Loading pipeline...</div>
+                    <LoadingState label="Loading pipeline..." />
                 ) : (
                     <div className="grid gap-4 overflow-x-auto pb-2 xl:grid-cols-6">
                         {stages.map((stage) => (
-                            <section key={stage} className="min-w-[280px] rounded-[2rem] border border-white/70 bg-white/80 p-4 shadow-sm">
+                            <Card key={stage} className="min-w-[280px] p-4">
                                 <div className="mb-4 flex items-center justify-between gap-3">
                                     <div>
                                         <h2 className="text-lg font-black text-slate-950">{stage}</h2>
@@ -93,7 +83,7 @@ export default function DealPipeline() {
                                             {(dealsByStage[stage] || []).length} deals
                                         </p>
                                     </div>
-                                    <span className={`rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wider ${stageColors[stage] || 'bg-slate-100 text-slate-700'}`}>
+                                    <span className="rounded-full border border-slate-200 bg-slate-100 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-slate-600">
                                         {stage}
                                     </span>
                                 </div>
@@ -127,7 +117,7 @@ export default function DealPipeline() {
                                                 <select
                                                     value={deal.stage}
                                                     onChange={(event) => moveDeal(deal, event.target.value)}
-                                                    className="w-full rounded-2xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium outline-none focus:ring-2 focus:ring-sky-500"
+                                                    className="w-full rounded-2xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium outline-none focus:ring-2 focus:ring-slate-500"
                                                 >
                                                     {stages.map((option) => (
                                                         <option key={option} value={option}>
@@ -139,11 +129,11 @@ export default function DealPipeline() {
                                         </article>
                                     ))}
                                 </div>
-                            </section>
+                            </Card>
                         ))}
                     </div>
                 )}
             </div>
-        </main>
+        </ModuleLayout>
     );
 }

@@ -13,11 +13,11 @@ export default function TicketForm({
         <form onSubmit={onSubmit} className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2">
                 <div>
-                    <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-slate-600">Customer</label>
-                    <select
-                        value={value.customer_id || ''}
-                        onChange={(event) => onChange({ ...value, customer_id: event.target.value, contact_id: '' })}
-                        className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm font-medium outline-none focus:ring-2 focus:ring-rose-500"
+                    <label className="mb-2 block text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">Customer</label>
+                        <select
+                            value={value.customer_id || ''}
+                            onChange={(event) => onChange({ ...value, customer_id: event.target.value, contact_id: '' })}
+                            className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-slate-400 focus:ring-2 focus:ring-slate-500/20"
                     >
                         <option value="">Select customer</option>
                         {customers.map((customer) => (
@@ -29,11 +29,11 @@ export default function TicketForm({
                 </div>
 
                 <div>
-                    <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-slate-600">Contact</label>
-                    <select
-                        value={value.contact_id || ''}
-                        onChange={(event) => onChange({ ...value, contact_id: event.target.value })}
-                        className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm font-medium outline-none focus:ring-2 focus:ring-rose-500"
+                    <label className="mb-2 block text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">Contact</label>
+                        <select
+                            value={value.contact_id || ''}
+                            onChange={(event) => onChange({ ...value, contact_id: event.target.value })}
+                            className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-slate-400 focus:ring-2 focus:ring-slate-500/20"
                     >
                         <option value="">Select contact</option>
                         {contacts.map((contact) => (
@@ -46,32 +46,32 @@ export default function TicketForm({
             </div>
 
             <div>
-                <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-slate-600">Subject</label>
-                <input
-                    type="text"
-                    value={value.subject || ''}
-                    onChange={(event) => onChange({ ...value, subject: event.target.value })}
-                    className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm font-medium outline-none focus:ring-2 focus:ring-rose-500"
+                <label className="mb-2 block text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">Subject</label>
+                    <input
+                        type="text"
+                        value={value.subject || ''}
+                        onChange={(event) => onChange({ ...value, subject: event.target.value })}
+                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-slate-400 focus:ring-2 focus:ring-slate-500/20"
                 />
             </div>
 
             <div>
-                <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-slate-600">Description</label>
-                <textarea
-                    rows="5"
-                    value={value.description || ''}
-                    onChange={(event) => onChange({ ...value, description: event.target.value })}
-                    className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm font-medium outline-none focus:ring-2 focus:ring-rose-500"
+                <label className="mb-2 block text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">Description</label>
+                    <textarea
+                        rows="5"
+                        value={value.description || ''}
+                        onChange={(event) => onChange({ ...value, description: event.target.value })}
+                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-slate-400 focus:ring-2 focus:ring-slate-500/20"
                 />
             </div>
 
             <div className="grid gap-4 md:grid-cols-2">
                 <div>
-                    <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-slate-600">Status</label>
+                    <label className="mb-2 block text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">Status</label>
                     <select
                         value={value.status || 'Open'}
                         onChange={(event) => onChange({ ...value, status: event.target.value })}
-                        className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm font-medium outline-none focus:ring-2 focus:ring-rose-500"
+                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-slate-400 focus:ring-2 focus:ring-slate-500/20"
                     >
                         {['Open', 'In Progress', 'Waiting on Customer', 'Resolved', 'Closed'].map((status) => (
                             <option key={status} value={status}>
@@ -82,11 +82,11 @@ export default function TicketForm({
                 </div>
 
                 <div>
-                    <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-slate-600">Priority</label>
+                    <label className="mb-2 block text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">Priority</label>
                     <select
                         value={value.priority || 'Medium'}
                         onChange={(event) => onChange({ ...value, priority: event.target.value })}
-                        className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm font-medium outline-none focus:ring-2 focus:ring-rose-500"
+                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-slate-400 focus:ring-2 focus:ring-slate-500/20"
                     >
                         {['Low', 'Medium', 'High', 'Urgent'].map((priority) => (
                             <option key={priority} value={priority}>
@@ -98,11 +98,11 @@ export default function TicketForm({
             </div>
 
             <div>
-                <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-slate-600">Assigned To</label>
+                <label className="mb-2 block text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">Assigned To</label>
                 <select
                     value={value.assigned_to_user_id || ''}
                     onChange={(event) => onChange({ ...value, assigned_to_user_id: event.target.value })}
-                    className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm font-medium outline-none focus:ring-2 focus:ring-rose-500"
+                    className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-slate-400 focus:ring-2 focus:ring-slate-500/20"
                 >
                     <option value="">Unassigned</option>
                     {assignees.map((user) => (
@@ -114,21 +114,21 @@ export default function TicketForm({
             </div>
 
             <div>
-                <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-slate-600">Resolution Notes</label>
+                <label className="mb-2 block text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">Resolution Notes</label>
                 <textarea
                     rows="4"
                     value={value.resolution_notes || ''}
                     onChange={(event) => onChange({ ...value, resolution_notes: event.target.value })}
-                    className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm font-medium outline-none focus:ring-2 focus:ring-rose-500"
+                    className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-slate-400 focus:ring-2 focus:ring-slate-500/20"
                 />
             </div>
 
-            {error ? <p className="rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p> : null}
+            {error ? <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p> : null}
 
             <button
                 type="submit"
                 disabled={loading}
-                className="w-full rounded-2xl bg-rose-600 py-3 text-sm font-semibold uppercase tracking-wider text-white disabled:opacity-50"
+                className="w-full rounded-2xl border border-slate-950 bg-slate-950 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:opacity-50"
             >
                 {submitLabel}
             </button>

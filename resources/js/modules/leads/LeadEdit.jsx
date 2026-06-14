@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { apiFetch } from '../../shared/apiClient';
+import { apiFetch } from '../../lib/apiClient';
 import LeadForm from './LeadForm';
 import { leadSources, leadStatuses } from './leadOptions';
+import { Button, Card, LoadingState, ModuleLayout, PageHeader } from '../../components/ui';
 
 export default function LeadEdit() {
     const { id } = useParams();
@@ -56,29 +57,38 @@ export default function LeadEdit() {
     };
 
     if (loading || !value) {
-        return <main className="p-6">Loading lead...</main>;
+        return (
+            <ModuleLayout className="flex items-center justify-center">
+                <LoadingState label="Loading lead..." />
+            </ModuleLayout>
+        );
     }
 
     return (
-        <main className="min-h-screen bg-[radial-gradient(circle_at_top,_#fff5d6_0%,_#f7fafc_42%,_#dbeafe_100%)] p-6 text-slate-900">
-            <div className="mx-auto max-w-2xl rounded-[2rem] border border-white/70 bg-white/80 p-8 shadow-[0_20px_80px_rgba(15,23,42,0.10)] backdrop-blur">
-                <h1 className="mb-6 text-3xl font-black text-slate-950">Edit Lead</h1>
-                <LeadForm
-                    value={value}
-                    onChange={setValue}
-                    onSubmit={handleSubmit}
-                    submitLabel={saving ? 'Saving...' : 'Save Lead'}
-                    loading={saving}
-                    error={error}
+        <ModuleLayout>
+            <div className="w-full max-w-4xl space-y-6">
+                <PageHeader
+                    eyebrow="Lead Management"
+                    title="Edit Lead"
+                    description="Update the lead status, source, and qualifying details."
+                    breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Leads', href: '/leads' }, { label: 'Edit Lead' }]}
+                    actions={<Button to="/leads" variant="secondary">Back to Leads</Button>}
                 />
-                <button
-                    type="button"
-                    onClick={() => navigate('/leads')}
-                    className="mt-4 w-full rounded-2xl border border-slate-200 bg-white py-2 text-sm font-semibold text-slate-700"
-                >
-                    Cancel
-                </button>
+
+                <Card className="p-8">
+                    <LeadForm
+                        value={value}
+                        onChange={setValue}
+                        onSubmit={handleSubmit}
+                        submitLabel={saving ? 'Saving...' : 'Save Lead'}
+                        loading={saving}
+                        error={error}
+                    />
+                    <Button variant="secondary" className="mt-4 w-full" onClick={() => navigate('/leads')}>
+                        Cancel
+                    </Button>
+                </Card>
             </div>
-        </main>
+        </ModuleLayout>
     );
 }

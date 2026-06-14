@@ -1,3 +1,5 @@
+import { Alert, Button, FormField, Input } from '../../components/ui';
+
 export default function CustomerForm({ value, onChange, onSubmit, submitLabel, loading, error }) {
     const fields = [
         ['name', 'Customer Name'],
@@ -11,56 +13,47 @@ export default function CustomerForm({ value, onChange, onSubmit, submitLabel, l
     return (
         <form onSubmit={onSubmit} className="space-y-4">
             {fields.map(([name, label]) => (
-                <div key={name}>
-                    <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-slate-600">{label}</label>
-                    <input
+                <FormField key={name} label={label}>
+                    <Input
                         type={name === 'email' ? 'email' : 'text'}
                         value={value[name] || ''}
                         onChange={(event) => onChange({ ...value, [name]: event.target.value })}
-                        className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm font-medium outline-none focus:ring-2 focus:ring-amber-500"
                     />
-                </div>
+                </FormField>
             ))}
 
-            <div>
-                <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-slate-600">Billing Address</label>
+            <FormField label="Billing Address">
                 <textarea
                     rows="3"
                     value={value.billing_address || ''}
                     onChange={(event) => onChange({ ...value, billing_address: event.target.value })}
-                    className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm font-medium outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-slate-400 focus:ring-2 focus:ring-slate-500/20"
                 />
-            </div>
+            </FormField>
 
-            <div>
-                <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-slate-600">Shipping Address</label>
+            <FormField label="Shipping Address">
                 <textarea
                     rows="3"
                     value={value.shipping_address || ''}
                     onChange={(event) => onChange({ ...value, shipping_address: event.target.value })}
-                    className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm font-medium outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-slate-400 focus:ring-2 focus:ring-slate-500/20"
                 />
-            </div>
+            </FormField>
 
-            <div>
-                <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-slate-600">Notes</label>
+            <FormField label="Notes">
                 <textarea
                     rows="4"
                     value={value.notes || ''}
                     onChange={(event) => onChange({ ...value, notes: event.target.value })}
-                    className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm font-medium outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-slate-400 focus:ring-2 focus:ring-slate-500/20"
                 />
-            </div>
+            </FormField>
 
-            {error ? <p className="rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p> : null}
+            {error ? <Alert tone="danger">{error}</Alert> : null}
 
-            <button
-                type="submit"
-                disabled={loading}
-                className="w-full rounded-2xl bg-amber-600 py-3 text-sm font-semibold uppercase tracking-wider text-white disabled:opacity-50"
-            >
+            <Button type="submit" className="w-full" disabled={loading}>
                 {submitLabel}
-            </button>
+            </Button>
         </form>
     );
 }

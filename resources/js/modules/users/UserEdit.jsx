@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { apiFetch } from '../../shared/apiClient';
+import { apiFetch } from '../../lib/apiClient';
+import { Alert, Button, Card, FormField, Input, ModuleLayout, PageHeader } from '../../components/ui';
 
 export default function UserEdit() {
     const { id } = useParams();
@@ -41,59 +42,46 @@ export default function UserEdit() {
     };
 
     return (
-        <div className="min-h-screen bg-[radial-gradient(circle_at_top,_#fff5d6_0%,_#f7fafc_42%,_#dbeafe_100%)] flex items-center justify-center p-6">
-            <div className="w-full max-w-md rounded-[2rem] border border-white/70 bg-white/80 p-8 shadow-[0_20px_80px_rgba(15,23,42,0.10)] backdrop-blur">
-                <h1 className="text-3xl font-bold text-slate-950 mb-6">Edit User</h1>
-                
-                {error && (
-                    <div className="mb-4 rounded-2xl bg-red-50 p-4 text-sm text-red-600">
-                        {error}
-                    </div>
-                )}
+        <ModuleLayout className="flex items-center justify-center">
+            <div className="w-full max-w-md">
+                <PageHeader
+                    eyebrow="Users Management"
+                    title="Edit User"
+                    description="Update the selected user's profile and contact details."
+                    breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Users', href: '/users' }, { label: 'Edit User' }]}
+                />
 
-                <form onSubmit={handleSubmit} className="space-y-4">
-                    <div>
-                        <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">
-                            Name
-                        </label>
-                        <input
-                            type="text"
-                            value={formData.name}
-                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                            required
-                            className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-amber-500"
-                        />
-                    </div>
+                <Card className="p-8">
+                    {error ? <Alert tone="danger" className="mb-4">{error}</Alert> : null}
 
-                    <div>
-                        <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">
-                            Email
-                        </label>
-                        <input
-                            type="email"
-                            value={formData.email}
-                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                            required
-                            className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-amber-500"
-                        />
-                    </div>
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                        <FormField label="Name">
+                            <Input
+                                type="text"
+                                value={formData.name}
+                                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                required
+                            />
+                        </FormField>
 
-                    <button
-                        type="submit"
-                        disabled={loading}
-                        className="w-full rounded-2xl bg-amber-600 py-3 text-sm font-semibold uppercase tracking-wider text-white hover:bg-amber-700 disabled:opacity-50"
-                    >
-                        {loading ? 'Saving...' : 'Save'}
-                    </button>
-                </form>
+                        <FormField label="Email">
+                            <Input
+                                type="email"
+                                value={formData.email}
+                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                required
+                            />
+                        </FormField>
 
-                <button
-                    onClick={() => navigate('/users')}
-                    className="mt-4 w-full rounded-2xl border border-slate-200 bg-white py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
-                >
-                    Cancel
-                </button>
+                        <Button type="submit" className="w-full" disabled={loading}>
+                            {loading ? 'Saving...' : 'Save'}
+                        </Button>
+                        <Button variant="secondary" className="w-full" onClick={() => navigate('/users')}>
+                            Cancel
+                        </Button>
+                    </form>
+                </Card>
             </div>
-        </div>
+        </ModuleLayout>
     );
 }

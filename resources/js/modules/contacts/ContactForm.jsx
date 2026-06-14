@@ -17,18 +17,18 @@ export default function ContactForm({ value, onChange, onSubmit, submitLabel, lo
                             type={name === 'email' ? 'email' : 'text'}
                             value={value[name] || ''}
                             onChange={(event) => onChange({ ...value, [name]: event.target.value })}
-                            className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm font-medium outline-none focus:ring-2 focus:ring-emerald-500"
+                            className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium outline-none transition focus:border-slate-400 focus:ring-2 focus:ring-slate-500/20"
                         />
                     </div>
                 ))}
             </div>
 
-            <label className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm font-medium text-slate-700">
+            <label className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-700">
                 <input
                     type="checkbox"
                     checked={Boolean(value.is_primary)}
                     onChange={(event) => onChange({ ...value, is_primary: event.target.checked })}
-                    className="h-4 w-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500"
+                    className="h-4 w-4 rounded border-slate-300 text-slate-900 focus:ring-slate-500"
                 />
                 Primary Contact
             </label>
@@ -39,7 +39,7 @@ export default function ContactForm({ value, onChange, onSubmit, submitLabel, lo
                     rows="4"
                     value={value.notes || ''}
                     onChange={(event) => onChange({ ...value, notes: event.target.value })}
-                    className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm font-medium outline-none focus:ring-2 focus:ring-emerald-500"
+                    className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium outline-none transition focus:border-slate-400 focus:ring-2 focus:ring-slate-500/20"
                 />
             </div>
 
@@ -49,7 +49,7 @@ export default function ContactForm({ value, onChange, onSubmit, submitLabel, lo
                 <button
                     type="submit"
                     disabled={loading}
-                    className="rounded-2xl bg-emerald-600 px-5 py-3 text-sm font-semibold uppercase tracking-wider text-white disabled:opacity-50"
+                    className="rounded-2xl bg-slate-950 px-5 py-3 text-sm font-semibold uppercase tracking-wider text-white disabled:opacity-50"
                 >
                     {submitLabel}
                 </button>

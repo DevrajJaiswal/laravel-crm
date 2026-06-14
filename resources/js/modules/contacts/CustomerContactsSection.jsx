@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { apiFetch } from '../../shared/apiClient';
+import { apiFetch } from '../../lib/apiClient';
 import ContactForm from './ContactForm';
 
 const emptyContact = {
@@ -127,23 +127,23 @@ export default function CustomerContactsSection({ customerId }) {
     };
 
     return (
-        <section className="mt-8 rounded-[2rem] border border-slate-200 bg-white/70 p-6 shadow-sm">
+        <section className="mt-8 rounded-[var(--crm-radius-2xl)] border border-[var(--crm-border)] bg-[var(--crm-surface)] p-6 shadow-[0_8px_30px_rgba(15,23,42,0.06)]">
             <div className="flex flex-wrap items-end justify-between gap-3">
                 <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">Contacts</p>
+                    <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">Contacts</p>
                     <h2 className="mt-2 text-2xl font-black text-slate-950">Customer Contacts</h2>
                 </div>
                 <button
                     type="button"
                     onClick={resetForm}
-                    className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm font-semibold text-emerald-800"
+                    className="rounded-2xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700"
                 >
                     Add New Contact
                 </button>
             </div>
 
             <div className="mt-6 grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
-                <div className="rounded-3xl border border-slate-200 bg-slate-50/80 p-5">
+                <div className="rounded-[var(--crm-radius-2xl)] border border-[var(--crm-border)] bg-[var(--crm-surface-muted)] p-5">
                     <p className="mb-4 text-sm font-semibold uppercase tracking-wider text-slate-500">
                         {mode === 'edit' ? 'Edit Contact' : 'Create Contact'}
                     </p>
@@ -161,16 +161,16 @@ export default function CustomerContactsSection({ customerId }) {
 
                 <div className="space-y-4">
                     {loading ? (
-                        <div className="rounded-3xl border border-slate-200 bg-slate-50/80 p-5 text-sm text-slate-600">Loading contacts...</div>
+                        <div className="rounded-[var(--crm-radius-2xl)] border border-[var(--crm-border)] bg-[var(--crm-surface-muted)] p-5 text-sm text-slate-600">Loading contacts...</div>
                     ) : contacts.length ? (
                         contacts.map((contact) => (
-                            <article key={contact.id} className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+                            <article key={contact.id} className="rounded-[var(--crm-radius-2xl)] border border-[var(--crm-border)] bg-white p-5 shadow-[0_8px_30px_rgba(15,23,42,0.06)]">
                                 <div className="flex items-start justify-between gap-4">
                                     <div>
                                         <div className="flex flex-wrap items-center gap-2">
                                             <h3 className="text-lg font-bold text-slate-950">{contact.name}</h3>
                                             {contact.is_primary ? (
-                                                <span className="rounded-full bg-emerald-100 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-emerald-700">
+                                                <span className="rounded-full border border-slate-200 bg-slate-100 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-slate-700">
                                                     Primary
                                                 </span>
                                             ) : null}
@@ -181,14 +181,14 @@ export default function CustomerContactsSection({ customerId }) {
                                         <button
                                             type="button"
                                             onClick={() => handleEdit(contact)}
-                                            className="rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-semibold uppercase tracking-wider text-amber-800"
+                                            className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold uppercase tracking-wider text-slate-700"
                                         >
                                             Edit
                                         </button>
                                         <button
                                             type="button"
                                             onClick={() => handleDelete(contact)}
-                                            className="rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-xs font-semibold uppercase tracking-wider text-rose-700"
+                                            className="rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-xs font-semibold uppercase tracking-wider text-red-700"
                                         >
                                             Delete
                                         </button>
@@ -208,7 +208,7 @@ export default function CustomerContactsSection({ customerId }) {
                             </article>
                         ))
                     ) : (
-                        <div className="rounded-3xl border border-dashed border-slate-300 bg-slate-50/80 p-5 text-sm text-slate-600">
+                        <div className="rounded-[var(--crm-radius-2xl)] border border-dashed border-slate-300 bg-[var(--crm-surface-muted)] p-5 text-sm text-slate-600">
                             No contacts added yet.
                         </div>
                     )}

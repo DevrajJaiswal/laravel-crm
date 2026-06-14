@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { apiFetch } from '../../shared/apiClient';
+import { apiFetch } from '../../lib/apiClient';
+import { Alert, Button, Card, FormField, Input, ModuleLayout } from '../../components/ui';
 
 export default function RegisterPage() {
     const [formData, setFormData] = useState({
@@ -39,85 +40,62 @@ export default function RegisterPage() {
     };
 
     return (
-        <main className="min-h-screen bg-[radial-gradient(circle_at_top,_#fff5d6_0%,_#f7fafc_42%,_#dbeafe_100%)] flex items-center justify-center p-6">
-            <div className="w-full max-w-md rounded-[2rem] border border-white/70 bg-white/80 p-8 shadow-[0_20px_80px_rgba(15,23,42,0.10)] backdrop-blur">
-                <h1 className="text-3xl font-bold text-slate-950 mb-6">Register</h1>
+        <ModuleLayout className="flex items-center justify-center">
+            <Card className="w-full max-w-md p-8">
+                <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">Authentication</p>
+                <h1 className="mt-3 text-3xl font-black text-slate-950">Register</h1>
 
-                {error && (
-                    <div className="mb-4 rounded-2xl bg-red-50 p-4 text-sm text-red-600">
-                        {error}
-                    </div>
-                )}
+                {error ? <Alert tone="danger" className="mt-6">{error}</Alert> : null}
 
-                <form onSubmit={handleSubmit} className="space-y-4">
-                    <div>
-                        <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">
-                            Name
-                        </label>
-                        <input
+                <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+                    <FormField label="Name">
+                        <Input
                             type="text"
                             value={formData.name}
                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                             required
-                            className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-amber-500"
                         />
-                    </div>
+                    </FormField>
 
-                    <div>
-                        <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">
-                            Email
-                        </label>
-                        <input
+                    <FormField label="Email">
+                        <Input
                             type="email"
                             value={formData.email}
                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                             required
-                            className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-amber-500"
                         />
-                    </div>
+                    </FormField>
 
-                    <div>
-                        <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">
-                            Password
-                        </label>
-                        <input
+                    <FormField label="Password">
+                        <Input
                             type="password"
                             value={formData.password}
                             onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                             required
-                            className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-amber-500"
                         />
-                    </div>
+                    </FormField>
 
-                    <div>
-                        <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">
-                            Confirm Password
-                        </label>
-                        <input
+                    <FormField label="Confirm Password">
+                        <Input
                             type="password"
                             value={formData.password_confirmation}
                             onChange={(e) => setFormData({ ...formData, password_confirmation: e.target.value })}
                             required
-                            className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-amber-500"
                         />
-                    </div>
+                    </FormField>
 
-                    <button
-                        type="submit"
-                        disabled={loading}
-                        className="w-full rounded-2xl bg-amber-600 py-3 text-sm font-semibold uppercase tracking-wider text-white hover:bg-amber-700 disabled:opacity-50"
-                    >
+                    <Button type="submit" className="w-full" disabled={loading}>
                         {loading ? 'Registering...' : 'Register'}
-                    </button>
+                    </Button>
                 </form>
 
                 <p className="mt-6 text-center text-sm text-slate-600">
                     Already have an account?{' '}
-                    <a href="/login" className="font-semibold text-amber-600 hover:underline">
+                    <a href="/login" className="font-semibold text-slate-900 hover:underline">
                         Login
                     </a>
                 </p>
-            </div>
-        </main>
+            </Card>
+        </ModuleLayout>
     );
 }

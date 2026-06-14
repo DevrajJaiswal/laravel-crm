@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { apiFetch } from '../../shared/apiClient';
+import { apiFetch } from '../../lib/apiClient';
+import { Badge, Card, LoadingState, PageHeader } from '../../components/ui';
 
 export default function ImportHistory() {
     const [history, setHistory] = useState([]);
@@ -34,39 +35,41 @@ export default function ImportHistory() {
     }, []);
 
     return (
-        <div>
-            <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">Data transfer history</p>
-                <h2 className="mt-3 text-3xl font-black text-slate-950">Data Transfer History</h2>
-                <p className="mt-2 text-sm text-slate-600">Review recent import and export jobs for this account.</p>
-            </div>
-            <div className="mt-6 space-y-4">
+        <div className="space-y-6">
+            <PageHeader
+                eyebrow="Data transfer history"
+                title="Data Transfer History"
+                description="Review recent import and export jobs for this account."
+            />
+
+            <div className="space-y-4">
                 {loading ? (
-                    <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5 text-sm text-slate-600">Loading data transfer history...</div>
+                    <LoadingState label="Loading data transfer history..." />
                 ) : history.length ? (
                     <div className="space-y-3">
                         {history.map((item) => (
-                            <div key={`${item.type}-${item.id}`} className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm">
+                            <Card key={`${item.type}-${item.id}`}>
                                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                                     <div>
-                                        <div className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-500">{item.type} · {item.title}</div>
+                                        <div className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-500">
+                                            {item.type} · {item.title}
+                                        </div>
                                         <div className="mt-2 text-lg font-bold text-slate-950">{item.statusText}</div>
                                     </div>
-                                    <div className="text-sm text-slate-500">{item.rowsSummary} rows</div>
+                                    <Badge tone="default">{item.rowsSummary} rows</Badge>
                                 </div>
                                 {item.errorCount ? (
-                                    <div className="mt-3 rounded-2xl bg-rose-50 p-3 text-sm text-rose-700">
+                                    <div className="mt-3 rounded-2xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">
                                         {item.errorCount} error(s) during {item.type.toLowerCase()}
                                     </div>
                                 ) : null}
-                            </div>
+                            </Card>
                         ))}
                     </div>
                 ) : (
-                    <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5 text-sm text-slate-500">No import or export history yet.</div>
+                    <Card className="text-sm text-slate-500">No import or export history yet.</Card>
                 )}
             </div>
         </div>
     );
 }
-

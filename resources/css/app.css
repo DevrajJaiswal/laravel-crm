@@ -10,13 +10,41 @@
 
 :root {
     color-scheme: light;
+    --crm-bg: #f3f7fc;
+    --crm-surface: rgba(255, 255, 255, 0.82);
+    --crm-surface-solid: #ffffff;
+    --crm-surface-muted: #f8fafc;
+    --crm-border: rgba(148, 163, 184, 0.24);
+    --crm-text: #0f172a;
+    --crm-text-muted: #475569;
+    --crm-brand: #d97706;
+    --crm-brand-strong: #b45309;
+    --crm-brand-soft: #fef3c7;
+    --crm-success: #059669;
+    --crm-warning: #d97706;
+    --crm-danger: #dc2626;
+    --crm-info: #2563eb;
+    --crm-shadow: 0 20px 80px rgba(15, 23, 42, 0.10);
+    --crm-radius-xl: 1.5rem;
+    --crm-radius-2xl: 2rem;
 }
 
 body {
     margin: 0;
     font-family: var(--font-sans);
+    background: var(--crm-bg);
+    color: var(--crm-text);
 }
 
 * {
     box-sizing: border-box;
+}
+
+a,
+button {
+    cursor: pointer;
+}
+
+button:disabled {
+    cursor: not-allowed;
 }

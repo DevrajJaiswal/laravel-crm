@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { apiFetch } from '../../shared/apiClient';
+import { apiFetch } from '../../lib/apiClient';
+import { Button, Card, LoadingState, ModuleLayout, PageHeader } from '../../components/ui';
 
 export default function RolesPage() {
     const [roles, setRoles] = useState([]);
@@ -83,49 +84,47 @@ export default function RolesPage() {
     };
 
     return (
-        <main className="min-h-screen bg-[radial-gradient(circle_at_top,_#fff5d6_0%,_#f7fafc_42%,_#dbeafe_100%)] p-6 text-slate-900">
-            <div className="mx-auto max-w-6xl">
-                <div className="mb-6 flex items-end justify-between gap-4">
-                    <div>
-                        <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">Access Control</p>
-                        <h1 className="mt-3 text-3xl font-black text-slate-950">Roles Management</h1>
-                    </div>
-                    <Link to="/dashboard" className="rounded-2xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700">
-                        Back to dashboard
-                    </Link>
-                </div>
+        <ModuleLayout>
+            <div className="w-full space-y-6">
+                <PageHeader
+                    eyebrow="Access Control"
+                    title="Roles Management"
+                    description="Create roles and assign permissions."
+                    breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Roles' }]}
+                    actions={<Button to="/dashboard" variant="secondary">Back to Dashboard</Button>}
+                />
 
-                <form onSubmit={handleCreate} className="mb-8 rounded-[2rem] border border-white/70 bg-white/80 p-6 shadow-[0_20px_80px_rgba(15,23,42,0.10)] backdrop-blur">
-                    <div className="grid gap-4 md:grid-cols-[1fr_auto]">
+                <Card className="mb-6">
+                    <form onSubmit={handleCreate} className="grid gap-4 md:grid-cols-[1fr_auto]">
                         <input
                             value={name}
                             onChange={(event) => setName(event.target.value)}
                             placeholder="Enter role name"
-                            className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm font-medium outline-none focus:ring-2 focus:ring-amber-500"
+                            className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-900 outline-none focus:border-slate-400 focus:ring-2 focus:ring-slate-500/20"
                         />
                         <button
                             type="submit"
                             disabled={saving}
-                            className="rounded-2xl bg-amber-600 px-5 py-3 text-sm font-semibold text-white disabled:opacity-50"
+                            className="rounded-2xl border border-slate-200 bg-slate-950 px-5 py-3 text-sm font-semibold text-white disabled:opacity-50"
                         >
                             {saving ? 'Saving...' : 'Create Role'}
                         </button>
-                    </div>
+                    </form>
                     {error ? <p className="mt-3 text-sm text-red-600">{error}</p> : null}
-                </form>
+                </Card>
 
                 {loading ? (
-                    <div className="rounded-[2rem] border border-white/70 bg-white/80 p-8 shadow-sm">Loading roles...</div>
+                    <LoadingState label="Loading roles..." />
                 ) : (
                     <div className="grid gap-4">
                         {roles.map((role) => (
-                            <div key={role.id} className="flex flex-col gap-4 rounded-[2rem] border border-white/70 bg-white/80 p-6 shadow-sm md:flex-row md:items-center md:justify-between">
+                            <Card key={role.id} className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                                 <div>
                                     <h2 className="text-xl font-bold text-slate-950">{role.name}</h2>
                                     <p className="mt-1 text-sm text-slate-600">{role.permission_count} permissions</p>
                                     <div className="mt-3 flex flex-wrap gap-2">
                                         {role.permissions?.map((permission) => (
-                                            <span key={permission} className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
+                                            <span key={permission} className="rounded-full border border-slate-200 bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
                                                 {permission}
                                             </span>
                                         ))}
@@ -141,23 +140,23 @@ export default function RolesPage() {
                                     </button>
                                     <Link
                                         to={`/access-control/roles/${role.id}/permissions`}
-                                        className="rounded-xl bg-slate-950 px-4 py-2 text-sm font-semibold text-white"
+                                        className="rounded-xl border border-slate-200 bg-slate-950 px-4 py-2 text-sm font-semibold text-white"
                                     >
                                         Permissions
                                     </Link>
                                     <button
                                         type="button"
                                         onClick={() => handleDelete(role)}
-                                        className="rounded-xl bg-red-50 px-4 py-2 text-sm font-semibold text-red-700"
+                                        className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700"
                                     >
                                         Delete
                                     </button>
                                 </div>
-                            </div>
+                            </Card>
                         ))}
                     </div>
                 )}
             </div>
-        </main>
+        </ModuleLayout>
     );
 }

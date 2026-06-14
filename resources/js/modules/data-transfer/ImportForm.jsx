@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { apiFetch } from '../../shared/apiClient';
+import { apiFetch } from '../../lib/apiClient';
+import { Alert, Button, FormField, Select } from '../../components/ui';
 
 export default function ImportForm({ onSuccess }) {
     const [file, setFile] = useState(null);
@@ -26,36 +27,32 @@ export default function ImportForm({ onSuccess }) {
     };
 
     return (
-        <section className="rounded-[2rem] border border-white/70 bg-white/80 p-6 shadow-sm">
-            <div className="mb-5 flex items-center justify-between gap-4">
-                <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">Import data</p>
-                    <h2 className="mt-2 text-2xl font-bold text-slate-950">Import</h2>
-                </div>
-            </div>
-
+        <section className="space-y-5">
             <form onSubmit={submit} className="space-y-4">
-                <div>
-                    <label className="block text-sm font-semibold text-slate-700">Model</label>
-                    <select value={model} onChange={(e) => setModel(e.target.value)} className="mt-2 block w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm">
+                <FormField label="Model">
+                    <Select value={model} onChange={(e) => setModel(e.target.value)}>
                         <option value="customers">Customers</option>
                         <option value="leads">Leads</option>
                         <option value="contacts">Contacts</option>
                         <option value="deals">Deals</option>
                         <option value="tickets">Tickets</option>
-                    </select>
-                </div>
+                    </Select>
+                </FormField>
 
-                <div>
-                    <label className="block text-sm font-semibold text-slate-700">File (CSV or XLSX)</label>
-                    <input type="file" accept=".csv,.xlsx" onChange={(e) => setFile(e.target.files[0])} className="mt-2 block w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm" />
-                </div>
+                <FormField label="File (CSV or XLSX)">
+                    <input
+                        type="file"
+                        accept=".csv,.xlsx"
+                        onChange={(e) => setFile(e.target.files[0])}
+                        className="block w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition file:mr-4 file:rounded-xl file:border-0 file:bg-slate-100 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-slate-700 focus:border-slate-400 focus:ring-2 focus:ring-slate-500/20"
+                    />
+                </FormField>
 
-                <button type="submit" className="inline-flex items-center justify-center rounded-2xl bg-amber-600 px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-amber-500">
+                <Button type="submit" variant="primary">
                     Import Data
-                </button>
+                </Button>
 
-                {message ? <p className="mt-3 text-sm text-slate-600">{message}</p> : null}
+                {message ? <Alert tone="info">{message}</Alert> : null}
             </form>
         </section>
     );

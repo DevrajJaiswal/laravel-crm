@@ -1,8 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { apiFetch } from '../../shared/apiClient';
+import { apiFetch } from '../../lib/apiClient';
 import LeadForm from './LeadForm';
 import { leadSources, leadStatuses } from './leadOptions';
+import { Button, Card, ModuleLayout, PageHeader } from '../../components/ui';
 
 export default function LeadCreate() {
     const navigate = useNavigate();
@@ -46,18 +47,27 @@ export default function LeadCreate() {
     };
 
     return (
-        <main className="min-h-screen bg-[radial-gradient(circle_at_top,_#fff5d6_0%,_#f7fafc_42%,_#dbeafe_100%)] p-6 text-slate-900">
-            <div className="mx-auto max-w-2xl rounded-[2rem] border border-white/70 bg-white/80 p-8 shadow-[0_20px_80px_rgba(15,23,42,0.10)] backdrop-blur">
-                <h1 className="mb-6 text-3xl font-black text-slate-950">Create Lead</h1>
-                <LeadForm
-                    value={value}
-                    onChange={setValue}
-                    onSubmit={handleSubmit}
-                    submitLabel={loading ? 'Creating...' : 'Create Lead'}
-                    loading={loading}
-                    error={error}
+        <ModuleLayout>
+            <div className="w-full max-w-4xl space-y-6">
+                <PageHeader
+                    eyebrow="Lead Management"
+                    title="Create Lead"
+                    description="Capture a sales opportunity and track it through the pipeline."
+                    breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Leads', href: '/leads' }, { label: 'Create Lead' }]}
+                    actions={<Button to="/leads" variant="secondary">Back to Leads</Button>}
                 />
+
+                <Card className="p-8">
+                    <LeadForm
+                        value={value}
+                        onChange={setValue}
+                        onSubmit={handleSubmit}
+                        submitLabel={loading ? 'Creating...' : 'Create Lead'}
+                        loading={loading}
+                        error={error}
+                    />
+                </Card>
             </div>
-        </main>
+        </ModuleLayout>
     );
 }

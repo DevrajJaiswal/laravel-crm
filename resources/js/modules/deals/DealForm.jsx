@@ -14,7 +14,7 @@ export default function DealForm({
                 <select
                     value={value.customer_id || ''}
                     onChange={(event) => onChange({ ...value, customer_id: event.target.value })}
-                    className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm font-medium outline-none focus:ring-2 focus:ring-sky-500"
+                    className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium outline-none transition focus:border-slate-400 focus:ring-2 focus:ring-slate-500/20"
                 >
                     <option value="">Select customer</option>
                     {customers.map((customer) => (
@@ -31,7 +31,7 @@ export default function DealForm({
                     type="text"
                     value={value.title || ''}
                     onChange={(event) => onChange({ ...value, title: event.target.value })}
-                    className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm font-medium outline-none focus:ring-2 focus:ring-sky-500"
+                    className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium outline-none transition focus:border-slate-400 focus:ring-2 focus:ring-slate-500/20"
                 />
             </div>
 
@@ -43,7 +43,7 @@ export default function DealForm({
                         step="0.01"
                         value={value.amount || ''}
                         onChange={(event) => onChange({ ...value, amount: event.target.value })}
-                        className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm font-medium outline-none focus:ring-2 focus:ring-sky-500"
+                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium outline-none transition focus:border-slate-400 focus:ring-2 focus:ring-slate-500/20"
                     />
                 </div>
 
@@ -55,7 +55,7 @@ export default function DealForm({
                         max="100"
                         value={value.probability || ''}
                         onChange={(event) => onChange({ ...value, probability: event.target.value })}
-                        className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm font-medium outline-none focus:ring-2 focus:ring-sky-500"
+                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium outline-none transition focus:border-slate-400 focus:ring-2 focus:ring-slate-500/20"
                     />
                 </div>
             </div>
@@ -66,7 +66,7 @@ export default function DealForm({
                     <select
                         value={value.stage || 'Prospecting'}
                         onChange={(event) => onChange({ ...value, stage: event.target.value })}
-                        className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm font-medium outline-none focus:ring-2 focus:ring-sky-500"
+                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium outline-none transition focus:border-slate-400 focus:ring-2 focus:ring-slate-500/20"
                     >
                         {['Prospecting', 'Qualification', 'Proposal', 'Negotiation', 'Won', 'Lost'].map((stage) => (
                             <option key={stage} value={stage}>
@@ -82,7 +82,7 @@ export default function DealForm({
                         type="date"
                         value={value.expected_close_date || ''}
                         onChange={(event) => onChange({ ...value, expected_close_date: event.target.value })}
-                        className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm font-medium outline-none focus:ring-2 focus:ring-sky-500"
+                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium outline-none transition focus:border-slate-400 focus:ring-2 focus:ring-slate-500/20"
                     />
                 </div>
             </div>
@@ -93,7 +93,7 @@ export default function DealForm({
                     rows="4"
                     value={value.notes || ''}
                     onChange={(event) => onChange({ ...value, notes: event.target.value })}
-                    className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm font-medium outline-none focus:ring-2 focus:ring-sky-500"
+                    className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium outline-none transition focus:border-slate-400 focus:ring-2 focus:ring-slate-500/20"
                 />
             </div>
 
@@ -102,7 +102,7 @@ export default function DealForm({
             <button
                 type="submit"
                 disabled={loading}
-                className="w-full rounded-2xl bg-sky-600 py-3 text-sm font-semibold uppercase tracking-wider text-white disabled:opacity-50"
+                className="w-full rounded-2xl bg-slate-950 py-3 text-sm font-semibold uppercase tracking-wider text-white disabled:opacity-50"
             >
                 {submitLabel}
             </button>

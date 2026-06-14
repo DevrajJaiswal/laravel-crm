@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { apiFetch } from '../../shared/apiClient';
+import { apiFetch } from '../../lib/apiClient';
 import CustomerForm from './CustomerForm';
+import { Button, Card, ModuleLayout, PageHeader } from '../../components/ui';
 
 export default function CustomerCreate() {
     const navigate = useNavigate();
@@ -45,18 +46,27 @@ export default function CustomerCreate() {
     };
 
     return (
-        <main className="min-h-screen bg-[radial-gradient(circle_at_top,_#fff5d6_0%,_#f7fafc_42%,_#dbeafe_100%)] p-6 text-slate-900">
-            <div className="mx-auto max-w-2xl rounded-[2rem] border border-white/70 bg-white/80 p-8 shadow-[0_20px_80px_rgba(15,23,42,0.10)] backdrop-blur">
-                <h1 className="mb-6 text-3xl font-black text-slate-950">Create Customer</h1>
-                <CustomerForm
-                    value={value}
-                    onChange={setValue}
-                    onSubmit={handleSubmit}
-                    submitLabel={loading ? 'Creating...' : 'Create Customer'}
-                    loading={loading}
-                    error={error}
+        <ModuleLayout>
+            <div className="w-full max-w-4xl space-y-6">
+                <PageHeader
+                    eyebrow="Customer Management"
+                    title="Create Customer"
+                    description="Add a customer manually or from a lead conversion."
+                    breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Customers', href: '/customers' }, { label: 'Create Customer' }]}
+                    actions={<Button to="/customers" variant="secondary">Back to Customers</Button>}
                 />
+
+                <Card className="p-8">
+                    <CustomerForm
+                        value={value}
+                        onChange={setValue}
+                        onSubmit={handleSubmit}
+                        submitLabel={loading ? 'Creating...' : 'Create Customer'}
+                        loading={loading}
+                        error={error}
+                    />
+                </Card>
             </div>
-        </main>
+        </ModuleLayout>
     );
 }
