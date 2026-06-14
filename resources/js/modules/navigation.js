@@ -5,4 +5,5 @@ export const dashboardLinks = [
     { href: '/deals', title: 'Deals', description: 'Manage pipeline stages and sales forecasts.' },
     { href: '/tickets', title: 'Support Tickets', description: 'Track customer issues and resolutions.' },
     { href: '/customers', title: 'Customers', description: 'View customer accounts and details.' },
+    { href: '/data-transfer', title: 'Import & Export', description: 'Bulk import or export CRM data.' },
 ];
