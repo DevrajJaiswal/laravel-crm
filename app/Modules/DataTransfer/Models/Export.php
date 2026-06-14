@@ -1,23 +1,24 @@
 <?php
 
-namespace App\Modules\ImportExport\Models;
+namespace App\Modules\DataTransfer\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\User;
 
-class Import extends Model
+class Export extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'user_id',
         'model',
+        'format',
         'filename',
         'status',
         'rows_total',
-        'rows_processed',
+        'rows_exported',
         'errors',
         'started_at',
         'completed_at',
@@ -37,3 +38,5 @@ class Import extends Model
         return $this->belongsTo(User::class);
     }
 }
+
+

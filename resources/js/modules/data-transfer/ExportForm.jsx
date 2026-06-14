@@ -10,7 +10,7 @@ export default function ExportForm({ onSuccess }) {
         e.preventDefault();
 
         const body = { model, format };
-        const response = await apiFetch('/api/exports', {
+        const response = await apiFetch('/api/data-transfer/exports', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body),
@@ -72,3 +72,4 @@ export default function ExportForm({ onSuccess }) {
         </section>
     );
 }
+

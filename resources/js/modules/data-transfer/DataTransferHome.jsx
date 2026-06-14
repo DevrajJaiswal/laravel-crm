@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-export default function DataTransferPage() {
+export default function DataTransferHome() {
     return (
         <div className="space-y-8">
             <div>

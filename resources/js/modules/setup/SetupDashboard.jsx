@@ -1,4 +1,5 @@
 import { moduleWidgets } from '../index';
+import { Link } from 'react-router-dom';
 
 export default function SetupDashboard() {
     return (
@@ -40,35 +41,35 @@ export default function SetupDashboard() {
                             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-cyan-300">
                                 Current Module
                             </p>
-                            <h2 className="mt-4 text-2xl font-bold">Notifications</h2>
+                            <h2 className="mt-4 text-2xl font-bold">Data Transfer</h2>
                             <p className="mt-3 text-sm leading-6 text-slate-300">
-                                The CRM is now through Module 11, with a notification dropdown visible in the dashboard and tracked in the progress board.
+                                The CRM now includes the renamed Data Transfer module, with module-owned import/export screens and module-local tests.
                             </p>
                             <div className="mt-6 space-y-3">
-                                <a href="/customers" className="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm">
+                                <Link to="/customers" className="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm">
                                     Open Customers
-                                </a>
-                                <a href="/deals" className="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm">
+                                </Link>
+                                <Link to="/deals" className="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm">
                                     Open Deals
-                                </a>
-                                <a href="/tickets" className="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm">
+                                </Link>
+                                <Link to="/tickets" className="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm">
                                     Open Tickets
-                                </a>
-                                <a href="/dashboard" className="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm">
+                                </Link>
+                                <Link to="/dashboard" className="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm">
                                     Open Dashboard
-                                </a>
-                                <a href="/leads" className="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm">
+                                </Link>
+                                <Link to="/leads" className="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm">
                                     Open Leads
-                                </a>
-                                <a href="/data-transfer" className="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm">
-                                    Open Import & Export
-                                </a>
-                                <a href="/reports" className="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm">
+                                </Link>
+                                <Link to="/data-transfer" className="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm">
+                                    Open Data Transfer
+                                </Link>
+                                <Link to="/reports" className="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm">
                                     Open Reports
-                                </a>
-                                <a href="/access-control/roles" className="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm">
+                                </Link>
+                                <Link to="/access-control/roles" className="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm">
                                     Open Roles & Permissions
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </aside>

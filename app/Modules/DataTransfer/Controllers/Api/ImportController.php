@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Modules\ImportExport\Controllers\Api;
+namespace App\Modules\DataTransfer\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Modules\ImportExport\Services\ImportService;
-use App\Modules\ImportExport\Models\Import;
+use App\Modules\DataTransfer\Services\ImportService;
+use App\Modules\DataTransfer\Models\Import;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 
@@ -38,3 +38,5 @@ class ImportController
         return response()->json(['data' => $import]);
     }
 }
+
+

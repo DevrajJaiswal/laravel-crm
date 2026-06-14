@@ -7,8 +7,8 @@ export default function ImportHistory() {
 
     useEffect(() => {
         Promise.all([
-            apiFetch('/api/imports').then((r) => r.json()),
-            apiFetch('/api/exports').then((r) => r.json()),
+            apiFetch('/api/data-transfer/imports').then((r) => r.json()),
+            apiFetch('/api/data-transfer/exports').then((r) => r.json()),
         ])
             .then(([importsPayload, exportsPayload]) => {
                 const imports = (importsPayload.data || []).map((item) => ({
@@ -69,3 +69,4 @@ export default function ImportHistory() {
         </div>
     );
 }
+

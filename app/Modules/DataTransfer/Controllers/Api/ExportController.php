@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Modules\ImportExport\Controllers\Api;
+namespace App\Modules\DataTransfer\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Modules\ImportExport\Models\Export;
-use App\Modules\ImportExport\Services\ExportService;
+use App\Modules\DataTransfer\Models\Export;
+use App\Modules\DataTransfer\Services\ExportService;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -35,3 +35,5 @@ class ExportController extends Controller
         return response()->json(['data' => $export]);
     }
 }
+
+

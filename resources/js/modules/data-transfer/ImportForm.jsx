@@ -14,7 +14,7 @@ export default function ImportForm({ onSuccess }) {
         fd.append('file', file);
         fd.append('model', model);
 
-        const resp = await apiFetch('/api/imports', { method: 'POST', body: fd });
+        const resp = await apiFetch('/api/data-transfer/imports', { method: 'POST', body: fd });
         if (resp.ok) {
             setMessage('Import queued successfully.');
             setFile(null);
@@ -60,3 +60,4 @@ export default function ImportForm({ onSuccess }) {
         </section>
     );
 }
+

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Modules\ImportExport\Jobs;
+namespace App\Modules\DataTransfer\Jobs;
 
-use App\Modules\ImportExport\Models\Import;
-use App\Modules\ImportExport\Services\ImportService;
+use App\Modules\DataTransfer\Models\Import;
+use App\Modules\DataTransfer\Services\ImportService;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -28,3 +28,5 @@ class ProcessImportJob implements ShouldQueue
         $service->processImport($import);
     }
 }
+
+

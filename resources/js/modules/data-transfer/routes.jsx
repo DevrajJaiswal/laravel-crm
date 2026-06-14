@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom';
-import ImportExportPage from './ImportExportPage';
 import DataTransferPage from './DataTransferPage';
+import DataTransferHome from './DataTransferHome';
 import ImportPage from './ImportPage';
 import ExportPage from './ExportPage';
 import ImportHistory from './ImportHistory';
@@ -8,9 +8,9 @@ import ImportHistory from './ImportHistory';
 export const routes = [
     {
         path: 'data-transfer',
-        element: <ImportExportPage />,
+        element: <DataTransferPage />,
         children: [
-            { index: true, element: <DataTransferPage /> },
+            { index: true, element: <DataTransferHome /> },
             { path: 'import', element: <ImportPage /> },
             { path: 'export', element: <ExportPage /> },
             { path: 'history', element: <ImportHistory /> },

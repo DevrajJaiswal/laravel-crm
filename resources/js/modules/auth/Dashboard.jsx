@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { apiFetch } from '../../shared/apiClient';
 import { dashboardLinks } from '../navigation';
 import NotificationBell from '../notifications/NotificationBell';
@@ -33,14 +34,14 @@ export default function Dashboard() {
                 </div>
                 <div className="mt-8 grid gap-4 md:grid-cols-3">
                     {dashboardLinks.map((link) => (
-                        <a
+                        <Link
                             key={link.href}
-                            href={link.href}
+                            to={link.href}
                             className="rounded-[1.5rem] border border-slate-200 bg-white p-4 transition hover:-translate-y-0.5 hover:shadow-md"
                         >
                             <h2 className="text-base font-semibold text-slate-950">{link.title}</h2>
                             <p className="mt-2 text-sm leading-6 text-slate-600">{link.description}</p>
-                        </a>
+                        </Link>
                     ))}
                 </div>
                 <button

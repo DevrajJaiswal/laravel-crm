@@ -10,6 +10,6 @@ export const widgets = [
     { id: 'deals', title: 'Deals', complete: true },
     { id: 'support-tickets', title: 'Support Tickets', complete: true },
     { id: 'notifications', title: 'Notifications', complete: true },
-    { id: 'import-export', title: 'Import & Export', complete: true },
+    { id: 'data-transfer', title: 'Data Transfer', complete: true },
     { id: 'reports', title: 'Reports & Analytics', complete: true },
 ];

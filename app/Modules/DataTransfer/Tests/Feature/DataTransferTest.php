@@ -1,16 +1,15 @@
 <?php
 
-namespace Tests\Feature;
+namespace App\Modules\DataTransfer\Tests\Feature;
 
 use App\Models\User;
-use App\Modules\ImportExport\Models\Import;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Storage;
-use Tests\TestCase;
-use App\Modules\ImportExport\Jobs\ProcessImportJob;
+use App\Modules\DataTransfer\Jobs\ProcessImportJob;
+use App\Modules\DataTransfer\Models\Import;
 use App\Modules\CustomerManagement\Models\Customer;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
-class ImportExportTest extends TestCase
+class DataTransferTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -20,7 +19,9 @@ class ImportExportTest extends TestCase
         $this->actingAs($actor, 'sanctum');
 
         $dir = storage_path('app/imports');
-        if (! is_dir($dir)) mkdir($dir, 0755, true);
+        if (! is_dir($dir)) {
+            mkdir($dir, 0755, true);
+        }
         file_put_contents(storage_path('app/imports/test_customers.csv'), "name,company_name,email,phone\nJohn Doe,Acme Corp,john@acme.test,12345\nJane Roe,Blue Ltd,jane@blue.test,67890\n");
 
         $import = Import::create([
@@ -30,13 +31,9 @@ class ImportExportTest extends TestCase
             'status' => 'queued',
         ]);
 
-        // Process synchronously
         (new ProcessImportJob($import->id))->handle();
 
         $import->refresh();
-        if ($import->errors) {
-            file_put_contents('php://stderr', "Import errors: " . print_r($import->errors, true));
-        }
 
         $this->assertContains($import->status, ['completed', 'completed_with_errors']);
         $this->assertEquals(2, $import->rows_total);
@@ -58,7 +55,7 @@ class ImportExportTest extends TestCase
 
         $this->actingAs($actor, 'sanctum');
 
-        $response = $this->postJson('/api/exports', [
+        $response = $this->postJson('/api/data-transfer/exports', [
             'model' => 'customers',
             'format' => 'csv',
         ]);
@@ -86,12 +83,12 @@ class ImportExportTest extends TestCase
 
         $this->actingAs($actor, 'sanctum');
 
-        $this->postJson('/api/exports', [
+        $this->postJson('/api/data-transfer/exports', [
             'model' => 'customers',
             'format' => 'csv',
         ])->assertStatus(200);
 
-        $response = $this->getJson('/api/exports');
+        $response = $this->getJson('/api/data-transfer/exports');
 
         $response->assertStatus(200);
         $response->assertJsonStructure(['data' => [['id', 'model', 'format', 'status', 'rows_total', 'rows_exported', 'created_at', 'updated_at']]]);

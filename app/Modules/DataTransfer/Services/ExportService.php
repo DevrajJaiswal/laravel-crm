@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Modules\ImportExport\Services;
+namespace App\Modules\DataTransfer\Services;
 
 use App\Modules\CustomerManagement\Models\Customer;
 use App\Modules\DealManagement\Models\Deal;
 use App\Modules\ContactManagement\Models\Contact;
-use App\Modules\ImportExport\Models\Export;
+use App\Modules\DataTransfer\Models\Export;
 use App\Modules\LeadManagement\Models\Lead;
 use App\Modules\SupportTicketManagement\Models\Ticket;
 use App\Models\User;
@@ -163,3 +163,5 @@ class ExportService
         };
     }
 }
+
+
