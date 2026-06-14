@@ -6,4 +6,5 @@ export const dashboardLinks = [
     { href: '/tickets', title: 'Support Tickets', description: 'Track customer issues and resolutions.' },
     { href: '/customers', title: 'Customers', description: 'View customer accounts and details.' },
     { href: '/data-transfer', title: 'Import & Export', description: 'Bulk import or export CRM data.' },
+    { href: '/reports', title: 'Reports', description: 'View CRM analytics and summary dashboards.' },
 ];

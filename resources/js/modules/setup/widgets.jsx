@@ -11,4 +11,5 @@ export const widgets = [
     { id: 'support-tickets', title: 'Support Tickets', complete: true },
     { id: 'notifications', title: 'Notifications', complete: true },
     { id: 'import-export', title: 'Import & Export', complete: true },
+    { id: 'reports', title: 'Reports & Analytics', complete: true },
 ];

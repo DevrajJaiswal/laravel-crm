@@ -8,6 +8,7 @@ import { routes as accessControlRoutes } from './access-control/routes.jsx';
 import { routes as usersRoutes } from './users/routes.jsx';
 import { routes as setupRoutes } from './setup/routes.jsx';
 import { routes as importRoutes } from './imports/routes.jsx';
+import { routes as reportRoutes } from './reports/routes.jsx';
 
 export const moduleRoutes = [
     ...setupRoutes,
@@ -18,6 +19,7 @@ export const moduleRoutes = [
     ...ticketRoutes,
     ...customerRoutes,
     ...importRoutes,
+    ...reportRoutes,
     ...usersRoutes,
 ];
 

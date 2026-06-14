@@ -63,6 +63,9 @@ export default function SetupDashboard() {
                                 <a href="/data-transfer" className="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm">
                                     Open Import & Export
                                 </a>
+                                <a href="/reports" className="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm">
+                                    Open Reports
+                                </a>
                                 <a href="/access-control/roles" className="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm">
                                     Open Roles & Permissions
                                 </a>

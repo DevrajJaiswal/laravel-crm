@@ -12,6 +12,7 @@ use App\Modules\SupportTicketManagement\Providers\SupportTicketManagementService
 use App\Modules\ImportExport\Providers\ImportExportServiceProvider;
 use App\Modules\Setup\Providers\SetupServiceProvider;
 use App\Modules\Users\Providers\UsersServiceProvider;
+use App\Modules\ReportsAnalytics\Providers\ReportsAnalyticsServiceProvider;
 use App\Providers\AppServiceProvider;
 
 return [
@@ -28,4 +29,5 @@ return [
     SupportTicketManagementServiceProvider::class,
     ContactManagementServiceProvider::class,
     CustomerManagementServiceProvider::class,
+    ReportsAnalyticsServiceProvider::class,
 ];
