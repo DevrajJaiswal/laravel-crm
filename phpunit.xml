@@ -10,6 +10,7 @@
         </testsuite>
         <testsuite name="Feature">
             <directory>tests/Feature</directory>
+            <directory>app/Modules</directory>
         </testsuite>
     </testsuites>
     <source>
