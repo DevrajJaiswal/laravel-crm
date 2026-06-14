@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Models\User;
+use App\Modules\Users\Models\User;
 use App\Modules\ContactManagement\Models\Contact;
 use App\Modules\CustomerManagement\Models\Customer;
 use App\Modules\SupportTicketManagement\Models\Ticket;
@@ -181,3 +181,4 @@ class TicketManagementTest extends TestCase
         ]);
     }
 }
+

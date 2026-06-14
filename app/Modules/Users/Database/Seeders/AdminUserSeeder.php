@@ -2,7 +2,7 @@
 
 namespace App\Modules\Users\Database\Seeders;
 
-use App\Models\User;
+use App\Modules\Users\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -19,3 +19,4 @@ class AdminUserSeeder extends Seeder
         ]);
     }
 }
+

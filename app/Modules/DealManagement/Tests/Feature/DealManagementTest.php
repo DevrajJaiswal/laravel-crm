@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Models\User;
+use App\Modules\Users\Models\User;
 use App\Modules\CustomerManagement\Models\Customer;
 use App\Modules\DealManagement\Models\Deal;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -172,3 +172,4 @@ class DealManagementTest extends TestCase
         ]);
     }
 }
+

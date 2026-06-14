@@ -2,7 +2,7 @@
 
 namespace App\Modules\Auth\Services;
 
-use App\Models\User;
+use App\Modules\Users\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 class AuthService
@@ -21,3 +21,4 @@ class AuthService
         return $user->createToken('auth-token')->plainTextToken;
     }
 }
+

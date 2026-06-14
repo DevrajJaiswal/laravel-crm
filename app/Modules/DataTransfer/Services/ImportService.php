@@ -6,7 +6,7 @@ use App\Modules\DataTransfer\Models\Import;
 use App\Modules\DataTransfer\Jobs\ProcessImportJob;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use App\Models\User;
+use App\Modules\Users\Models\User;
 use App\Modules\CustomerManagement\Models\Customer;
 use App\Modules\LeadManagement\Models\Lead;
 use App\Modules\ContactManagement\Models\Contact;
@@ -376,5 +376,6 @@ class ImportService
         Ticket::create(array_filter($data, fn($v) => $v !== null));
     }
 }
+
 
 

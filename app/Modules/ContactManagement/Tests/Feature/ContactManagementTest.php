@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Models\User;
+use App\Modules\Users\Models\User;
 use App\Modules\ContactManagement\Models\Contact;
 use App\Modules\CustomerManagement\Models\Customer;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -174,3 +174,4 @@ class ContactManagementTest extends TestCase
         ]);
     }
 }
+

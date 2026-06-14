@@ -8,7 +8,7 @@ use App\Modules\ContactManagement\Models\Contact;
 use App\Modules\DataTransfer\Models\Export;
 use App\Modules\LeadManagement\Models\Lead;
 use App\Modules\SupportTicketManagement\Models\Ticket;
-use App\Models\User;
+use App\Modules\Users\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -163,5 +163,6 @@ class ExportService
         };
     }
 }
+
 
 

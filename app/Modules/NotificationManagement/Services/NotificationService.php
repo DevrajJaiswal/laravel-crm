@@ -2,7 +2,7 @@
 
 namespace App\Modules\NotificationManagement\Services;
 
-use App\Models\User;
+use App\Modules\Users\Models\User;
 use App\Modules\NotificationManagement\Models\Notification;
 use Illuminate\Support\Collection;
 
@@ -69,3 +69,4 @@ class NotificationService
             ->update(['read_at' => now()]);
     }
 }
+

@@ -2,7 +2,7 @@
 
 namespace App\Modules\DealManagement\Services;
 
-use App\Models\User;
+use App\Modules\Users\Models\User;
 use App\Modules\DealManagement\Models\Deal;
 use App\Modules\CustomerManagement\Models\Customer;
 use App\Modules\NotificationManagement\Services\NotificationService;
@@ -112,3 +112,4 @@ class DealService
         $deal->delete();
     }
 }
+

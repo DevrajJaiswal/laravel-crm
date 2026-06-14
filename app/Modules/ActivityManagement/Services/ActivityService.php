@@ -2,7 +2,7 @@
 
 namespace App\Modules\ActivityManagement\Services;
 
-use App\Models\User;
+use App\Modules\Users\Models\User;
 use App\Modules\ActivityManagement\Models\Activity;
 use App\Modules\CustomerManagement\Models\Customer;
 use Illuminate\Support\Collection;
@@ -57,3 +57,4 @@ class ActivityService
         $activity->delete();
     }
 }
+

@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Models\User;
+use App\Modules\Users\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
 use Spatie\Permission\Models\Permission;
@@ -52,3 +52,4 @@ class AccessControlTest extends TestCase
             ->assertJsonPath('role.permissions.0', 'users.view');
     }
 }
+

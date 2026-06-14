@@ -2,7 +2,7 @@
 
 namespace App\Modules\Users\Tests\Feature;
 
-use App\Models\User;
+use App\Modules\Users\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
@@ -61,3 +61,4 @@ class UsersApiTest extends TestCase
         ]);
     }
 }
+

@@ -2,7 +2,7 @@
 
 namespace App\Modules\LeadManagement\Services;
 
-use App\Models\User;
+use App\Modules\Users\Models\User;
 use App\Modules\LeadManagement\Models\Lead;
 use App\Modules\CustomerManagement\Events\LeadWon;
 use App\Modules\NotificationManagement\Services\NotificationService;
@@ -85,3 +85,4 @@ class LeadService
         ];
     }
 }
+

@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Models\User;
+use App\Modules\Users\Models\User;
 use App\Modules\CustomerManagement\Models\Customer;
 use App\Modules\LeadManagement\Models\Lead;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -130,3 +130,4 @@ class LeadManagementTest extends TestCase
         $this->assertSame('Won Person', $customer?->name);
     }
 }
+

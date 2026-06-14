@@ -2,7 +2,7 @@
 
 namespace App\Modules\Users\Services;
 
-use App\Models\User;
+use App\Modules\Users\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class UserService
@@ -37,3 +37,4 @@ class UserService
         User::query()->whereKey($id)->delete();
     }
 }
+

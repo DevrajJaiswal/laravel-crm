@@ -2,7 +2,7 @@
 
 namespace App\Modules\CustomerManagement\Models;
 
-use App\Models\User;
+use App\Modules\Users\Models\User;
 use App\Modules\DealManagement\Models\Deal;
 use App\Modules\ActivityManagement\Models\Activity;
 use App\Modules\ContactManagement\Models\Contact;
@@ -55,3 +55,4 @@ class Customer extends Model
         return $this->hasMany(Ticket::class);
     }
 }
+

@@ -2,7 +2,7 @@
 
 namespace App\Modules\ActivityManagement\Models;
 
-use App\Models\User;
+use App\Modules\Users\Models\User;
 use App\Modules\CustomerManagement\Models\Customer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -38,3 +38,4 @@ class Activity extends Model
         return $this->belongsTo(User::class);
     }
 }
+

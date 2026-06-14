@@ -2,7 +2,7 @@
 
 namespace App\Modules\Users\Controllers\Api;
 
-use App\Models\User;
+use App\Modules\Users\Models\User;
 use App\Modules\Users\Requests\UserRequest;
 use App\Modules\Users\Services\UserService;
 use Illuminate\Http\JsonResponse;
@@ -40,3 +40,4 @@ class UserController
         return response()->json(['message' => 'User deleted']);
     }
 }
+

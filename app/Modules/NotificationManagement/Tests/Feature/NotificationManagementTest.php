@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Models\User;
+use App\Modules\Users\Models\User;
 use App\Modules\CustomerManagement\Models\Customer;
 use App\Modules\SupportTicketManagement\Models\Ticket;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -88,3 +88,4 @@ class NotificationManagementTest extends TestCase
         $this->assertNotNull($response->json('notification.read_at'));
     }
 }
+

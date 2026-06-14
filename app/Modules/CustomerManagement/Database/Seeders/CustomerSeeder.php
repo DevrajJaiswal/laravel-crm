@@ -2,7 +2,7 @@
 
 namespace App\Modules\CustomerManagement\Database\Seeders;
 
-use App\Models\User;
+use App\Modules\Users\Models\User;
 use App\Modules\CustomerManagement\Models\Customer;
 use Illuminate\Database\Seeder;
 
@@ -32,3 +32,4 @@ class CustomerSeeder extends Seeder
         ]);
     }
 }
+

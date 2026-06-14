@@ -2,7 +2,7 @@
 
 namespace App\Modules\DataTransfer\Tests\Feature;
 
-use App\Models\User;
+use App\Modules\Users\Models\User;
 use App\Modules\DataTransfer\Jobs\ProcessImportJob;
 use App\Modules\DataTransfer\Models\Import;
 use App\Modules\CustomerManagement\Models\Customer;
@@ -96,3 +96,4 @@ class DataTransferTest extends TestCase
         $this->assertEquals('csv', $response->json('data.0.format'));
     }
 }
+

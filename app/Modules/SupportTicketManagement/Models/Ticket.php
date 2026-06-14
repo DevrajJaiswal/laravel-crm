@@ -2,7 +2,7 @@
 
 namespace App\Modules\SupportTicketManagement\Models;
 
-use App\Models\User;
+use App\Modules\Users\Models\User;
 use App\Modules\ContactManagement\Models\Contact;
 use App\Modules\CustomerManagement\Models\Customer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -62,3 +62,4 @@ class Ticket extends Model
         return $this->belongsTo(User::class, 'assigned_to_user_id');
     }
 }
+

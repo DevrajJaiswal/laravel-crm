@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Models\User;
+use App\Modules\Users\Models\User;
 use App\Modules\CustomerManagement\Models\Customer;
 use App\Modules\LeadManagement\Models\Lead;
 use App\Modules\DealManagement\Models\Deal;
@@ -86,3 +86,4 @@ class ReportsAnalyticsTest extends TestCase
             ->assertJsonPath('data.tickets.total', 1);
     }
 }
+

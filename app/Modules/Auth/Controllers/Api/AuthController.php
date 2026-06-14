@@ -2,7 +2,7 @@
 
 namespace App\Modules\Auth\Controllers\Api;
 
-use App\Models\User;
+use App\Modules\Users\Models\User;
 use App\Modules\Auth\Requests\LoginRequest;
 use App\Modules\Auth\Requests\RegisterRequest;
 use App\Modules\Auth\Services\AuthService;
@@ -62,3 +62,4 @@ class AuthController
         return response()->json($request->user());
     }
 }
+

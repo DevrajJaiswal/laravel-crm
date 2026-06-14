@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\User;
+use App\Modules\Users\Models\User;
 
 return [
 
@@ -120,3 +120,4 @@ return [
     'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
 
 ];
+

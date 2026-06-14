@@ -2,7 +2,7 @@
 
 namespace App\Modules\CustomerManagement\Services;
 
-use App\Models\User;
+use App\Modules\Users\Models\User;
 use App\Modules\CustomerManagement\Models\Customer;
 use App\Modules\LeadManagement\Models\Lead;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -73,3 +73,4 @@ class CustomerService
         ])->load('owner');
     }
 }
+

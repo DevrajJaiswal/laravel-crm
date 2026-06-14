@@ -2,19 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Modules\AccessControl\Database\Seeders\AccessControlSeeder;
-use App\Modules\CustomerManagement\Database\Seeders\CustomerSeeder;
-use App\Modules\Users\Database\Seeders\AdminUserSeeder;
+use App\Modules\Core\Database\Seeders\DatabaseSeeder as CoreDatabaseSeeder;
 
-// Modules auto-register their seeders via ServiceProviders
+// Root seeder stays as a thin bootstrap entrypoint.
 class DatabaseSeeder extends \Illuminate\Database\Seeder
 {
     public function run(): void
     {
-        $this->call([
-            AdminUserSeeder::class,
-            AccessControlSeeder::class,
-            CustomerSeeder::class,
-        ]);
+        $this->call([CoreDatabaseSeeder::class]);
     }
 }

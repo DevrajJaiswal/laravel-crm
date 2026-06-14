@@ -2,7 +2,7 @@
 
 namespace App\Modules\NotificationManagement\Models;
 
-use App\Models\User;
+use App\Modules\Users\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -34,3 +34,4 @@ class Notification extends Model
         return $this->belongsTo(User::class);
     }
 }
+

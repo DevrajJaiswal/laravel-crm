@@ -2,6 +2,7 @@
 
 use App\Modules\Auth\Providers\AuthServiceProvider;
 use App\Modules\AccessControl\Providers\AccessControlServiceProvider;
+use App\Modules\Core\Providers\CoreServiceProvider;
 use App\Modules\ActivityManagement\Providers\ActivityManagementServiceProvider;
 use App\Modules\DealManagement\Providers\DealManagementServiceProvider;
 use App\Modules\ContactManagement\Providers\ContactManagementServiceProvider;
@@ -18,6 +19,7 @@ use App\Providers\AppServiceProvider;
 return [
     AppServiceProvider::class,
     SetupServiceProvider::class,
+    CoreServiceProvider::class,
     AuthServiceProvider::class,
     UsersServiceProvider::class,
     AccessControlServiceProvider::class,
