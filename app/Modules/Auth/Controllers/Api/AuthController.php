@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController
 {
+    private const PRIVILEGED_ROLES = ['super-admin', 'administrator'];
+
     public function __construct(
         private AuthService $authService
     ) {}
@@ -29,6 +31,9 @@ class AuthController
                 'id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
+                'roles' => $user->roles->pluck('name')->values(),
+                'permissions' => $user->getAllPermissions()->pluck('name')->values(),
+                'is_admin' => $user->roles->pluck('name')->intersect(self::PRIVILEGED_ROLES)->isNotEmpty(),
             ],
             'token' => $token,
         ]);
@@ -51,6 +56,7 @@ class AuthController
             'email' => $user->email,
             'roles' => $user->roles->pluck('name')->values(),
             'permissions' => $user->getAllPermissions()->pluck('name')->values(),
+            'is_admin' => $user->roles->pluck('name')->intersect(self::PRIVILEGED_ROLES)->isNotEmpty(),
         ]);
     }
 }

@@ -9,18 +9,23 @@ use Spatie\Permission\Models\Role;
 
 class AccessControlSeeder extends Seeder
 {
+    private const PRIVILEGED_ROLES = ['super-admin', 'administrator'];
+
     public function run(): void
     {
         $permissions = [
             'access-control.view',
             'access-control.manage',
-            'manage-settings',
-            'manage-users',
-            'manage-roles',
             'users.view',
             'users.create',
             'users.update',
             'users.delete',
+            'roles.view',
+            'roles.create',
+            'roles.update',
+            'roles.delete',
+            'settings.view',
+            'settings.update',
             'leads.view',
             'leads.create',
             'leads.update',
@@ -56,13 +61,20 @@ class AccessControlSeeder extends Seeder
             Permission::findOrCreate($permission, 'web');
         }
 
-        $superAdmin = Role::findOrCreate('super-admin', 'web');
-        $superAdmin->syncPermissions(Permission::all());
+        $permissions = Permission::all();
+
+        foreach (self::PRIVILEGED_ROLES as $roleName) {
+            $role = Role::findOrCreate($roleName, 'web');
+            $role->syncPermissions($permissions);
+        }
 
         $admin = User::where('email', 'admin@example.com')->first();
 
         if ($admin) {
-            $admin->assignRole($superAdmin);
+            foreach (self::PRIVILEGED_ROLES as $roleName) {
+                $role = Role::findOrCreate($roleName, 'web');
+                $admin->assignRole($role);
+            }
         }
     }
 }
