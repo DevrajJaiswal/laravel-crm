@@ -78,12 +78,6 @@ export default function LoginPage() {
                     </Button>
                 </form>
 
-                <p className="mt-6 text-center text-sm text-slate-600">
-                    Don&apos;t have an account?{' '}
-                    <a href="/register" className="font-semibold text-slate-900 hover:underline">
-                        Register
-                    </a>
-                </p>
             </Card>
         </ModuleLayout>
     );

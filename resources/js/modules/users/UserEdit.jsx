@@ -1,30 +1,39 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { apiFetch } from '../../lib/apiClient';
-import { Alert, Button, Card, FormField, Input, ModuleLayout, PageHeader } from '../../components/ui';
+import { Button, Card, LoadingState, ModuleLayout, PageHeader } from '../../components/ui';
+import UserForm from './UserForm';
 
 export default function UserEdit() {
     const { id } = useParams();
     const navigate = useNavigate();
-    const [formData, setFormData] = useState({ name: '', email: '' });
-    const [loading, setLoading] = useState(false);
+    const [roles, setRoles] = useState([]);
+    const [formData, setFormData] = useState({ name: '', email: '', password: '', password_confirmation: '', roles: [] });
+    const [loading, setLoading] = useState(true);
+    const [saving, setSaving] = useState(false);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        apiFetch(`/api/users/${id}`)
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error(`Failed to load user (${response.status})`);
-            }
-            return response.json();
-        })
-        .then(data => setFormData({ name: data.name, email: data.email }))
-        .catch(() => navigate('/users'));
+        Promise.all([apiFetch('/api/users/meta'), apiFetch(`/api/users/${id}`)])
+            .then(async ([rolesResponse, userResponse]) => {
+                const rolesPayload = await rolesResponse.json();
+                const userPayload = await userResponse.json();
+                setRoles(rolesPayload.roles || []);
+                setFormData({
+                    name: userPayload.name || '',
+                    email: userPayload.email || '',
+                    password: '',
+                    password_confirmation: '',
+                    roles: userPayload.roles || [],
+                });
+            })
+            .catch(() => navigate('/users'))
+            .finally(() => setLoading(false));
     }, [id]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);
+        setSaving(true);
         
         try {
             const response = await apiFetch(`/api/users/${id}`, {
@@ -32,54 +41,35 @@ export default function UserEdit() {
                 body: JSON.stringify(formData),
             });
             
-            if (!response.ok) throw new Error('Update failed');
+            if (!response.ok) {
+                const payload = await response.json().catch(() => ({}));
+                throw new Error(payload.message || 'Update failed');
+            }
             navigate('/users');
         } catch (err) {
-            setError('Failed to update user');
+            setError(err.message || 'Failed to update user');
         } finally {
-            setLoading(false);
+            setSaving(false);
         }
     };
 
+    if (loading) {
+        return <ModuleLayout className="flex items-center justify-center"><LoadingState label="Loading user..." /></ModuleLayout>;
+    }
+
     return (
-        <ModuleLayout className="flex items-center justify-center">
-            <div className="w-full max-w-md">
+        <ModuleLayout>
+            <div className="w-full max-w-4xl space-y-6">
                 <PageHeader
                     eyebrow="Users Management"
                     title="Edit User"
                     description="Update the selected user's profile and contact details."
                     breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Users', href: '/users' }, { label: 'Edit User' }]}
+                    actions={<Button to="/users" variant="secondary">Back to Users</Button>}
                 />
 
                 <Card className="p-8">
-                    {error ? <Alert tone="danger" className="mb-4">{error}</Alert> : null}
-
-                    <form onSubmit={handleSubmit} className="space-y-4">
-                        <FormField label="Name">
-                            <Input
-                                type="text"
-                                value={formData.name}
-                                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                required
-                            />
-                        </FormField>
-
-                        <FormField label="Email">
-                            <Input
-                                type="email"
-                                value={formData.email}
-                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                required
-                            />
-                        </FormField>
-
-                        <Button type="submit" className="w-full" disabled={loading}>
-                            {loading ? 'Saving...' : 'Save'}
-                        </Button>
-                        <Button variant="secondary" className="w-full" onClick={() => navigate('/users')}>
-                            Cancel
-                        </Button>
-                    </form>
+                    <UserForm value={formData} onChange={setFormData} onSubmit={handleSubmit} submitLabel={saving ? 'Saving...' : 'Save Changes'} loading={saving} error={error} roles={roles} mode="edit" />
                 </Card>
             </div>
         </ModuleLayout>

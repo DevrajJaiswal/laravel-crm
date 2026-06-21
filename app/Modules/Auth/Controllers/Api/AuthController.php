@@ -4,7 +4,6 @@ namespace App\Modules\Auth\Controllers\Api;
 
 use App\Modules\Users\Models\User;
 use App\Modules\Auth\Requests\LoginRequest;
-use App\Modules\Auth\Requests\RegisterRequest;
 use App\Modules\Auth\Services\AuthService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -15,21 +14,6 @@ class AuthController
     public function __construct(
         private AuthService $authService
     ) {}
-
-    public function register(RegisterRequest $request): JsonResponse
-    {
-        $user = $this->authService->register($request->validated());
-        $token = $this->authService->login($user);
-
-        return response()->json([
-            'user' => [
-                'id' => $user->id,
-                'name' => $user->name,
-                'email' => $user->email,
-            ],
-            'token' => $token,
-        ], 201);
-    }
 
     public function login(LoginRequest $request): JsonResponse
     {
@@ -59,7 +43,15 @@ class AuthController
 
     public function user(Request $request): JsonResponse
     {
-        return response()->json($request->user());
+        $user = $request->user()->load('roles', 'permissions');
+
+        return response()->json([
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'roles' => $user->roles->pluck('name')->values(),
+            'permissions' => $user->getAllPermissions()->pluck('name')->values(),
+        ]);
     }
 }
 

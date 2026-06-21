@@ -5,31 +5,36 @@ import { Button, DataTable, EmptyState, LoadingState, ModuleLayout, PageHeader }
 
 export default function UsersList() {
     const [users, setUsers] = useState([]);
+    const [currentUser, setCurrentUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [deleting, setDeleting] = useState(false);
     const navigate = useNavigate();
 
-    const fetchUsers = () => {
-        apiFetch('/api/users')
-        .then(r => {
-            if (!r.ok) {
-                throw new Error(`Failed to load users (${r.status})`);
-            }
-            return r.json();
-        })
-        .then(data => {
-            setUsers(data);
-        })
-        .catch(err => {
-            console.error('Fetch error:', err);
-            alert('Failed to load users. Please login first.');
-        })
-        .finally(() => setLoading(false));
+    const fetchUsers = async () => {
+        const [usersResponse, meResponse] = await Promise.all([
+            apiFetch('/api/users'),
+            apiFetch('/api/user'),
+        ]);
+
+        const usersData = await usersResponse.json();
+        const meData = await meResponse.json();
+
+        setUsers(usersData);
+        setCurrentUser(meData);
+        setLoading(false);
     };
 
     useEffect(() => {
-        fetchUsers();
+        fetchUsers().catch(() => {
+            alert('Failed to load users. Please login first.');
+            setLoading(false);
+        });
     }, []);
+
+    const isSuperAdmin = currentUser?.roles?.includes('super-admin');
+    const canCreate = isSuperAdmin || currentUser?.permissions?.includes('users.create');
+    const canUpdate = isSuperAdmin || currentUser?.permissions?.includes('users.update');
+    const canDelete = isSuperAdmin || currentUser?.permissions?.includes('users.delete');
 
     const handleDelete = async (id) => {
         if (!confirm('Are you sure you want to delete this user?')) return;
@@ -72,12 +77,16 @@ export default function UsersList() {
             cellClassName: 'w-48',
             render: (user) => (
                 <div className="flex flex-wrap gap-2">
-                    <Button variant="secondary" size="sm" onClick={() => navigate(`/users/${user.id}/edit`)}>
-                        Edit
-                    </Button>
-                    <Button variant="danger" size="sm" onClick={() => handleDelete(user.id)} disabled={deleting}>
-                        Delete
-                    </Button>
+                    {canUpdate ? (
+                        <Button variant="secondary" size="sm" onClick={() => navigate(`/users/${user.id}/edit`)}>
+                            Edit
+                        </Button>
+                    ) : null}
+                    {canDelete ? (
+                        <Button variant="danger" size="sm" onClick={() => handleDelete(user.id)} disabled={deleting}>
+                            Delete
+                        </Button>
+                    ) : null}
                 </div>
             ),
         },
@@ -91,7 +100,12 @@ export default function UsersList() {
                     title="Users"
                     description="Create, edit, and remove CRM users."
                     breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Users' }]}
-                    actions={<Button to="/dashboard" variant="secondary">Back to Dashboard</Button>}
+                    actions={
+                        <>
+                            {canCreate ? <Button to="/users/create">Create User</Button> : null}
+                            <Button to="/dashboard" variant="secondary">Back to Dashboard</Button>
+                        </>
+                    }
                 />
 
                 {loading ? (

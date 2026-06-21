@@ -35,6 +35,11 @@ export default function Dashboard() {
         );
     }
 
+    const canAccess = (permission) =>
+        user.roles?.includes('super-admin') || user.permissions?.includes(permission);
+
+    const links = dashboardLinks.filter((link) => !link.permission || canAccess(link.permission));
+
     return (
         <ModuleLayout>
             <div className="w-full max-w-none">
@@ -65,7 +70,7 @@ export default function Dashboard() {
                 </Card>
 
                 <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-                    {dashboardLinks.map((link) => (
+                    {links.map((link) => (
                         <Card key={link.href} className="hover:-translate-y-0.5 transition">
                             <h2 className="text-base font-bold text-slate-950">{link.title}</h2>
                             <p className="mt-2 text-sm leading-6 text-slate-600">{link.description}</p>
