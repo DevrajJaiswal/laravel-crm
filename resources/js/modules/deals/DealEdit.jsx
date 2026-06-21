@@ -69,16 +69,15 @@ export default function DealEdit() {
 
     return (
         <ModuleLayout>
-            <div className="w-full max-w-4xl space-y-6">
+            <div className="w-full space-y-6">
                 <PageHeader
-                    eyebrow="Deal Management"
                     title="Edit Deal"
                     description="Update the deal details and stage."
                     breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Deals', href: '/deals' }, { label: 'Edit Deal' }]}
-                    actions={<Button to="/deals" variant="secondary">Back to Deals</Button>}
+
                 />
 
-                <Card className="p-8">
+                <Card className="p-5 lg:p-6">
                     <DealForm
                         value={value}
                         onChange={setValue}
@@ -93,3 +92,4 @@ export default function DealEdit() {
         </ModuleLayout>
     );
 }
+

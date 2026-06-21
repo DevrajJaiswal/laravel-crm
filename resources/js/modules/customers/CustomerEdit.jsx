@@ -67,16 +67,15 @@ export default function CustomerEdit() {
 
     return (
         <ModuleLayout>
-            <div className="w-full max-w-4xl space-y-6">
+            <div className="w-full space-y-6">
                 <PageHeader
-                    eyebrow="Customer Management"
                     title="Edit Customer"
                     description="Update the customer profile, addresses, and notes."
                     breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Customers', href: '/customers' }, { label: 'Edit Customer' }]}
-                    actions={<Button to="/customers" variant="secondary">Back to Customers</Button>}
+
                 />
 
-                <Card className="p-8">
+                <Card className="p-5 lg:p-6">
                     <CustomerForm
                         value={value}
                         onChange={setValue}
@@ -90,3 +89,4 @@ export default function CustomerEdit() {
         </ModuleLayout>
     );
 }
+

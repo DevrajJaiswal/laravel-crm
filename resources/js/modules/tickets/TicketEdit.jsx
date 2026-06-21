@@ -93,16 +93,15 @@ export default function TicketEdit() {
 
     return (
         <ModuleLayout>
-            <div className="w-full max-w-4xl space-y-6">
+            <div className="w-full space-y-6">
                 <PageHeader
-                    eyebrow="Support Tickets"
                     title="Edit Ticket"
                     description="Update ticket routing, priority, and resolution notes."
                     breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Tickets', href: '/tickets' }, { label: 'Edit Ticket' }]}
-                    actions={<Button to="/tickets" variant="secondary">Back to Tickets</Button>}
+
                 />
 
-                <Card className="p-8">
+                <Card className="p-5 lg:p-6">
                     <TicketForm
                         value={value}
                         onChange={setValue}
@@ -119,3 +118,4 @@ export default function TicketEdit() {
         </ModuleLayout>
     );
 }
+

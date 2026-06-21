@@ -55,18 +55,18 @@ export default function UserCreate() {
 
     return (
         <ModuleLayout>
-            <div className="w-full max-w-4xl space-y-6">
+            <div className="w-full space-y-6">
                 <PageHeader
-                    eyebrow="Users Management"
                     title="Create User"
                     description="Add a CRM user and assign roles."
                     breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Users', href: '/users' }, { label: 'Create User' }]}
-                    actions={<Button to="/users" variant="secondary">Back to Users</Button>}
+
                 />
-                <Card className="p-8">
+                <Card className="p-5 lg:p-6">
                     <UserForm value={value} onChange={setValue} onSubmit={handleSubmit} submitLabel={saving ? 'Creating...' : 'Create User'} loading={saving} error={error} roles={roles} mode="create" />
                 </Card>
             </div>
         </ModuleLayout>
     );
 }
+

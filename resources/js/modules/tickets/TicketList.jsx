@@ -56,7 +56,12 @@ export default function TicketList() {
                     title="Tickets"
                     description="Track customer issues, status, priority, and ownership."
                     breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Tickets' }]}
-                    actions={<Button to="/dashboard" variant="secondary">Back to Dashboard</Button>}
+                    actions={
+                        <>
+                            <Button to="/tickets/create">Create Ticket</Button>
+
+                        </>
+                    }
                 />
 
                 {loading ? (
@@ -75,3 +80,4 @@ export default function TicketList() {
         </ModuleLayout>
     );
 }
+

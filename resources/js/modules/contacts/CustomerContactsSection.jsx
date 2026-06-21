@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { apiFetch } from '../../lib/apiClient';
+import { Button, Modal } from '../../components/ui';
 import ContactForm from './ContactForm';
 
 const emptyContact = {
@@ -20,6 +21,7 @@ export default function CustomerContactsSection({ customerId }) {
     const [mode, setMode] = useState('create');
     const [editingId, setEditingId] = useState(null);
     const [value, setValue] = useState(emptyContact);
+    const [deleteContact, setDeleteContact] = useState(null);
 
     const editingContact = useMemo(
         () => contacts.find((contact) => contact.id === editingId) || null,
@@ -105,12 +107,10 @@ export default function CustomerContactsSection({ customerId }) {
         });
     };
 
-    const handleDelete = async (contact) => {
-        if (!window.confirm(`Delete ${contact.name}?`)) {
-            return;
-        }
+    const handleDelete = async () => {
+        if (!deleteContact) return;
 
-        const response = await apiFetch(`/api/contacts/${contact.id}`, {
+        const response = await apiFetch(`/api/contacts/${deleteContact.id}`, {
             method: 'DELETE',
         });
 
@@ -121,9 +121,10 @@ export default function CustomerContactsSection({ customerId }) {
         }
 
         loadContacts();
-        if (editingId === contact.id) {
+        if (editingId === deleteContact.id) {
             resetForm();
         }
+        setDeleteContact(null);
     };
 
     return (
@@ -187,7 +188,7 @@ export default function CustomerContactsSection({ customerId }) {
                                         </button>
                                         <button
                                             type="button"
-                                            onClick={() => handleDelete(contact)}
+                                            onClick={() => setDeleteContact(contact)}
                                             className="rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-xs font-semibold uppercase tracking-wider text-red-700"
                                         >
                                             Delete
@@ -214,6 +215,18 @@ export default function CustomerContactsSection({ customerId }) {
                     )}
                 </div>
             </div>
+
+            <Modal open={Boolean(deleteContact)} title="Delete Contact" onClose={() => setDeleteContact(null)}>
+                <div className="space-y-4">
+                    <p className="text-sm leading-6 text-slate-600">
+                        Delete <span className="font-semibold text-slate-900">{deleteContact?.name}</span>? This cannot be undone.
+                    </p>
+                    <div className="flex justify-end gap-3">
+                        <Button variant="secondary" onClick={() => setDeleteContact(null)}>Cancel</Button>
+                        <Button variant="danger" onClick={handleDelete}>Delete</Button>
+                    </div>
+                </div>
+            </Modal>
         </section>
     );
 }

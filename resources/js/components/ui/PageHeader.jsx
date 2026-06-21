@@ -1,5 +1,8 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Card from './Card';
+import NotificationBell from '../../modules/notifications/NotificationBell';
+import UserProfileMenu from './UserProfileMenu';
 
 function Breadcrumbs({ items = [] }) {
     if (!items.length) {
@@ -7,7 +10,7 @@ function Breadcrumbs({ items = [] }) {
     }
 
     return (
-        <nav aria-label="Breadcrumb" className="mb-4 flex flex-wrap items-center gap-2 text-xs font-medium text-slate-500">
+        <nav aria-label="Breadcrumb" className="mb-2 flex flex-wrap items-center gap-2 text-sm font-medium text-slate-500">
             {items.map((item, index) => {
                 const isLast = index === items.length - 1;
 
@@ -36,26 +39,29 @@ export default function PageHeader({
     actions = null,
     className = '',
 }) {
+    useEffect(() => {
+        document.title = title ? `${title} | Laravel CRM` : 'Laravel CRM';
+    }, [title]);
+
     return (
-        <Card className={`mb-6 ${className}`}>
+        <Card className={`relative z-30 mb-4 p-3 sm:p-4 ${className}`}>
             <Breadcrumbs items={breadcrumbs} />
-            <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+            <div className="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between">
                 <div>
-                    {eyebrow ? (
-                        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
-                            {eyebrow}
-                        </p>
-                    ) : null}
-                    <h1 className="mt-3 text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
+                    <h1 className="text-2xl font-black tracking-tight text-slate-950 sm:text-[1.75rem]">
                         {title}
                     </h1>
                     {description ? (
-                        <p className="mt-3 max-w-4xl text-sm leading-6 text-slate-600 sm:text-base">
+                        <p className="mt-1 max-w-4xl text-sm leading-6 text-slate-600">
                             {description}
                         </p>
                     ) : null}
                 </div>
-                {actions ? <div className="flex flex-wrap gap-3">{actions}</div> : null}
+                <div className="flex flex-wrap items-center gap-3">
+                    {actions ? <div className="flex flex-wrap gap-3">{actions}</div> : null}
+                    <NotificationBell />
+                    <UserProfileMenu />
+                </div>
             </div>
         </Card>
     );

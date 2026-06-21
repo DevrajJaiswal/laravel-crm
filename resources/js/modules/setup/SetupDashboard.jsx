@@ -4,7 +4,7 @@ import { Button, Card, ModuleLayout, PageHeader, StatCard, Badge } from '../../c
 export default function SetupDashboard() {
     return (
         <ModuleLayout className="flex items-center justify-center">
-            <div className="w-full max-w-6xl">
+            <div className="w-full max-w-none">
                 <PageHeader
                     eyebrow="Laravel CRM Progress"
                     title="Build your CRM one module at a time."

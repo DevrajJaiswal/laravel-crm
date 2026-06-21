@@ -84,16 +84,15 @@ export default function TicketCreate() {
 
     return (
         <ModuleLayout>
-            <div className="w-full max-w-4xl space-y-6">
+            <div className="w-full space-y-6">
                 <PageHeader
-                    eyebrow="Support Tickets"
                     title="Create Ticket"
                     description="Open a support issue and route it to the right owner."
                     breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Tickets', href: '/tickets' }, { label: 'Create Ticket' }]}
-                    actions={<Button to="/tickets" variant="secondary">Back to Tickets</Button>}
+
                 />
 
-                <Card className="p-8">
+                <Card className="p-5 lg:p-6">
                     <TicketForm
                         value={value}
                         onChange={setValue}
@@ -110,3 +109,4 @@ export default function TicketCreate() {
         </ModuleLayout>
     );
 }
+

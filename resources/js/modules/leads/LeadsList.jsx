@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { apiFetch } from '../../lib/apiClient';
-import { Badge, Button, DataTable, EmptyState, LoadingState, ModuleLayout, PageHeader } from '../../components/ui';
+import { Badge, Button, DataTable, EmptyState, LoadingState, Modal, ModuleLayout, PageHeader } from '../../components/ui';
 
 export default function LeadsList() {
     const [leads, setLeads] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [deleteLead, setDeleteLead] = useState(null);
 
     const loadLeads = async () => {
         setLoading(true);
@@ -22,10 +23,9 @@ export default function LeadsList() {
     }, []);
 
     const handleDelete = async (id) => {
-        if (!window.confirm('Delete this lead?')) return;
-
         const response = await apiFetch(`/api/leads/${id}`, { method: 'DELETE' });
         if (response.ok) {
+            setDeleteLead(null);
             await loadLeads();
         }
     };
@@ -68,7 +68,7 @@ export default function LeadsList() {
                     <Button to={`/leads/${lead.id}/edit`} variant="dark" size="sm">
                         Edit
                     </Button>
-                    <Button variant="danger" size="sm" onClick={() => handleDelete(lead.id)}>
+                    <Button variant="danger" size="sm" onClick={() => setDeleteLead(lead)}>
                         Delete
                     </Button>
                 </div>
@@ -84,7 +84,12 @@ export default function LeadsList() {
                     title="Leads"
                     description="Track sales opportunities and convert them into customers."
                     breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Leads' }]}
-                    actions={<Button to="/dashboard" variant="secondary">Back to Dashboard</Button>}
+                    actions={
+                        <>
+                            <Button to="/leads/create">Create Lead</Button>
+
+                        </>
+                    }
                 />
 
                 {loading ? (
@@ -99,7 +104,22 @@ export default function LeadsList() {
                         actionTo="/dashboard"
                     />
                 )}
+
+                <Modal open={Boolean(deleteLead)} title="Delete Lead" onClose={() => setDeleteLead(null)}>
+                    <div className="space-y-4">
+                        <p className="text-sm leading-6 text-slate-600">
+                            Delete <span className="font-semibold text-slate-900">{deleteLead?.title}</span>? This cannot be undone.
+                        </p>
+                        <div className="flex justify-end gap-3">
+                            <Button variant="secondary" onClick={() => setDeleteLead(null)}>Cancel</Button>
+                            <Button variant="danger" onClick={() => handleDelete(deleteLead.id)}>
+                                Delete
+                            </Button>
+                        </div>
+                    </div>
+                </Modal>
             </div>
         </ModuleLayout>
     );
 }
+

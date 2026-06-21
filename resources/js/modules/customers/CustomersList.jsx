@@ -62,7 +62,12 @@ export default function CustomersList() {
                     title="Customers"
                     description="Customer accounts, ownership, and relationship details."
                     breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Customers' }]}
-                    actions={<Button to="/dashboard" variant="secondary">Back to Dashboard</Button>}
+                    actions={
+                        <>
+                            <Button to="/customers/create">Create Customer</Button>
+
+                        </>
+                    }
                 />
 
                 {loading ? (
@@ -81,3 +86,4 @@ export default function CustomersList() {
         </ModuleLayout>
     );
 }
+

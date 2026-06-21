@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { apiFetch } from '../../lib/apiClient';
 import { dashboardLinks } from '../navigation';
-import NotificationBell from '../notifications/NotificationBell';
+import { canAccess } from './access';
 import {
     Button,
     Card,
@@ -35,39 +35,15 @@ export default function Dashboard() {
         );
     }
 
-    const canAccess = (permission) =>
-        user.roles?.includes('super-admin') || user.permissions?.includes(permission);
-
-    const links = dashboardLinks.filter((link) => !link.permission || canAccess(link.permission));
+    const links = dashboardLinks.filter((link) => !link.permission || canAccess(user, link.permission));
 
     return (
         <ModuleLayout>
             <div className="w-full max-w-none">
                 <PageHeader
-                    eyebrow="CRM Dashboard"
-                    title={`Welcome back, ${user.name}`}
-                    description={user.email}
-                    actions={<NotificationBell />}
+                    title="Dashboard"
+                    description={`Welcome back, ${user.name}`}
                 />
-
-                <Card className="mb-6">
-                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                        <div>
-                            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">Quick Actions</p>
-                            <p className="mt-2 text-sm text-slate-600">Jump into the main CRM areas or end the session.</p>
-                        </div>
-                        <Button
-                            variant="danger"
-                            onClick={() => {
-                                apiFetch('/api/logout', { method: 'POST' });
-                                localStorage.removeItem('auth_token');
-                                window.location.href = '/login';
-                            }}
-                        >
-                            Logout
-                        </Button>
-                    </div>
-                </Card>
 
                 <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                     {links.map((link) => (

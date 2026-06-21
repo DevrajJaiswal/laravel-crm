@@ -63,7 +63,7 @@ export default function DealPipeline() {
                     actions={
                         <>
                             <Button to="/deals/create" variant="secondary">Create Deal</Button>
-                            <Button to="/dashboard" variant="secondary">Back to Dashboard</Button>
+
                         </>
                     }
                 />
@@ -90,7 +90,7 @@ export default function DealPipeline() {
 
                                 <div className="space-y-3">
                                     {(dealsByStage[stage] || []).map((deal) => (
-                                        <article key={deal.id} className="rounded-3xl border border-slate-200 bg-slate-50/80 p-4">
+                                        <article key={deal.id} className="rounded-2xl border border-slate-200 bg-slate-50/80 p-4">
                                             <div className="flex items-start justify-between gap-3">
                                                 <div>
                                                     <h3 className="text-base font-bold text-slate-950">{deal.title}</h3>
@@ -137,3 +137,4 @@ export default function DealPipeline() {
         </ModuleLayout>
     );
 }
+

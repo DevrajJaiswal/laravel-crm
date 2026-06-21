@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { apiFetch } from '../../lib/apiClient';
+import { Button, Modal } from '../../components/ui';
 import ActivityForm from './ActivityForm';
 
 const emptyActivity = {
@@ -23,6 +24,7 @@ export default function CustomerActivitiesSection({ customerId }) {
     const [mode, setMode] = useState('create');
     const [editingId, setEditingId] = useState(null);
     const [value, setValue] = useState(emptyActivity);
+    const [deleteActivity, setDeleteActivity] = useState(null);
 
     const editingActivity = useMemo(
         () => activities.find((activity) => activity.id === editingId) || null,
@@ -102,12 +104,10 @@ export default function CustomerActivitiesSection({ customerId }) {
         });
     };
 
-    const handleDelete = async (activity) => {
-        if (!window.confirm(`Delete activity "${activity.subject}"?`)) {
-            return;
-        }
+    const handleDelete = async () => {
+        if (!deleteActivity) return;
 
-        const response = await apiFetch(`/api/activities/${activity.id}`, {
+        const response = await apiFetch(`/api/activities/${deleteActivity.id}`, {
             method: 'DELETE',
         });
 
@@ -118,9 +118,10 @@ export default function CustomerActivitiesSection({ customerId }) {
         }
 
         loadActivities();
-        if (editingId === activity.id) {
+        if (editingId === deleteActivity.id) {
             resetForm();
         }
+        setDeleteActivity(null);
     };
 
     return (
@@ -185,7 +186,7 @@ export default function CustomerActivitiesSection({ customerId }) {
                                         </button>
                                         <button
                                             type="button"
-                                            onClick={() => handleDelete(activity)}
+                                            onClick={() => setDeleteActivity(activity)}
                                             className="rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-xs font-semibold uppercase tracking-wider text-red-700"
                                         >
                                             Delete
@@ -207,6 +208,18 @@ export default function CustomerActivitiesSection({ customerId }) {
                     )}
                 </div>
             </div>
+
+            <Modal open={Boolean(deleteActivity)} title="Delete Activity" onClose={() => setDeleteActivity(null)}>
+                <div className="space-y-4">
+                    <p className="text-sm leading-6 text-slate-600">
+                        Delete <span className="font-semibold text-slate-900">{deleteActivity?.subject}</span>? This cannot be undone.
+                    </p>
+                    <div className="flex justify-end gap-3">
+                        <Button variant="secondary" onClick={() => setDeleteActivity(null)}>Cancel</Button>
+                        <Button variant="danger" onClick={handleDelete}>Delete</Button>
+                    </div>
+                </div>
+            </Modal>
         </section>
     );
 }

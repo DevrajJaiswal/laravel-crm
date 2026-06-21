@@ -1,6 +1,6 @@
 export const dashboardLinks = [
     { href: '/users', title: 'Users Management', description: 'Create, edit, and delete CRM users.', permission: 'users.view' },
-    { href: '/access-control/roles', title: 'Roles & Permissions', description: 'Manage role access and permission assignment.', permission: 'manage-roles' },
+    { href: '/access-control/roles', title: 'Roles & Permissions', description: 'Manage role access and permission assignment.', permission: 'roles.view' },
     { href: '/leads', title: 'Leads', description: 'Track and manage sales opportunities.', permission: 'leads.view' },
     { href: '/deals', title: 'Deals', description: 'Manage pipeline stages and sales forecasts.', permission: 'deals.view' },
     { href: '/tickets', title: 'Support Tickets', description: 'Track customer issues and resolutions.', permission: 'tickets.view' },

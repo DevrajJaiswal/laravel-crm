@@ -46,7 +46,7 @@ export default function NotificationBell() {
     };
 
     return (
-        <div ref={menuRef} className="relative">
+        <div ref={menuRef} className="relative z-[60]">
             <button
                 type="button"
                 onClick={() => setOpen((value) => !value)}
@@ -61,7 +61,7 @@ export default function NotificationBell() {
             </button>
 
             {open ? (
-                <div className="absolute right-0 top-full z-50 mt-3 w-[22rem] overflow-hidden rounded-[1.5rem] border border-slate-200 bg-white shadow-[0_20px_80px_rgba(15,23,42,0.18)]">
+                <div className="absolute right-0 top-full z-[999] mt-3 w-[22rem] overflow-hidden rounded-[1.5rem] border border-slate-200 bg-white shadow-[0_20px_80px_rgba(15,23,42,0.18)]">
                     <div className="flex items-center justify-between border-b border-slate-100 px-4 py-3">
                         <p className="text-sm font-semibold text-slate-900">Notifications</p>
                         <button

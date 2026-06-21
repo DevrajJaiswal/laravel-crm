@@ -48,16 +48,15 @@ export default function LeadCreate() {
 
     return (
         <ModuleLayout>
-            <div className="w-full max-w-4xl space-y-6">
+            <div className="w-full space-y-6">
                 <PageHeader
-                    eyebrow="Lead Management"
                     title="Create Lead"
                     description="Capture a sales opportunity and track it through the pipeline."
                     breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Leads', href: '/leads' }, { label: 'Create Lead' }]}
-                    actions={<Button to="/leads" variant="secondary">Back to Leads</Button>}
+
                 />
 
-                <Card className="p-8">
+                <Card className="p-5 lg:p-6">
                     <LeadForm
                         value={value}
                         onChange={setValue}
@@ -71,3 +70,4 @@ export default function LeadCreate() {
         </ModuleLayout>
     );
 }
+

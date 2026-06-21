@@ -17,5 +17,6 @@ export { default as Pagination } from './Pagination';
 export { default as SearchBar } from './SearchBar';
 export { default as Select } from './Select';
 export { default as StatCard } from './StatCard';
+export { default as UserProfileMenu } from './UserProfileMenu';
 export { default as ModuleLayout } from '../../layouts/ModuleLayout';
 export { designTokens } from './theme';

@@ -59,19 +59,19 @@ export default function UserEdit() {
 
     return (
         <ModuleLayout>
-            <div className="w-full max-w-4xl space-y-6">
+            <div className="w-full space-y-6">
                 <PageHeader
-                    eyebrow="Users Management"
                     title="Edit User"
                     description="Update the selected user's profile and contact details."
                     breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Users', href: '/users' }, { label: 'Edit User' }]}
-                    actions={<Button to="/users" variant="secondary">Back to Users</Button>}
+
                 />
 
-                <Card className="p-8">
+                <Card className="p-5 lg:p-6">
                     <UserForm value={formData} onChange={setFormData} onSubmit={handleSubmit} submitLabel={saving ? 'Saving...' : 'Save Changes'} loading={saving} error={error} roles={roles} mode="edit" />
                 </Card>
             </div>
         </ModuleLayout>
     );
 }
+
