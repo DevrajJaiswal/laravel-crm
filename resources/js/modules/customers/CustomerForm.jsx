@@ -1,6 +1,6 @@
-import { Alert, Button, FormField, Input } from '../../components/ui';
+import { Alert, FormField, Input } from '../../components/ui';
 
-export default function CustomerForm({ value, onChange, onSubmit, submitLabel, loading, error }) {
+export default function CustomerForm({ formId, value, onChange, onSubmit, error }) {
     const fields = [
         ['name', 'Customer Name'],
         ['company_name', 'Company Name'],
@@ -11,7 +11,7 @@ export default function CustomerForm({ value, onChange, onSubmit, submitLabel, l
     ];
 
     return (
-        <form onSubmit={onSubmit} className="space-y-4">
+        <form id={formId} onSubmit={onSubmit} className="space-y-4">
             {fields.map(([name, label]) => (
                 <FormField key={name} label={label}>
                     <Input
@@ -50,10 +50,6 @@ export default function CustomerForm({ value, onChange, onSubmit, submitLabel, l
             </FormField>
 
             {error ? <Alert tone="danger">{error}</Alert> : null}
-
-            <Button type="submit" className="w-full" disabled={loading}>
-                {submitLabel}
-            </Button>
         </form>
     );
 }

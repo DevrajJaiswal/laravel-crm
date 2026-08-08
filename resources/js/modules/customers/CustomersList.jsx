@@ -48,7 +48,7 @@ export default function CustomersList() {
             cellClassName: 'w-40',
             render: (customer) => (
                 <Button to={`/customers/${customer.id}`} variant="dark" size="sm">
-                    View Details
+                    View
                 </Button>
             ),
         },
@@ -62,12 +62,10 @@ export default function CustomersList() {
                     title="Customers"
                     description="Customer accounts, ownership, and relationship details."
                     breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Customers' }]}
-                    actions={
-                        <>
-                            <Button to="/customers/create">Create Customer</Button>
-
-                        </>
-                    }
+                    actions={{
+                        back: <Button to="/dashboard" variant="secondary">Back</Button>,
+                        primary: <Button to="/customers/create">Create</Button>,
+                    }}
                 />
 
                 {loading ? (
@@ -86,4 +84,3 @@ export default function CustomersList() {
         </ModuleLayout>
     );
 }
-

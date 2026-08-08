@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { apiFetch } from '../../lib/apiClient';
 import { Button, Card, LoadingState, ModuleLayout, PageHeader } from '../../components/ui';
 
@@ -60,12 +59,10 @@ export default function DealPipeline() {
                     title="Sales Pipeline"
                     description="Move deals through the pipeline in a consistent board layout."
                     breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Deals' }, { label: 'Pipeline' }]}
-                    actions={
-                        <>
-                            <Button to="/deals/create" variant="secondary">Create Deal</Button>
-
-                        </>
-                    }
+                    actions={{
+                        back: <Button to="/deals" variant="secondary">Back</Button>,
+                        primary: <Button to="/deals/create">Create</Button>,
+                    }}
                 />
 
                 {error ? <div className="mb-4 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div> : null}
@@ -96,12 +93,13 @@ export default function DealPipeline() {
                                                     <h3 className="text-base font-bold text-slate-950">{deal.title}</h3>
                                                     <p className="mt-1 text-sm text-slate-600">{deal.customer?.company_name}</p>
                                                 </div>
-                                                <Link
+                                                <Button
                                                     to={`/deals/${deal.id}/edit`}
-                                                    className="rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700"
+                                                    variant="secondary"
+                                                    size="sm"
                                                 >
                                                     Edit
-                                                </Link>
+                                                </Button>
                                             </div>
 
                                             <div className="mt-3 grid gap-2 text-sm text-slate-600">
@@ -137,4 +135,3 @@ export default function DealPipeline() {
         </ModuleLayout>
     );
 }
-

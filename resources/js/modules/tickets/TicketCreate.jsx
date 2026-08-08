@@ -17,6 +17,7 @@ const emptyTicket = {
 
 export default function TicketCreate() {
     const navigate = useNavigate();
+    const formId = 'ticket-create-form';
     const [customers, setCustomers] = useState([]);
     const [contacts, setContacts] = useState([]);
     const [assignees, setAssignees] = useState([]);
@@ -86,19 +87,20 @@ export default function TicketCreate() {
         <ModuleLayout>
             <div className="w-full space-y-6">
                 <PageHeader
-                    title="Create Ticket"
-                    description="Open a support issue and route it to the right owner."
-                    breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Tickets', href: '/tickets' }, { label: 'Create Ticket' }]}
+                    breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Tickets', href: '/tickets' }, { label: 'Create' }]}
+                    actions={{
+                        back: <Button to="/tickets" variant="secondary">Back</Button>,
+                        primary: <Button type="submit" form={formId} disabled={saving}>{saving ? 'Creating...' : 'Create'}</Button>,
+                    }}
 
                 />
 
                 <Card className="p-5 lg:p-6">
                     <TicketForm
+                        formId={formId}
                         value={value}
                         onChange={setValue}
                         onSubmit={handleSubmit}
-                        submitLabel={saving ? 'Creating...' : 'Create Ticket'}
-                        loading={saving}
                         error={error}
                         customers={customers}
                         contacts={contacts}
@@ -109,4 +111,3 @@ export default function TicketCreate() {
         </ModuleLayout>
     );
 }
-

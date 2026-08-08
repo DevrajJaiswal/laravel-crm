@@ -41,8 +41,6 @@ export default function Dashboard() {
         <ModuleLayout>
             <div className="w-full max-w-none">
                 <PageHeader
-                    title="Dashboard"
-                    description={`Welcome back, ${user.name}`}
                 />
 
                 <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">

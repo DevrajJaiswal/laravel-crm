@@ -84,12 +84,10 @@ export default function LeadsList() {
                     title="Leads"
                     description="Track sales opportunities and convert them into customers."
                     breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Leads' }]}
-                    actions={
-                        <>
-                            <Button to="/leads/create">Create Lead</Button>
-
-                        </>
-                    }
+                    actions={{
+                        back: <Button to="/dashboard" variant="secondary">Back</Button>,
+                        primary: <Button to="/leads/create">Create</Button>,
+                    }}
                 />
 
                 {loading ? (
@@ -122,4 +120,3 @@ export default function LeadsList() {
         </ModuleLayout>
     );
 }
-

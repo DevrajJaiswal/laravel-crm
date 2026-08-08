@@ -46,20 +46,11 @@ export default function CustomerDetail() {
         <ModuleLayout>
             <div className="w-full space-y-6">
                 <PageHeader
-                    eyebrow="Customer Details"
-                    title={customer.name}
-                    description="View the account record, related contacts, and activity timeline."
                     breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Customers', href: '/customers' }, { label: customer.name }]}
-                    actions={
-                        <>
-                            <Button to={`/customers/${customer.id}/edit`} variant="secondary">
-                                Edit
-                            </Button>
-                            <Button to="/customers" variant="dark">
-                                Back
-                            </Button>
-                        </>
-                    }
+                    actions={{
+                        back: <Button to="/customers" variant="secondary">Back</Button>,
+                        primary: <Button to={`/customers/${customer.id}/edit`} variant="dark">Edit</Button>,
+                    }}
                 />
 
                 <Card className="mb-6">

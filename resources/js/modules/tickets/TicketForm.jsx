@@ -1,16 +1,15 @@
 export default function TicketForm({
+    formId,
     value,
     onChange,
     onSubmit,
-    submitLabel,
-    loading,
     error,
     customers,
     contacts,
     assignees,
 }) {
     return (
-        <form onSubmit={onSubmit} className="space-y-4">
+        <form id={formId} onSubmit={onSubmit} className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2">
                 <div>
                     <label className="mb-2 block text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">Customer</label>
@@ -124,14 +123,6 @@ export default function TicketForm({
             </div>
 
             {error ? <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p> : null}
-
-            <button
-                type="submit"
-                disabled={loading}
-                className="w-full rounded-2xl border border-slate-950 bg-slate-950 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:opacity-50"
-            >
-                {submitLabel}
-            </button>
         </form>
     );
 }

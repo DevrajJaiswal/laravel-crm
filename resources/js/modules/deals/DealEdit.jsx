@@ -7,6 +7,7 @@ import { Button, Card, LoadingState, ModuleLayout, PageHeader } from '../../comp
 export default function DealEdit() {
     const { id } = useParams();
     const navigate = useNavigate();
+    const formId = 'deal-edit-form';
     const [customers, setCustomers] = useState([]);
     const [value, setValue] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -71,19 +72,20 @@ export default function DealEdit() {
         <ModuleLayout>
             <div className="w-full space-y-6">
                 <PageHeader
-                    title="Edit Deal"
-                    description="Update the deal details and stage."
                     breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Deals', href: '/deals' }, { label: 'Edit Deal' }]}
+                    actions={{
+                        back: <Button to="/deals" variant="secondary">Back</Button>,
+                        primary: <Button type="submit" form={formId} disabled={saving}>{saving ? 'Saving...' : 'Save'}</Button>,
+                    }}
 
                 />
 
                 <Card className="p-5 lg:p-6">
                     <DealForm
+                        formId={formId}
                         value={value}
                         onChange={setValue}
                         onSubmit={handleSubmit}
-                        submitLabel={saving ? 'Saving...' : 'Save Changes'}
-                        loading={saving}
                         error={error}
                         customers={customers}
                     />
@@ -92,4 +94,3 @@ export default function DealEdit() {
         </ModuleLayout>
     );
 }
-

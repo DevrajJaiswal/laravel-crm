@@ -1,11 +1,10 @@
-import { Button, FormField, Input } from '../../components/ui';
+import { FormField, Input } from '../../components/ui';
 
 export default function UserForm({
+    formId,
     value,
     onChange,
     onSubmit,
-    submitLabel,
-    loading,
     error,
     roles = [],
     mode = 'create',
@@ -18,7 +17,7 @@ export default function UserForm({
     };
 
     return (
-        <form onSubmit={onSubmit} className="space-y-4">
+        <form id={formId} onSubmit={onSubmit} className="space-y-4">
             <FormField label="Name">
                 <Input value={value.name} onChange={(e) => onChange({ ...value, name: e.target.value })} required />
             </FormField>
@@ -63,10 +62,6 @@ export default function UserForm({
             </div>
 
             {error ? <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div> : null}
-
-            <Button type="submit" className="w-full" disabled={loading}>
-                {submitLabel}
-            </Button>
         </form>
     );
 }

@@ -34,20 +34,11 @@ export default function DealDetail() {
         <ModuleLayout>
             <div className="w-full space-y-6">
                 <PageHeader
-                    eyebrow="Deal Details"
-                    title={deal.title}
-                    description="Review the pipeline record and deal ownership."
                     breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Deals', href: '/deals' }, { label: deal.title }]}
-                    actions={
-                        <>
-                            <Button to={`/deals/${deal.id}/edit`} variant="secondary">
-                                Edit
-                            </Button>
-                            <Button to="/deals" variant="dark">
-                                Back
-                            </Button>
-                        </>
-                    }
+                    actions={{
+                        back: <Button to="/deals" variant="secondary">Back</Button>,
+                        primary: <Button to={`/deals/${deal.id}/edit`} variant="dark">Edit</Button>,
+                    }}
                 />
 
                 <Card>

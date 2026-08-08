@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { apiFetch } from '../../lib/apiClient';
 import { Button, Card, Input, LoadingState, Modal, ModuleLayout, PageHeader } from '../../components/ui';
 
@@ -12,6 +11,7 @@ export default function RolesPage() {
     const [editRole, setEditRole] = useState(null);
     const [deleteRole, setDeleteRole] = useState(null);
     const [renameValue, setRenameValue] = useState('');
+    const formId = 'role-create-form';
 
     const isReservedRole = (role) => role?.is_reserved || ['administrator', 'super-admin'].includes(role?.name?.toLowerCase());
 
@@ -113,27 +113,24 @@ export default function RolesPage() {
             <div className="w-full space-y-6">
                 <PageHeader
                     eyebrow="Access Control"
-                    title="Roles Management"
-                    description="Create custom roles and keep the built-in Administrator role reserved."
+                    title="Roles"
+                    description="Create custom roles and manage access to CRM modules."
                     breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Roles' }]}
+                    actions={{
+                        back: <Button to="/dashboard" variant="secondary">Back</Button>,
+                        primary: <Button type="submit" form={formId} disabled={saving}>{saving ? 'Creating...' : 'Create'}</Button>,
+                    }}
 
                 />
 
                 <Card className="mb-6">
-                    <form onSubmit={handleCreate} className="grid gap-3 md:grid-cols-[1fr_auto] md:items-end">
+                    <form id={formId} onSubmit={handleCreate} className="flex flex-col gap-3 sm:flex-row">
                         <input
                             value={name}
                             onChange={(event) => setName(event.target.value)}
                             placeholder="Enter role name"
-                            className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-900 outline-none focus:border-slate-400 focus:ring-2 focus:ring-slate-500/20"
+                            className="min-h-11 flex-1 rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-900 outline-none focus:border-slate-400 focus:ring-2 focus:ring-slate-500/20"
                         />
-                        <button
-                            type="submit"
-                            disabled={saving}
-                            className="rounded-2xl border border-slate-200 bg-slate-950 px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-50"
-                        >
-                            {saving ? 'Saving...' : 'Create Role'}
-                        </button>
                     </form>
                     <p className="mt-3 text-xs text-slate-600">
                         <span className="font-semibold text-slate-900">Role type:</span> Custom roles are editable. Administrator is reserved.
@@ -184,26 +181,26 @@ export default function RolesPage() {
                                 <div className="flex flex-wrap gap-2">
                                     {!isReservedRole(role) ? (
                                         <>
-                                            <button type="button" onClick={() => openRename(role)} className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700">
+                                            <Button variant="secondary" size="sm" onClick={() => openRename(role)}>
                                                 Edit
-                                            </button>
-                                            <Link
+                                            </Button>
+                                            <Button
                                                 to={`/access-control/roles/${role.id}/permissions`}
-                                                className="rounded-xl border border-slate-200 bg-slate-950 px-4 py-2 text-sm font-semibold text-white"
+                                                size="sm"
                                             >
                                                 Permissions
-                                            </Link>
-                                            <button type="button" onClick={() => setDeleteRole(role)} className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700">
+                                            </Button>
+                                            <Button variant="danger" size="sm" onClick={() => setDeleteRole(role)}>
                                                 Delete
-                                            </button>
+                                            </Button>
                                         </>
                                     ) : (
-                                        <Link
+                                        <Button
                                             to={`/access-control/roles/${role.id}/permissions`}
-                                            className="rounded-xl border border-slate-200 bg-slate-950 px-4 py-2 text-sm font-semibold text-white"
+                                            size="sm"
                                         >
-                                            View Permissions
-                                        </Link>
+                                            View
+                                        </Button>
                                     )}
                                 </div>
                             </Card>

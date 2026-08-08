@@ -33,20 +33,11 @@ export default function TicketDetail() {
         <ModuleLayout>
             <div className="w-full space-y-6">
                 <PageHeader
-                    eyebrow="Ticket Details"
-                    title={ticket.subject}
-                    description="Review support case details, assignment, and resolution notes."
                     breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Tickets', href: '/tickets' }, { label: ticket.subject }]}
-                    actions={
-                        <>
-                            <Button to={`/tickets/${ticket.id}/edit`} variant="secondary">
-                                Edit
-                            </Button>
-                            <Button to="/tickets" variant="dark">
-                                Back
-                            </Button>
-                        </>
-                    }
+                    actions={{
+                        back: <Button to="/tickets" variant="secondary">Back</Button>,
+                        primary: <Button to={`/tickets/${ticket.id}/edit`} variant="dark">Edit</Button>,
+                    }}
                 />
 
                 <Card className="mb-6">

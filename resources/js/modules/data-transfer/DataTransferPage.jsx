@@ -1,5 +1,5 @@
 import { NavLink, Outlet } from 'react-router-dom';
-import { Card, ModuleLayout, PageHeader } from '../../components/ui';
+import { Button, Card, ModuleLayout, PageHeader } from '../../components/ui';
 
 const tabClassName = ({ isActive }) =>
     `rounded-xl px-3 py-2 text-sm font-semibold transition ${
@@ -17,6 +17,9 @@ export default function DataTransferPage() {
                     title="Data Transfer"
                     description="Import, export, and review transfer history in one place."
                     breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Data Transfer' }]}
+                    actions={{
+                        back: <Button to="/dashboard" variant="secondary">Back</Button>,
+                    }}
 
                 />
 

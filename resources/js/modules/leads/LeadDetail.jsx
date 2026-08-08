@@ -36,17 +36,11 @@ export default function LeadDetail() {
         <ModuleLayout>
             <div className="w-full space-y-6">
                 <PageHeader
-                    eyebrow="Lead Details"
-                    title={lead.title}
-                    description="Review the lead record and conversion status."
                     breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Leads', href: '/leads' }, { label: lead.title }]}
-                    actions={
-                        <>
-                            <Button to="/leads" variant="secondary">
-                                Back
-                            </Button>
-                        </>
-                    }
+                    actions={{
+                        back: <Button to="/leads" variant="secondary">Back</Button>,
+                        primary: <Button to={`/leads/${lead.id}/edit`} variant="dark">Edit</Button>,
+                    }}
                 />
 
                 <Card className="mb-6">

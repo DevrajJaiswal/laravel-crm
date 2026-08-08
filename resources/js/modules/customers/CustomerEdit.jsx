@@ -7,6 +7,7 @@ import { Button, Card, LoadingState, ModuleLayout, PageHeader } from '../../comp
 export default function CustomerEdit() {
     const { id } = useParams();
     const navigate = useNavigate();
+    const formId = 'customer-edit-form';
     const [value, setValue] = useState(null);
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
@@ -69,19 +70,20 @@ export default function CustomerEdit() {
         <ModuleLayout>
             <div className="w-full space-y-6">
                 <PageHeader
-                    title="Edit Customer"
-                    description="Update the customer profile, addresses, and notes."
                     breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Customers', href: '/customers' }, { label: 'Edit Customer' }]}
+                    actions={{
+                        back: <Button to="/customers" variant="secondary">Back</Button>,
+                        primary: <Button type="submit" form={formId} disabled={saving}>{saving ? 'Saving...' : 'Save'}</Button>,
+                    }}
 
                 />
 
                 <Card className="p-5 lg:p-6">
                     <CustomerForm
+                        formId={formId}
                         value={value}
                         onChange={setValue}
                         onSubmit={handleSubmit}
-                        submitLabel={saving ? 'Saving...' : 'Save Changes'}
-                        loading={saving}
                         error={error}
                     />
                 </Card>
@@ -89,4 +91,3 @@ export default function CustomerEdit() {
         </ModuleLayout>
     );
 }
-

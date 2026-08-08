@@ -16,7 +16,7 @@ const sizeClasses = {
 
 function buildClasses({ variant, size, className }) {
     return [
-        'inline-flex items-center justify-center rounded-2xl font-semibold transition focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none',
+        'inline-flex cursor-pointer items-center justify-center rounded-2xl font-semibold transition focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 disabled:pointer-events-none',
         variantClasses[variant] || variantClasses.primary,
         sizeClasses[size] || sizeClasses.md,
         className,

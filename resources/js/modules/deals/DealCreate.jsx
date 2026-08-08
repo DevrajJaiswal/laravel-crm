@@ -16,6 +16,7 @@ const emptyDeal = {
 
 export default function DealCreate() {
     const navigate = useNavigate();
+    const formId = 'deal-create-form';
     const [customers, setCustomers] = useState([]);
     const [value, setValue] = useState(emptyDeal);
     const [loading, setLoading] = useState(true);
@@ -67,19 +68,20 @@ export default function DealCreate() {
         <ModuleLayout>
             <div className="w-full space-y-6">
                 <PageHeader
-                    title="Create Deal"
-                    description="Capture a sales opportunity in the pipeline."
-                    breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Deals', href: '/deals' }, { label: 'Create Deal' }]}
+                    breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Deals', href: '/deals' }, { label: 'Create' }]}
+                    actions={{
+                        back: <Button to="/deals" variant="secondary">Back</Button>,
+                        primary: <Button type="submit" form={formId} disabled={saving}>{saving ? 'Creating...' : 'Create'}</Button>,
+                    }}
 
                 />
 
                 <Card className="p-5 lg:p-6">
                     <DealForm
+                        formId={formId}
                         value={value}
                         onChange={setValue}
                         onSubmit={handleSubmit}
-                        submitLabel={saving ? 'Creating...' : 'Create Deal'}
-                        loading={saving}
                         error={error}
                         customers={customers}
                     />
@@ -88,4 +90,3 @@ export default function DealCreate() {
         </ModuleLayout>
     );
 }
-

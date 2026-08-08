@@ -7,6 +7,7 @@ import { Button, Card, LoadingState, ModuleLayout, PageHeader } from '../../comp
 export default function TicketEdit() {
     const { id } = useParams();
     const navigate = useNavigate();
+    const formId = 'ticket-edit-form';
     const [customers, setCustomers] = useState([]);
     const [contacts, setContacts] = useState([]);
     const [assignees, setAssignees] = useState([]);
@@ -95,19 +96,20 @@ export default function TicketEdit() {
         <ModuleLayout>
             <div className="w-full space-y-6">
                 <PageHeader
-                    title="Edit Ticket"
-                    description="Update ticket routing, priority, and resolution notes."
                     breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Tickets', href: '/tickets' }, { label: 'Edit Ticket' }]}
+                    actions={{
+                        back: <Button to="/tickets" variant="secondary">Back</Button>,
+                        primary: <Button type="submit" form={formId} disabled={saving}>{saving ? 'Saving...' : 'Save'}</Button>,
+                    }}
 
                 />
 
                 <Card className="p-5 lg:p-6">
                     <TicketForm
+                        formId={formId}
                         value={value}
                         onChange={setValue}
                         onSubmit={handleSubmit}
-                        submitLabel={saving ? 'Saving...' : 'Save Changes'}
-                        loading={saving}
                         error={error}
                         customers={customers}
                         contacts={contacts}
@@ -118,4 +120,3 @@ export default function TicketEdit() {
         </ModuleLayout>
     );
 }
-

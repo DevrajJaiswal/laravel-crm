@@ -1,3 +1,5 @@
+import { Button } from '../../components/ui';
+
 export default function ContactForm({ value, onChange, onSubmit, submitLabel, loading, error, onCancel, mode }) {
     const fields = [
         ['first_name', 'First Name'],
@@ -46,21 +48,13 @@ export default function ContactForm({ value, onChange, onSubmit, submitLabel, lo
             {error ? <p className="rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p> : null}
 
             <div className="flex gap-3">
-                <button
-                    type="submit"
-                    disabled={loading}
-                    className="rounded-2xl bg-slate-950 px-5 py-3 text-sm font-semibold uppercase tracking-wider text-white disabled:opacity-50"
-                >
+                <Button type="submit" disabled={loading}>
                     {submitLabel}
-                </button>
+                </Button>
                 {mode === 'edit' ? (
-                    <button
-                        type="button"
-                        onClick={onCancel}
-                        className="rounded-2xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold uppercase tracking-wider text-slate-700"
-                    >
+                    <Button type="button" variant="secondary" onClick={onCancel}>
                         Cancel
-                    </button>
+                    </Button>
                 ) : null}
             </div>
         </form>

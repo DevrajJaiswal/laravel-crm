@@ -177,7 +177,6 @@ export default function RolePermissionsPage() {
         <ModuleLayout>
             <div className="w-full space-y-6">
                 <PageHeader
-                    eyebrow="Access Control"
                     title={`Permission Assignment: ${role?.name}`}
                     description={
                         reservedRole
@@ -189,6 +188,14 @@ export default function RolePermissionsPage() {
                         { label: 'Roles', href: '/access-control/roles' },
                         { label: 'Permissions' },
                     ]}
+                    actions={{
+                        back: <Button to="/access-control/roles" variant="secondary">Back</Button>,
+                        primary: !reservedRole ? (
+                            <Button type="button" onClick={handleSave} disabled={saving}>
+                                {saving ? 'Saving...' : 'Save'}
+                            </Button>
+                        ) : null,
+                    }}
 
                 />
 
@@ -218,18 +225,7 @@ export default function RolePermissionsPage() {
                                 />
                             ))}
                         </div>
-
-                        <div className="mt-6 flex items-center gap-3">
-                            <button
-                                type="button"
-                                onClick={handleSave}
-                                disabled={saving}
-                                className="rounded-2xl border border-slate-200 bg-slate-950 px-5 py-3 text-sm font-semibold text-white disabled:opacity-50"
-                            >
-                                {saving ? 'Saving...' : 'Save Permissions'}
-                            </button>
-                            <span className="text-sm text-slate-600">{selected.length} selected</span>
-                        </div>
+                        <div className="text-sm text-slate-600">{selected.length} selected</div>
                     </>
                 )}
             </div>

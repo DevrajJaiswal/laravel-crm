@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { apiFetch } from '../../lib/apiClient';
+import { Button } from '../../components/ui';
 
 export default function NotificationBell() {
     const [open, setOpen] = useState(false);
@@ -47,10 +48,11 @@ export default function NotificationBell() {
 
     return (
         <div ref={menuRef} className="relative z-[60]">
-            <button
+            <Button
                 type="button"
+                variant="secondary"
                 onClick={() => setOpen((value) => !value)}
-                className="relative rounded-2xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm"
+                className="relative"
             >
                 Notifications
                 {unreadCount > 0 ? (
@@ -58,19 +60,15 @@ export default function NotificationBell() {
                         {unreadCount}
                     </span>
                 ) : null}
-            </button>
+            </Button>
 
             {open ? (
                 <div className="absolute right-0 top-full z-[999] mt-3 w-[22rem] overflow-hidden rounded-[1.5rem] border border-slate-200 bg-white shadow-[0_20px_80px_rgba(15,23,42,0.18)]">
                     <div className="flex items-center justify-between border-b border-slate-100 px-4 py-3">
                         <p className="text-sm font-semibold text-slate-900">Notifications</p>
-                        <button
-                            type="button"
-                            onClick={markAllRead}
-                            className="text-xs font-semibold uppercase tracking-wider text-slate-700"
-                        >
+                        <Button type="button" variant="ghost" size="sm" onClick={markAllRead} className="px-2 py-1 text-xs">
                             Mark all read
-                        </button>
+                        </Button>
                     </div>
 
                     <div className="max-h-96 overflow-y-auto">
@@ -87,13 +85,15 @@ export default function NotificationBell() {
                                             <p className="mt-2 text-xs text-slate-400">{notification.created_at}</p>
                                         </div>
                                         {!notification.read_at ? (
-                                            <button
+                                            <Button
                                                 type="button"
+                                                variant="secondary"
+                                                size="sm"
                                                 onClick={() => markRead(notification.id)}
-                                                className="rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-slate-700"
+                                                className="px-2.5 py-1 text-[11px] uppercase tracking-wider"
                                             >
                                                 Read
-                                            </button>
+                                            </Button>
                                         ) : null}
                                     </div>
 

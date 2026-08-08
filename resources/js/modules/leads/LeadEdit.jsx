@@ -8,6 +8,7 @@ import { Button, Card, LoadingState, ModuleLayout, PageHeader } from '../../comp
 export default function LeadEdit() {
     const { id } = useParams();
     const navigate = useNavigate();
+    const formId = 'lead-edit-form';
     const [value, setValue] = useState(null);
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
@@ -68,27 +69,24 @@ export default function LeadEdit() {
         <ModuleLayout>
             <div className="w-full space-y-6">
                 <PageHeader
-                    title="Edit Lead"
-                    description="Update the lead status, source, and qualifying details."
                     breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Leads', href: '/leads' }, { label: 'Edit Lead' }]}
+                    actions={{
+                        back: <Button to="/leads" variant="secondary">Back</Button>,
+                        primary: <Button type="submit" form={formId} disabled={saving}>{saving ? 'Saving...' : 'Save Lead'}</Button>,
+                    }}
 
                 />
 
                 <Card className="p-5 lg:p-6">
                     <LeadForm
+                        formId={formId}
                         value={value}
                         onChange={setValue}
                         onSubmit={handleSubmit}
-                        submitLabel={saving ? 'Saving...' : 'Save Lead'}
-                        loading={saving}
                         error={error}
                     />
-                    <Button variant="secondary" className="mt-4 w-full" onClick={() => navigate('/leads')}>
-                        Cancel
-                    </Button>
                 </Card>
             </div>
         </ModuleLayout>
     );
 }
-

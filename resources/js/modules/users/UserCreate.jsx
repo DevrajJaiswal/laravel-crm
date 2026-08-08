@@ -17,6 +17,7 @@ export default function UserCreate() {
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState('');
+    const formId = 'user-create-form';
 
     useEffect(() => {
         apiFetch('/api/users/meta')
@@ -57,16 +58,17 @@ export default function UserCreate() {
         <ModuleLayout>
             <div className="w-full space-y-6">
                 <PageHeader
-                    title="Create User"
-                    description="Add a CRM user and assign roles."
-                    breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Users', href: '/users' }, { label: 'Create User' }]}
+                    breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Users', href: '/users' }, { label: 'Create' }]}
+                    actions={{
+                        back: <Button to="/users" variant="secondary">Back</Button>,
+                        primary: <Button type="submit" form={formId} disabled={saving}>{saving ? 'Creating...' : 'Create'}</Button>,
+                    }}
 
                 />
                 <Card className="p-5 lg:p-6">
-                    <UserForm value={value} onChange={setValue} onSubmit={handleSubmit} submitLabel={saving ? 'Creating...' : 'Create User'} loading={saving} error={error} roles={roles} mode="create" />
+                    <UserForm formId={formId} value={value} onChange={setValue} onSubmit={handleSubmit} error={error} roles={roles} mode="create" />
                 </Card>
             </div>
         </ModuleLayout>
     );
 }
-

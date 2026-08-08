@@ -1,7 +1,7 @@
 import { leadSources, leadStatuses } from './leadOptions';
-import { Alert, Button, FormField, Input, Select } from '../../components/ui';
+import { Alert, FormField, Input, Select } from '../../components/ui';
 
-export default function LeadForm({ value, onChange, onSubmit, submitLabel, loading, error }) {
+export default function LeadForm({ formId, value, onChange, onSubmit, error }) {
     const fields = [
         ['title', 'Lead Title'],
         ['company_name', 'Company Name'],
@@ -12,7 +12,7 @@ export default function LeadForm({ value, onChange, onSubmit, submitLabel, loadi
     ];
 
     return (
-        <form onSubmit={onSubmit} className="space-y-4">
+        <form id={formId} onSubmit={onSubmit} className="space-y-4">
             {fields.map(([name, label]) => (
                 <FormField key={name} label={label}>
                     <Input
@@ -60,9 +60,6 @@ export default function LeadForm({ value, onChange, onSubmit, submitLabel, loadi
 
             {error ? <Alert tone="danger">{error}</Alert> : null}
 
-            <Button type="submit" className="w-full" disabled={loading}>
-                {submitLabel}
-            </Button>
         </form>
     );
 }

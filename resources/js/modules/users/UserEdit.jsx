@@ -12,6 +12,7 @@ export default function UserEdit() {
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState(null);
+    const formId = 'user-edit-form';
 
     useEffect(() => {
         Promise.all([apiFetch('/api/users/meta'), apiFetch(`/api/users/${id}`)])
@@ -61,17 +62,18 @@ export default function UserEdit() {
         <ModuleLayout>
             <div className="w-full space-y-6">
                 <PageHeader
-                    title="Edit User"
-                    description="Update the selected user's profile and contact details."
                     breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Users', href: '/users' }, { label: 'Edit User' }]}
+                    actions={{
+                        back: <Button to="/users" variant="secondary">Back</Button>,
+                        primary: <Button type="submit" form={formId} disabled={saving}>{saving ? 'Saving...' : 'Save'}</Button>,
+                    }}
 
                 />
 
                 <Card className="p-5 lg:p-6">
-                    <UserForm value={formData} onChange={setFormData} onSubmit={handleSubmit} submitLabel={saving ? 'Saving...' : 'Save Changes'} loading={saving} error={error} roles={roles} mode="edit" />
+                    <UserForm formId={formId} value={formData} onChange={setFormData} onSubmit={handleSubmit} error={error} roles={roles} mode="edit" />
                 </Card>
             </div>
         </ModuleLayout>
     );
 }
-

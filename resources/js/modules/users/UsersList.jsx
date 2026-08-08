@@ -101,11 +101,10 @@ export default function UsersList() {
                     title="Users"
                     description="Create, edit, and remove CRM users."
                     breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Users' }]}
-                    actions={
-                        <>
-                            {canCreate ? <Button to="/users/create">Create User</Button> : null}
-                        </>
-                    }
+                    actions={{
+                        back: <Button to="/dashboard" variant="secondary">Back</Button>,
+                        primary: canCreate ? <Button to="/users/create">Create</Button> : null,
+                    }}
                 />
 
                 {loading ? (
@@ -138,4 +137,3 @@ export default function UsersList() {
         </ModuleLayout>
     );
 }
-

@@ -131,13 +131,9 @@ export default function CustomerActivitiesSection({ customerId }) {
                     <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">Activities</p>
                     <h2 className="mt-2 text-2xl font-black text-slate-950">Customer Timeline</h2>
                 </div>
-                <button
-                    type="button"
-                    onClick={resetForm}
-                    className="rounded-2xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700"
-                >
-                    Add New Activity
-                </button>
+                <Button type="button" variant="secondary" onClick={resetForm}>
+                    Create
+                </Button>
             </div>
 
             <div className="mt-6 grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
@@ -149,7 +145,7 @@ export default function CustomerActivitiesSection({ customerId }) {
                         value={value}
                         onChange={setValue}
                         onSubmit={handleSubmit}
-                        submitLabel={saving ? 'Saving...' : mode === 'edit' ? 'Update Activity' : 'Save Activity'}
+                        submitLabel={saving ? 'Saving...' : mode === 'edit' ? 'Save' : 'Create'}
                         loading={saving}
                         error={error}
                         mode={mode}
@@ -177,20 +173,12 @@ export default function CustomerActivitiesSection({ customerId }) {
                                         </p>
                                     </div>
                                     <div className="flex gap-2">
-                                        <button
-                                            type="button"
-                                            onClick={() => handleEdit(activity)}
-                                            className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold uppercase tracking-wider text-slate-700"
-                                        >
+                                        <Button type="button" variant="secondary" size="sm" onClick={() => handleEdit(activity)}>
                                             Edit
-                                        </button>
-                                        <button
-                                            type="button"
-                                            onClick={() => setDeleteActivity(activity)}
-                                            className="rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-xs font-semibold uppercase tracking-wider text-red-700"
-                                        >
+                                        </Button>
+                                        <Button type="button" variant="danger" size="sm" onClick={() => setDeleteActivity(activity)}>
                                             Delete
-                                        </button>
+                                        </Button>
                                     </div>
                                 </div>
 

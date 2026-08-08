@@ -29,6 +29,9 @@ export default function ReportPage() {
                     title="CRM Reports Dashboard"
                     description="High-level summary metrics for leads, customers, deals, and tickets."
                     breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Reports' }]}
+                    actions={{
+                        back: <Button to="/dashboard" variant="secondary">Back</Button>,
+                    }}
 
                 />
 
@@ -112,4 +115,3 @@ export default function ReportPage() {
         </ModuleLayout>
     );
 }
-

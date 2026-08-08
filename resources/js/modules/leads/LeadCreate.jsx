@@ -7,6 +7,7 @@ import { Button, Card, ModuleLayout, PageHeader } from '../../components/ui';
 
 export default function LeadCreate() {
     const navigate = useNavigate();
+    const formId = 'lead-create-form';
     const [value, setValue] = useState({
         title: '',
         company_name: '',
@@ -50,19 +51,20 @@ export default function LeadCreate() {
         <ModuleLayout>
             <div className="w-full space-y-6">
                 <PageHeader
-                    title="Create Lead"
-                    description="Capture a sales opportunity and track it through the pipeline."
-                    breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Leads', href: '/leads' }, { label: 'Create Lead' }]}
+                    breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Leads', href: '/leads' }, { label: 'Create' }]}
+                    actions={{
+                        back: <Button to="/leads" variant="secondary">Back</Button>,
+                        primary: <Button type="submit" form={formId} disabled={loading}>{loading ? 'Creating...' : 'Create'}</Button>,
+                    }}
 
                 />
 
                 <Card className="p-5 lg:p-6">
                     <LeadForm
+                        formId={formId}
                         value={value}
                         onChange={setValue}
                         onSubmit={handleSubmit}
-                        submitLabel={loading ? 'Creating...' : 'Create Lead'}
-                        loading={loading}
                         error={error}
                     />
                 </Card>

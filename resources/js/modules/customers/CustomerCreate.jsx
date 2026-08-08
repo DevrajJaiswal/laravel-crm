@@ -6,6 +6,7 @@ import { Button, Card, ModuleLayout, PageHeader } from '../../components/ui';
 
 export default function CustomerCreate() {
     const navigate = useNavigate();
+    const formId = 'customer-create-form';
     const [value, setValue] = useState({
         name: '',
         company_name: '',
@@ -49,19 +50,20 @@ export default function CustomerCreate() {
         <ModuleLayout>
             <div className="w-full space-y-6">
                 <PageHeader
-                    title="Create Customer"
-                    description="Add a customer manually or from a lead conversion."
-                    breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Customers', href: '/customers' }, { label: 'Create Customer' }]}
+                    breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Customers', href: '/customers' }, { label: 'Create' }]}
+                    actions={{
+                        back: <Button to="/customers" variant="secondary">Back</Button>,
+                        primary: <Button type="submit" form={formId} disabled={loading}>{loading ? 'Creating...' : 'Create'}</Button>,
+                    }}
 
                 />
 
                 <Card className="p-5 lg:p-6">
                     <CustomerForm
+                        formId={formId}
                         value={value}
                         onChange={setValue}
                         onSubmit={handleSubmit}
-                        submitLabel={loading ? 'Creating...' : 'Create Customer'}
-                        loading={loading}
                         error={error}
                     />
                 </Card>

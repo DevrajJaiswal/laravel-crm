@@ -1,14 +1,13 @@
 export default function DealForm({
+    formId,
     value,
     onChange,
     onSubmit,
-    submitLabel,
-    loading,
     error,
     customers,
 }) {
     return (
-        <form onSubmit={onSubmit} className="space-y-4">
+        <form id={formId} onSubmit={onSubmit} className="space-y-4">
             <div>
                 <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-slate-600">Customer</label>
                 <select
@@ -98,14 +97,6 @@ export default function DealForm({
             </div>
 
             {error ? <p className="rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p> : null}
-
-            <button
-                type="submit"
-                disabled={loading}
-                className="w-full rounded-2xl bg-slate-950 py-3 text-sm font-semibold uppercase tracking-wider text-white disabled:opacity-50"
-            >
-                {submitLabel}
-            </button>
         </form>
     );
 }
