@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { apiFetch } from '../../lib/apiClient';
 import { Button } from '../../components/ui';
 
@@ -6,7 +7,9 @@ export default function NotificationBell() {
     const [open, setOpen] = useState(false);
     const [notifications, setNotifications] = useState([]);
     const [unreadCount, setUnreadCount] = useState(0);
+    const triggerRef = useRef(null);
     const menuRef = useRef(null);
+    const [menuStyle, setMenuStyle] = useState(null);
 
     const loadNotifications = () => {
         apiFetch('/api/notifications')
@@ -22,15 +25,39 @@ export default function NotificationBell() {
     }, []);
 
     useEffect(() => {
+        if (!open || !triggerRef.current) {
+            return undefined;
+        }
+
+        const updatePosition = () => {
+            const rect = triggerRef.current.getBoundingClientRect();
+            setMenuStyle({
+                top: rect.bottom + 12,
+                right: Math.max(16, window.innerWidth - rect.right),
+            });
+        };
+
+        updatePosition();
+
         const handleClickOutside = (event) => {
-            if (menuRef.current && !menuRef.current.contains(event.target)) {
+            const clickedTrigger = triggerRef.current?.contains(event.target);
+            const clickedMenu = menuRef.current?.contains(event.target);
+
+            if (!clickedTrigger && !clickedMenu) {
                 setOpen(false);
             }
         };
 
         document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, []);
+        window.addEventListener('resize', updatePosition);
+        window.addEventListener('scroll', updatePosition, true);
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+            window.removeEventListener('resize', updatePosition);
+            window.removeEventListener('scroll', updatePosition, true);
+        };
+    }, [open]);
 
     const markRead = async (id) => {
         await apiFetch(`/api/notifications/${id}/read`, {
@@ -47,12 +74,15 @@ export default function NotificationBell() {
     };
 
     return (
-        <div ref={menuRef} className="relative z-[60]">
+        <div className="relative z-[60]">
             <Button
+                ref={triggerRef}
                 type="button"
                 variant="secondary"
                 onClick={() => setOpen((value) => !value)}
                 className="relative"
+                aria-expanded={open}
+                aria-haspopup="menu"
             >
                 Notifications
                 {unreadCount > 0 ? (
@@ -62,8 +92,13 @@ export default function NotificationBell() {
                 ) : null}
             </Button>
 
-            {open ? (
-                <div className="absolute right-0 top-full z-[999] mt-3 w-[22rem] overflow-hidden rounded-[1.5rem] border border-slate-200 bg-white shadow-[0_20px_80px_rgba(15,23,42,0.18)]">
+            {open && menuStyle ? createPortal(
+                <div
+                    ref={menuRef}
+                    className="fixed z-[9999] w-[22rem] overflow-hidden rounded-[1.5rem] border border-slate-200 bg-white shadow-[0_20px_80px_rgba(15,23,42,0.18)]"
+                    style={menuStyle}
+                    role="menu"
+                >
                     <div className="flex items-center justify-between border-b border-slate-100 px-4 py-3">
                         <p className="text-sm font-semibold text-slate-900">Notifications</p>
                         <Button type="button" variant="ghost" size="sm" onClick={markAllRead} className="px-2 py-1 text-xs">
@@ -117,7 +152,8 @@ export default function NotificationBell() {
                             <div className="p-4 text-sm text-slate-500">No notifications yet.</div>
                         )}
                     </div>
-                </div>
+                </div>,
+                document.body,
             ) : null}
         </div>
     );

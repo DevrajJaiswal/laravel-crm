@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { forwardRef } from 'react';
 
 const variantClasses = {
     primary: 'bg-slate-950 text-white hover:bg-slate-800 border border-slate-950 shadow-sm',
@@ -23,7 +24,7 @@ function buildClasses({ variant, size, className }) {
     ].join(' ');
 }
 
-export default function Button({
+const Button = forwardRef(function Button({
     variant = 'primary',
     size = 'md',
     className = '',
@@ -32,20 +33,22 @@ export default function Button({
     type = 'button',
     children,
     ...props
-}) {
+}, ref) {
     const classes = buildClasses({ variant, size, className });
 
     if (to) {
-        return <Link to={to} className={classes} {...props}>{children}</Link>;
+        return <Link ref={ref} to={to} className={classes} {...props}>{children}</Link>;
     }
 
     if (href) {
-        return <a href={href} className={classes} {...props}>{children}</a>;
+        return <a ref={ref} href={href} className={classes} {...props}>{children}</a>;
     }
 
     return (
-        <button type={type} className={classes} {...props}>
+        <button ref={ref} type={type} className={classes} {...props}>
             {children}
         </button>
     );
-}
+});
+
+export default Button;
