@@ -1,5 +1,5 @@
-import SetupDashboard from './SetupDashboard';
+import { Navigate } from 'react-router-dom';
 
 export const routes = [
-    { index: true, element: <SetupDashboard /> },
+    { index: true, element: <Navigate to="/dashboard" replace /> },
 ];
