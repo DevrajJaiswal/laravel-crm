@@ -1,161 +1,178 @@
 # Laravel CRM
 
-A modern, modular, and scalable Customer Relationship Management (CRM) system built with Laravel and React.
+**Version:** `0.1.0`
 
-This project is designed using a feature-based modular architecture with a reusable component-driven frontend and a centralized design system. It provides a strong foundation for managing customers, leads, contacts, data transfers, and future ERP capabilities.
+Laravel CRM is a modular, production-ready customer relationship management system built with Laravel, MySQL, React, Tailwind CSS, and Sanctum authentication.
 
----
+It is structured as a modular monolith with a service-layer backend and API-first module boundaries, so each business area can be maintained and extended independently.
+
+## About
+
+This CRM is designed for teams that need a clean, scalable system for managing:
+
+- Users
+- Roles and permissions
+- Leads
+- Customers
+- Contacts
+- Activities
+- Deals
+- Support tickets
+- Notifications
+- Import and export data
+- Reports and analytics
+
+The UI uses a shared component system and consistent layout patterns to keep the product easy to use and easy to extend.
 
 ## Features
 
-### Dashboard
-
-* Business overview dashboard
-* KPI and statistics cards
-* Quick actions
-* Responsive design
-
-### Customer Management
-
-* Customer records management
-* Customer profiles
-* Search and filtering
-* Customer lifecycle tracking
-
-### Lead Management
-
-* Lead creation and management
-* Lead status tracking
-* Assignment workflows
-* Follow-up management
-
-### Contact Management
-
-* Centralized contact database
-* Contact relationship management
-* Search and filtering
-
-### Data Transfer
-
-* Import data from external sources
-* Export data for reporting and migration
-* Extensible import/export architecture
-* Module-based data transfer support
-
-### User Management
-
-* User authentication
-* Authorization and access control
-* Role and permission support
-
----
-
-## Architecture
-
-### Backend
-
-* Laravel
-* Modular Architecture
-* Service-Oriented Design
-* SOLID Principles
-* Clean Separation of Concerns
-
-### Frontend
-
-* React
-* Feature-Based Module Structure
-* Reusable Component Architecture
-* Shared Layout System
-* Centralized Design System
-
----
+- Sanctum authentication
+- Protected dashboard
+- Users management
+- Roles and permissions
+- Lead lifecycle management
+- Customer profiles and contacts
+- Activity timeline
+- Deal pipeline board
+- Ticket tracking
+- Notification center
+- Data transfer module
+- Reports dashboard
+- Responsive interface
 
 ## Technology Stack
 
 ### Backend
 
-* PHP
-* Laravel
-* MySQL
+- Laravel
+- MySQL
+- Sanctum
 
 ### Frontend
 
-* React
-* JavaScript
-* Vite
+- React
+- Tailwind CSS
+- Vite
+- React Router
 
 ### Development Tools
 
-* Composer
-* NPM
-* Git
+- Composer
+- Node.js
+- NPM
 
----
+## Project Structure
+
+- `app/Modules/*` - module-owned backend code
+- `resources/js/modules/*` - module-owned frontend screens
+- `resources/js/components/*` - shared UI components
+- `resources/js/layouts/*` - app and module layouts
+- `routes/*` - Laravel route entry points
+- `database/*` - framework-level bootstrap data and core structure
+
+## Requirements
+
+- PHP 8.2 or later
+- Composer 2 or later
+- Node.js 18 or later
+- NPM 9 or later
+- MySQL 8 or later
 
 ## Installation
 
-### Clone Repository
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/DevrajJaiswal/laravel-crm.git
 cd laravel-crm
 ```
 
-### Install Dependencies
+### 2. Install dependencies
 
 ```bash
 composer install
 npm install
 ```
 
-### Configure Environment
+### 3. Configure environment
 
 ```bash
 cp .env.example .env
 php artisan key:generate
 ```
 
-Update database credentials inside the `.env` file.
+Update `.env` with your database credentials, app URL, and queue/session settings.
 
-### Run Database Migrations
+### 4. Run migrations
 
 ```bash
 php artisan migrate
 ```
 
-### Start Development Server
+### 5. Seed the database
+
+```bash
+php artisan db:seed
+```
+
+### 6. Start the application
 
 ```bash
 php artisan serve
 npm run dev
 ```
----
 
-## Future Enhancements
+## Default Login
 
-* Workflow Automation
-* Activity Timeline
-* Notification System
-* Reporting & Analytics
+Open the app in your browser and sign in with the default CRM admin account.
 
----
+- E-mail: admin@example.com
+- Password: admin123
+
+## Module Overview
+
+- `Auth` - login and dashboard entry point
+- `AccessControl` - roles and permissions
+- `Users` - CRM user administration
+- `LeadManagement` - lead tracking and conversion
+- `CustomerManagement` - customer records
+- `ContactManagement` - customer contacts
+- `ActivityManagement` - activity timeline
+- `DealManagement` - sales pipeline
+- `SupportTicketManagement` - support tickets
+- `NotificationManagement` - in-app notifications
+- `DataTransfer` - import, export, and history
+- `ReportsAnalytics` - CRM reporting
+- `Core` - shared backend infrastructure
+
+## Development
+
+### Run tests
+
+```bash
+php artisan test
+```
+
+### Build frontend assets
+
+```bash
+npm run build
+```
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for version history.
 
 ## Contributing
-
-Contributions, suggestions, and improvements are welcome.
 
 1. Fork the repository
 2. Create a feature branch
 3. Commit your changes
 4. Open a pull request
 
----
-
 ## License
 
 This project is licensed under the MIT License.
-
----
 
 ## Author
 
