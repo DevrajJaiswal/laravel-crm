@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Modules\Users\Models\User;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -39,6 +40,10 @@ class AppServiceProvider extends ServiceProvider
 
     private function syncPrivilegedRolePermissions(): void
     {
+        if (! Schema::hasTable('permissions') || ! Schema::hasTable('roles') || ! Schema::hasTable('model_has_roles')) {
+            return;
+        }
+
         app(PermissionRegistrar::class)->forgetCachedPermissions();
 
         $permissions = Permission::all();

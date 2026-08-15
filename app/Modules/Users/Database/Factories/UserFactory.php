@@ -6,6 +6,7 @@ use App\Modules\Users\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 
 /**
  * @extends Factory<User>
@@ -25,6 +26,18 @@ class UserFactory extends Factory
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
         ];
+    }
+
+    public function configure(): static
+    {
+        return $this->afterCreating(function (User $user): void {
+            if (! app()->environment('testing')) {
+                return;
+            }
+
+            $role = Role::findOrCreate('administrator', 'web');
+            $user->assignRole($role);
+        });
     }
 
     public function unverified(): static
